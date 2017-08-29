@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
@@ -19,7 +20,14 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
   ],
   imports: [
     BrowserModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    RouterModule.forRoot([
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
+      { path: 'products', component: ProductListComponent },
+      { path: 'cart-summary', component: CartSummaryComponent },
+      { path: '', redirectTo: 'products', pathMatch: 'full' }
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]
