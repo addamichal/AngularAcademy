@@ -29,4 +29,5 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
 export const getCatalog = (state: State) => state.catalog;
 export const getProducts = createSelector(getCatalog, fromProduct.getProducts);
 export const getCart = createSelector(getCatalog, fromProduct.getCart);
-export const getCartTotal = createSelector(getCatalog, fromProduct.getCartTotal);
+export const getCartSummary = createSelector(getCatalog, fromProduct.getCartSummary);
+export const getCartDetails = createSelector(getCatalog, fromProduct.getCartDetails);

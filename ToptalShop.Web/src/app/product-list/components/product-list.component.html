@@ -1,6 +1,3 @@
-{{ cart$ | async | json }}
-{{ cartTotal$ | async }}
-
 <div class="container">
     <div class="row">
       <div class="col-sm-3" *ngFor="let product of products$ | async">
@@ -10,7 +7,7 @@
             data-holder-rendered="true">
           <div class="card-body">
             <h4 class="card-title">{{ product.name }}</h4>
-            <h5 class="cart-title">{{ product.price }}</h5>
+            <h5 class="cart-title">{{ product.price| currency:"USD":true }}</h5>
             <p class="card-text">{{ product.description }}</p>
           </div>
           <div class="card-body text-right">

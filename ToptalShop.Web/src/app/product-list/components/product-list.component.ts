@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from './models/product';
+import { Product } from '../models/product';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
-import * as products from './actions/products';
-import * as fromRoot from '../reducers';
+import * as products from '../actions/products';
+import * as fromRoot from '../../reducers';
 
 @Component({
   selector: 'app-product-list',
@@ -18,7 +18,6 @@ export class ProductListComponent implements OnInit {
   constructor(private store: Store<fromRoot.State>) {
     this.products$ = store.select(fromRoot.getProducts);
     this.cart$ = store.select(fromRoot.getCart);
-    this.cartTotal$ = store.select(fromRoot.getCartTotal);
   }
 
   ngOnInit() {

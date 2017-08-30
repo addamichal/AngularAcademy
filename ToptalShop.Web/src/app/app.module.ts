@@ -5,8 +5,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
-import { CartSummaryComponent } from './cart-summary/cart-summary.component';
-import { ProductListComponent } from './product-list/product-list.component';
+import { CartSummaryComponent } from './product-list/components/cart-summary.component';
+import { ProductListComponent } from './product-list/components/product-list.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { reducers, metaReducers } from './reducers';
 import { StoreModule } from '@ngrx/store';
@@ -14,7 +14,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ProductsEffects } from './product-list/effects/products';
 import { ProductService } from './product-list/services/product.service';
 import { HttpClientModule } from '@angular/common/http';
-import { CartDetailsComponent } from './cart-details/cart-details.component';
+import { CartDetailsComponent } from './product-list/components/cart-details.component';
 
 @NgModule({
   declarations: [
