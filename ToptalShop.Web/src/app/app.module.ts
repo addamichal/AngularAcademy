@@ -32,6 +32,10 @@ import { CartDetailsComponent } from './product-list/components/cart-details.com
     RouterModule.forRoot([
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
+      {
+        path: 'products/:id',
+        component: ProductDetailsComponent
+      },
       { path: 'products', component: ProductListComponent },
       { path: 'cart', component: CartDetailsComponent },
       { path: '', redirectTo: 'products', pathMatch: 'full' }

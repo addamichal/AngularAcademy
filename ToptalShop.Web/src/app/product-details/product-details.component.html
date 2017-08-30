@@ -1,36 +1,20 @@
-<div class="container">
+<div class="container" *ngIf="product">
   <div class="card">
-    <h4 class="card-header">Product1</h4>
+    <h4 class="card-header">{{ product.name }}</h4>
     <div class="card-body">
       <div class="row">
         <div class="col">
           <img data-width="350" data-height="300" src="https://placehold.it/350x300/EEE04A">
         </div>
         <div class="col">
-          <p class="cart-text mb-0">Price:</p>
-          <h4 class="card-title mb-4">100 $</h4>
-          <div class="input-group mb-1">
-            <span class="input-group-btn">
-                  <button class="btn btn-secondary" type="button">-</button>
-                </span>
-            <input type="number" class="form-control" value="1">
-            <span class="input-group-btn">
-                  <button class="btn btn-secondary" type="button">+</button>
-                </span>
-          </div>
-          <div class="text-right">
-            <a href="#" class="btn btn-primary">Add to card</a>
-          </div>
-        </div>
-      </div>
-      <div class="row mt-4">
-        <div class="col">
-          <p class="card-text">Here can be super long text description</p>
+          <h2 class="card-title mt">Price: {{ product.price | currency:'USD':true }}</h2>
+          <p class="card-text">{{ product.description }}</p>
         </div>
       </div>
     </div>
     <div class="card-footer">
-      <a href="#" class="btn btn-primary">Back</a>
+      <a routerLink='/' class="btn btn-success">Back</a>
+      <button (click)="addProductToCart()" href="#" class="btn btn-primary float-right">Add to card</button>
     </div>
   </div>
 </div>

@@ -10,7 +10,7 @@ import * as fromRoot from '../../reducers';
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent {
   products$: Observable<Product[]>;
   cart$: Observable<any>;
   cartTotal$: Observable<number>;
@@ -18,10 +18,6 @@ export class ProductListComponent implements OnInit {
   constructor(private store: Store<fromRoot.State>) {
     this.products$ = store.select(fromRoot.getProducts);
     this.cart$ = store.select(fromRoot.getCart);
-  }
-
-  ngOnInit() {
-    this.store.dispatch(new products.LoadProductsAction());
   }
 
   addProductToCart(product: Product) {

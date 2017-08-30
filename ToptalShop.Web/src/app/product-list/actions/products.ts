@@ -23,6 +23,11 @@ export class AddProductToCart implements Action {
   constructor(public productId: number, public quantity: number) { }
 }
 
+export class SelectProduct implements Action {
+  readonly type = INCREMENT_PRODUCT_QUANTITY;
+  constructor(public productId: number, public quantity: number) { }
+}
+
 export class ChangeProductQuantity implements Action {
   readonly type = CHANGE_PRODUCT_QUANTITY;
 
