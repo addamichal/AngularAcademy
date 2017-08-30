@@ -12,14 +12,20 @@ import * as fromRoot from '../reducers';
 })
 export class ProductListComponent implements OnInit {
   products$: Observable<Product[]>;
+  cart$: Observable<any>;
+  cartTotal$: Observable<number>;
 
   constructor(private store: Store<fromRoot.State>) {
     this.products$ = store.select(fromRoot.getProducts);
-    this.products$.subscribe(data => console.log(data));
+    this.cart$ = store.select(fromRoot.getCart);
+    this.cartTotal$ = store.select(fromRoot.getCartTotal);
   }
 
   ngOnInit() {
     this.store.dispatch(new products.LoadProductsAction());
   }
 
+  addProductToCart(product: Product) {
+    this.store.dispatch(new products.AddProductToCart(product.productId, 1));
+  }
 }

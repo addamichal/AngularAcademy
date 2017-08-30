@@ -14,6 +14,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ProductsEffects } from './product-list/effects/products';
 import { ProductService } from './product-list/services/product.service';
 import { HttpClientModule } from '@angular/common/http';
+import { CartDetailsComponent } from './cart-details/cart-details.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     CartSummaryComponent,
     ProductListComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    CartDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'products', component: ProductListComponent },
-      { path: 'cart-summary', component: CartSummaryComponent },
+      { path: 'cart', component: CartDetailsComponent },
       { path: '', redirectTo: 'products', pathMatch: 'full' }
     ]),
     StoreModule.forRoot(reducers, { metaReducers }),

@@ -1,3 +1,6 @@
+{{ cart$ | async | json }}
+{{ cartTotal$ | async }}
+
 <div class="container">
     <div class="row">
       <div class="col-sm-3" *ngFor="let product of products$ | async">
@@ -11,7 +14,7 @@
             <p class="card-text">{{ product.description }}</p>
           </div>
           <div class="card-body text-right">
-            <a href="#" class="btn btn-primary">Add to cart</a>
+            <button type="button" class="btn btn-primary" (click)="addProductToCart(product)">Add to cart</button>
           </div>
         </div>
       </div>
