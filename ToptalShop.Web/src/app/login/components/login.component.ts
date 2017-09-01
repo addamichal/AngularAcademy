@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import * as fromAuth from '../reducers';
+import * as fromLogin from '../reducers';
 import { Store } from '@ngrx/store';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import * as auth from '../actions/auth';
+import * as login from '../actions/login';
 import { Authenticate } from '../models/user';
 import { Observable } from 'rxjs/Observable';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -37,19 +37,19 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store<fromAuth.State>) {}
+    private store: Store<fromLogin.State>) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
+      email: ['regularuser@toptalshop.com', [Validators.required, Validators.email]],
+      password: ['regularuser', [Validators.required]]
     });
 
     this.registerValidation(this.form, this.formErrors, this.validationMessages);
 
-    this.loggedIn$ = this.store.select(fromAuth.getLoggedIn);
+    this.loggedIn$ = this.store.select(fromLogin.getLoggedIn);
 
-    this.store.select(fromAuth.getLoginPageError)
+    this.store.select(fromLogin.getLoginPageError)
       .takeWhile(() => this.active)
       .subscribe(e => {
         console.log('here');
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.store.select(fromAuth.getLoginPagePending)
+    this.store.select(fromLogin.getLoginPagePending)
       .takeWhile(() => this.active)
       .subscribe(pending => {
         if (pending) {
@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   submit() {
     const model = <Authenticate>Object.assign({}, this.form.value);
-    this.store.dispatch(new auth.Login(model));
+    this.store.dispatch(new login.Login(model));
   }
 
   // TODO refactor away

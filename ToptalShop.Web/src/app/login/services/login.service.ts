@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { Token } from '../models/token';
 
 @Injectable()
-export class AuthService {
+export class LoginService {
   private _url: string = environment.loginUrl;
 
   constructor(private httpClient: HttpClient) {}

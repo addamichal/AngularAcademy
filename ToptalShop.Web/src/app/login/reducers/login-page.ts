@@ -1,4 +1,4 @@
-import * as auth from '../actions/auth';
+import * as login from '../actions/login';
 import { HttpErrorResponse } from '@angular/common/http';
 
 export interface State {
@@ -11,9 +11,9 @@ export const initialState: State = {
   pending: false,
 };
 
-export function reducer(state = initialState, action: auth.Actions): State {
+export function reducer(state = initialState, action: login.Actions): State {
   switch (action.type) {
-    case auth.LOGIN: {
+    case login.LOGIN: {
       return {
         ...state,
         error: null,
@@ -21,7 +21,7 @@ export function reducer(state = initialState, action: auth.Actions): State {
       };
     }
 
-    case auth.LOGIN_SUCCESS: {
+    case login.LOGIN_SUCCESS: {
       return {
         ...state,
         error: null,
@@ -29,7 +29,7 @@ export function reducer(state = initialState, action: auth.Actions): State {
       };
     }
 
-    case auth.LOGIN_FAILURE: {
+    case login.LOGIN_FAILURE: {
       return {
         ...state,
         error: action.payload,

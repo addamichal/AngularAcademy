@@ -15,6 +15,7 @@ export class ProfileService {
 
     getProfile(): Observable<User> {
       // TODO add into middleware logic!
+      console.log('here?');
       const options = { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.loginTokenService.getUserToken()) };
       return this.httpClient.get<User>(this.url, options);
     }

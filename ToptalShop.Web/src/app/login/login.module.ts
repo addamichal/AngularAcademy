@@ -4,9 +4,9 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthService } from './services/auth.service';
-import { AuthGuard } from './services/auth-guard.service';
-import { AuthEffects } from './effects/auth.effects';
+import { LoginService } from './services/login.service';
+import { LoginGuard } from './services/login-guard.service';
+import { LoginEffects } from './effects/login.effects';
 import { reducers } from './reducers';
 import { LoginComponent } from './components/login.component';
 import { HttpModule } from '@angular/http';
@@ -21,15 +21,15 @@ export const COMPONENTS = [LoginComponent];
     HttpModule,
     ReactiveFormsModule,
     RouterModule.forChild([{ path: 'login', component: LoginComponent }]),
-    StoreModule.forFeature('auth', reducers),
-    EffectsModule.forFeature([AuthEffects]),
+    StoreModule.forFeature('login', reducers),
+    EffectsModule.forFeature([LoginEffects]),
   ],
   providers: [
-    AuthService,
+    LoginService,
     LoginTokenService,
     ProfileService
   ],
   declarations: COMPONENTS,
   exports: COMPONENTS,
 })
-export class AuthModule { }
+export class LoginModule { }

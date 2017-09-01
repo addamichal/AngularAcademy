@@ -15,7 +15,7 @@ import { ProductService } from './product-list/services/product.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CartDetailsComponent } from './product-list/components/cart-details.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { AuthModule } from './login/auth.module';
+import { LoginModule } from './login/login.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import { AuthModule } from './login/auth.module';
   imports: [
     BrowserModule,
     NgbModule.forRoot(),
-    AuthModule,
+    LoginModule,
     RouterModule.forRoot([
       { path: 'register', component: RegisterComponent },
       {

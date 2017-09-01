@@ -3,13 +3,13 @@ import { User, Authenticate } from '../models/user';
 import { Token } from '../models/token';
 import { HttpErrorResponse } from '@angular/common/http';
 
-export const LOGIN = '[Auth] Login';
-export const LOGOUT = '[Auth] Logout';
-export const LOGIN_SUCCESS = '[Auth] Login Success';
-export const LOGIN_FAILURE = '[Auth] Login Failure';
-export const LOGIN_REDIRECT = '[Auth] Login Redirect';
-export const TOKEN_SUCCESS = '[Auth] Token Success';
-export const TOKEN_ERROR = '[Auth] Token Error';
+export const LOGIN = '[Login] Login';
+export const LOGOUT = '[Login] Logout';
+export const LOGIN_SUCCESS = '[Login] Login Success';
+export const LOGIN_FAILURE = '[Login] Login Failure';
+export const LOGIN_REDIRECT = '[Login] Login Redirect';
+export const TOKEN_SUCCESS = '[Login] Token Success';
+export const TOKEN_ERROR = '[Login] Token Error';
 
 export class Login implements Action {
   readonly type = LOGIN;
