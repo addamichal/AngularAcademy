@@ -16,6 +16,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { CartDetailsComponent } from './product-list/components/cart-details.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoginModule } from './login/login.module';
+import { ToasterModule } from 'angular2-toaster';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ExceptionInterceptor } from './services/exception-interceptor';
+import { TokenInterceptor } from './services/token-interceptor';
 
 @NgModule({
   declarations: [
@@ -28,6 +33,7 @@ import { LoginModule } from './login/login.module';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     NgbModule.forRoot(),
     LoginModule,
     RouterModule.forRoot([
@@ -44,10 +50,13 @@ import { LoginModule } from './login/login.module';
     EffectsModule.forRoot([ProductsEffects]),
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToasterModule
   ],
   providers: [
-    ProductService
+    ProductService,
+    { provide: HTTP_INTERCEPTORS, useClass: ExceptionInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

@@ -24,6 +24,6 @@ export class ProductsEffects {
     .switchMap(() =>
     this.productService.getProducts()
       .map((p: Product[]) => new products.LoadSuccessAction(p))
-      // .catch(error => of(new collection.LoadFailAction(error)))
+      .catch(error => of(new products.LoadFailedAction(error)))
   );
 }

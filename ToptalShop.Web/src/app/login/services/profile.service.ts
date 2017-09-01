@@ -11,12 +11,9 @@ import { HttpHeaders } from '@angular/common/http';
 export class ProfileService {
     private url: string = environment.profileUrl;
 
-    constructor(private httpClient: HttpClient, private loginTokenService: LoginTokenService) { }
+    constructor(private httpClient: HttpClient) { }
 
     getProfile(): Observable<User> {
-      // TODO add into middleware logic!
-      console.log('here?');
-      const options = { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.loginTokenService.getUserToken()) };
-      return this.httpClient.get<User>(this.url, options);
+      return this.httpClient.get<User>(this.url);
     }
 }

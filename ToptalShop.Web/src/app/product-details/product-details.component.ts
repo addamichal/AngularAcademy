@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../product-list/models';
 import * as products from '../product-list/actions/products';
 import * as fromRoot from '../reducers';
 import { Store } from '@ngrx/store';
+import { ToasterService } from 'angular2-toaster/angular2-toaster';
 
 @Component({
   selector: 'app-product-details',
@@ -14,7 +15,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   active = true;
   product: Product;
 
-  constructor(private route: ActivatedRoute, private store: Store<fromRoot.State>) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private store: Store<fromRoot.State>,
+    private toasterService: ToasterService
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe(data => {
@@ -25,6 +31,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       .map(
         products => products.filter(p => p.productId === id)[0]
       ).subscribe(product => {
+        if (!product) {
+          console.log('now!');
+          this.toasterService.pop('warning', 'Product not found');
+          //this.router.navigateByUrl('/');
+        }
+
         this.product = product;
         console.log(this.product);
       });

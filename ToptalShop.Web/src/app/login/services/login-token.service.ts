@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 export class LoginTokenService {
   _tokenKey = 'id_token';
 
-  isUserLoggedOn(): boolean {
+  tokenExists(): boolean {
     return this.getUserToken() != null;
   }
 
