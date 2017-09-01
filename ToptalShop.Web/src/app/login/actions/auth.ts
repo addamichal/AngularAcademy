@@ -1,5 +1,7 @@
 import { Action } from '@ngrx/store';
 import { User, Authenticate } from '../models/user';
+import { Token } from '../models/token';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export const LOGIN = '[Auth] Login';
 export const LOGOUT = '[Auth] Logout';
@@ -18,7 +20,9 @@ export class Login implements Action {
 export class TokenSuccess implements Action {
   readonly type = TOKEN_SUCCESS;
 
-  constructor(public payload: string) { }
+  constructor(public payload: Token) {
+    console.log(payload);
+  }
 }
 
 export class LoginSuccess implements Action {
@@ -30,7 +34,7 @@ export class LoginSuccess implements Action {
 export class LoginFailure implements Action {
   readonly type = LOGIN_FAILURE;
 
-  constructor(public payload: any) {
+  constructor(public payload: HttpErrorResponse) {
     console.log(payload);
   }
 }

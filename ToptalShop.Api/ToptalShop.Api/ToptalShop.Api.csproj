@@ -283,9 +283,9 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="CustomAuthorize.cs" />
     <Compile Include="DataLayer\ApplicationUser.cs" />
+    <Compile Include="DataLayer\Product.cs" />
     <Compile Include="DataLayer\ToptalShopDbContext.cs" />
     <Compile Include="EditToptalShopAppUser.cs" />
     <Compile Include="Engines\UserEngine.cs" />
@@ -298,7 +298,12 @@
     <Compile Include="Migrations\201708312132274_AddDefaultData.Designer.cs">
       <DependentUpon>201708312132274_AddDefaultData.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709011647063_AddingProducts.cs" />
+    <Compile Include="Migrations\201709011647063_AddingProducts.Designer.cs">
+      <DependentUpon>201709011647063_AddingProducts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="ToptalShopAppLogger.cs" />
     <Compile Include="NoCacheHeaderHandler.cs" />
     <Compile Include="ToptalShopAppUser.cs" />
@@ -395,6 +400,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708312132274_AddDefaultData.resx">
       <DependentUpon>201708312132274_AddDefaultData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709011647063_AddingProducts.resx">
+      <DependentUpon>201709011647063_AddingProducts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

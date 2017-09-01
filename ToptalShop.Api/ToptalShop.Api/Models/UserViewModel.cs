@@ -15,6 +15,5 @@ namespace ToptalShop.Api.Models
 
         [JsonConverter(typeof(StringEnumConverter))]
         public ToptalShopAppUserRole UserRole { get; set; }
-
     }
 }

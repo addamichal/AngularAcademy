@@ -22,7 +22,7 @@ export class AuthEffects {
     .exhaustMap(auth =>
       this.authService
         .login(auth)
-        .do(token => this.loginTokenService.setUserToken(token))
+        .do(token => this.loginTokenService.setUserToken(token.access_token))
         .map(token => new Auth.TokenSuccess(token))
         .catch(error => of(new Auth.LoginFailure(error)))
     );

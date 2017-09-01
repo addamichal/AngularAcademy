@@ -1,5 +1,5 @@
 export interface Authenticate {
-  username: string;
+  email: string;
   password: string;
 }
 

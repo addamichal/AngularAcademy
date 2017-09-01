@@ -16,6 +16,8 @@ namespace ToptalShop.Api.DataLayer
             this.Configuration.LazyLoadingEnabled = false;
         }
 
+        public DbSet<Product> Products { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

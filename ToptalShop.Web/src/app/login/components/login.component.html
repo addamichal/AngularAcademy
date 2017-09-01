@@ -1,7 +1,12 @@
-<div class="container">
-  <div class="alert alert-danger" role="alert" *ngIf="error$ | async">
-    {{ error$ | async }}
+<div class="container" *ngIf="loggedIn$ | async">
+  <p>You are already logged in. <a routerLink="/logout">Logout</a></p>
+</div>
+
+<div class="container" *ngIf="!(loggedIn$ | async)">
+  <div class="alert alert-danger" role="alert" *ngIf="formErrors['']">
+    {{ formErrors[''] }}
   </div>
+
   <form novalidate class="form-horizontal" role="form" [formGroup]="form" (ngSubmit)="submit()">
     <div class="row">
       <div class="col-md-3"></div>
@@ -17,15 +22,13 @@
       <div class="col-md-6">
         <div class="form-group">
           <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-            <input type="text" name="email" class="form-control" id="email" placeholder="you@example.com" autofocus formControlName="username">
+            <input type="text" name="email" class="form-control" id="email" placeholder="you@example.com" autofocus formControlName="email">
           </div>
         </div>
       </div>
       <div class="col-md-3">
         <div class="form-control-feedback">
-          <span class="text-danger align-middle">
-              <!-- Put e-mail validation error messages here -->
-            </span>
+          <span class="text-danger align-middle" *ngIf="formErrors.email">{{ formErrors.email }}</span>
         </div>
       </div>
     </div>
@@ -42,16 +45,14 @@
       </div>
       <div class="col-md-3">
         <div class="form-control-feedback">
-          <span class="text-danger align-middle">
-              <i class="fa fa-close">Example Error Message</i>
-            </span>
+          <span class="text-danger align-middle" *ngIf="formErrors.password">{{ formErrors.password }}</span>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-3"></div>
       <div class="col-md-6">
-        <button type="submit" class="btn btn-success"><i class="fa fa-user-plus"></i>Login</button>
+        <button type="submit" class="btn btn-success" [disabled]="!form.valid">Login</button>
       </div>
     </div>
   </form>

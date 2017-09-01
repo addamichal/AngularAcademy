@@ -5,22 +5,18 @@ import { User, Authenticate } from '../models/user';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 import { _throw } from 'rxjs/observable/throw';
+import { HttpClient } from '@angular/common/http';
+import { Token } from '../models/token';
 
 @Injectable()
 export class AuthService {
   private _url: string = environment.loginUrl;
 
-  constructor(private http: Http) {}
+  constructor(private httpClient: HttpClient) {}
 
-  login({ username, password }: Authenticate): Observable<string> {
-    const body = 'username=' + username + '&password=' + password + '&grant_type=password';
-    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-    const options = new RequestOptions({ headers: headers });
-
-    const result = this.http.post(this._url, body)
-        .map(this.extractData)
-        .catch(this.handleError);
-
+  login({ email, password }: Authenticate): Observable<Token> {
+    const body = 'username=' + email + '&password=' + password + '&grant_type=password';
+    const result = this.httpClient.post<any>(this._url, body);
     return result;
   }
 

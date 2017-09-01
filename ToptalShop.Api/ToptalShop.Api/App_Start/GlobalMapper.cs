@@ -40,6 +40,8 @@ namespace ToptalShop.Api
                     .ForMember(w => w.Roles, x => x.Ignore());
 
                 cfg.CreateMap<ToptalShopAppUser, UserViewModel>();
+
+                cfg.CreateMap<Product, ProductViewModel>();
             });
         }
     }

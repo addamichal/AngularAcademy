@@ -1,7 +1,8 @@
 import * as auth from '../actions/auth';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export interface State {
-  error: string | null;
+  error: HttpErrorResponse | null;
   pending: boolean;
 }
 

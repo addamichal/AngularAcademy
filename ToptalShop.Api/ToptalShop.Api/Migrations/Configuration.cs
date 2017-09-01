@@ -1,3 +1,5 @@
+using ToptalShop.Api.DataLayer;
+
 namespace ToptalShop.Api.Migrations
 {
     using System;
@@ -15,6 +17,10 @@ namespace ToptalShop.Api.Migrations
 
         protected override void Seed(ToptalShop.Api.DataLayer.ToptalShopDbContext context)
         {
+            context.Products.AddOrUpdate(new Product() { ProductId = 1, Name = "Product 1", Description = "Product 1 Description", Price = 10m });
+            context.Products.AddOrUpdate(new Product() { ProductId = 2, Name = "Product 2", Description = "Product 2 Description", Price = 15m, });
+            context.Products.AddOrUpdate(new Product() { ProductId = 3, Name = "Product 3", Description = "Product 3 Description", Price = 20m });
+
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
