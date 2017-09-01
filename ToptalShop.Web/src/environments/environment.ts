@@ -5,5 +5,7 @@
 
 export const environment = {
   production: false,
-  productUrl: 'http://localhost:5261/api/product'
+  productUrl: 'http://localhost:5261/api/product',
+  loginUrl: 'http://localhost:5261/token',
+  profileUrl: 'http://localhost:5261/api/profile',
 };

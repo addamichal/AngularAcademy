@@ -12,8 +12,6 @@ namespace ToptalShop.Api.Controllers
     {
         public IEnumerable<ProductDto> Get()
         {
-            Thread.Sleep(5000);
-
             return new List<ProductDto>()
             {
                 new ProductDto() { ProductId = 1, Name = "Product 1", Description = "Product 1 description", Price = 15 },

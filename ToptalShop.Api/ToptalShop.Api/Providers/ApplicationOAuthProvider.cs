@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using ToptalShop.Api.DataLayer;
 using ToptalShop.Api.Models;
 
 namespace ToptalShop.Api.Providers
