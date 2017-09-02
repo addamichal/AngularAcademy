@@ -37,6 +37,10 @@ export function reducer(state = initialState, action: login.Actions): State {
       };
     }
 
+    case login.LOGIN_RESET: {
+      return initialState;
+    }
+
     default: {
       return state;
     }

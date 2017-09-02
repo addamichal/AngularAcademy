@@ -3,6 +3,7 @@ import { RegistrationInfo } from '../models/registration-info';
 import { HttpErrorResponse } from '@angular/common/http';
 
 export const REGISTER = '[Register] Register';
+export const REGISTER_RESET = '[Register] Register Reset';
 export const REGISTER_SUCCESS = '[Register] Register Success';
 export const REGISTER_FAILURE = '[Register] Register Failure';
 
@@ -25,7 +26,12 @@ export class RegisterFailure implements Action {
   constructor(public payload: HttpErrorResponse) {}
 }
 
+export class RegisterReset implements Action {
+  readonly type = REGISTER_RESET;
+}
+
 export type Actions =
   | Register
+  | RegisterReset
   | RegisterSuccess
   | RegisterFailure;

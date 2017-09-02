@@ -24,7 +24,8 @@ import { ProductsLoadedGuard } from './product-list/services/products-loaded.gua
 import { ProductExistGuard } from './product-list/services/product-exists.guard.service';
 import { RegisterModule } from './register/register.module';
 import { ProfileModule } from './profile/profile.module';
-import { RecaptchaModule } from 'ng-recaptcha';
+import { RecaptchaModule, } from 'ng-recaptcha';
+import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { RecaptchaModule } from 'ng-recaptcha';
     FormsModule,
     ReactiveFormsModule,
     ToasterModule,
-    RecaptchaModule.forRoot()
+    RecaptchaModule.forRoot(),
+    RecaptchaFormsModule
   ],
   providers: [
     ProductsLoadedGuard,

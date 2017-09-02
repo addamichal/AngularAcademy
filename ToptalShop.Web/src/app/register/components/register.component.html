@@ -1,7 +1,11 @@
 <div class="container">
+  <div class="alert alert-success" role="alert" *ngIf="registerSuccess">
+    Registration successful! You can <a routerLink="/login">Login</a> now.
+  </div>
+  <div *ngIf="!registerSuccess">
     <div class="alert alert-danger" role="alert" *ngIf="formErrors['']">
-        {{ formErrors[''] }}
-      </div>
+      {{ formErrors[''] }}
+    </div>
     <form novalidate [formGroup]=form (ngSubmit)="submit()">
       <div class="row">
         <div class="col-md-3"></div>
@@ -41,7 +45,7 @@
         <div class="col-md-3">
           <div class="form-control-feedback">
             <span class="text-danger align-middle">
-              <span class="text-danger align-middle" *ngIf="formErrors.password">{{ formErrors.password }}</span>
+                <span class="text-danger align-middle" *ngIf="formErrors.password">{{ formErrors.password }}</span>
             </span>
           </div>
         </div>
@@ -53,15 +57,16 @@
         <div class="col-md-6">
           <div class="form-group">
             <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-              <input type="password" name="password-confirmation" class="form-control" id="password-confirm" placeholder="Confirm password" formControlName="confirmPassword">
+              <input type="password" name="password-confirmation" class="form-control" id="password-confirm" placeholder="Confirm password"
+                formControlName="confirmPassword">
             </div>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-control-feedback">
             <span class="text-danger align-middle">
-              <span class="text-danger align-middle" *ngIf="formErrors.confirmPassword">{{ formErrors.confirmPassword }}</span>
-              <span class="text-danger align-middle" *ngIf="formErrors.form">{{ formErrors.form }}</span>
+                <span class="text-danger align-middle" *ngIf="formErrors.confirmPassword">{{ formErrors.confirmPassword }}</span>
+            <span class="text-danger align-middle" *ngIf="formErrors.form">{{ formErrors.form }}</span>
             </span>
           </div>
         </div>
@@ -69,14 +74,15 @@
       <div class="row mb-4">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-          <re-captcha (resolved)="recaptchaResolved()" [siteKey]="recaptchaKey"></re-captcha>
+          <re-captcha formControlName="recaptcha" [siteKey]="recaptchaKey"></re-captcha>
         </div>
       </div>
       <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-          <button type="submit" class="btn btn-success" [disabled]="!form.valid || form.disabled || !isRecaptchaResolved">Register</button>
+          <button type="submit" class="btn btn-success" [disabled]="!form.valid || form.disabled">Register</button>
         </div>
       </div>
     </form>
   </div>
+</div>

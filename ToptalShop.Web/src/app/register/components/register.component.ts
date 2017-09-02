@@ -14,8 +14,8 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit, OnDestroy {
+  registerSuccess = false;
   recaptchaKey = environment.recaptchaKey;
-  isRecaptchaResolved = false;
   active = true;
 
   form: FormGroup;
@@ -42,16 +42,22 @@ export class RegisterComponent implements OnInit, OnDestroy {
     },
     confirmPassword: {
       required: 'Please repeat Password'
+    },
+    recaptcha: {
+      required: 'Recaptcha is required'
     }
   };
 
-  constructor(private fb: FormBuilder, private store: Store<fromRegister.State>) { }
+  constructor(private fb: FormBuilder, private store: Store<fromRegister.State>) {
+    this.store.dispatch(new register.RegisterReset());
+  }
 
   ngOnInit() {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]]
+      confirmPassword: ['', [Validators.required]],
+      recaptcha: [null, [Validators.required]]
     }, { validator: passwordMatcher });
 
     this.registerValidation(this.form, this.formErrors, this.validationMessages);
@@ -65,6 +71,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.form.enable();
       }
     });
+
+    this.store.select(fromRegister.getRegisterSuccess)
+      .takeWhile(() => this.active)
+      .subscribe((success) => {
+        if (success) {
+          this.store.dispatch(new register.RegisterReset());
+          this.form.reset();
+          this.registerSuccess = true;
+        }
+      });
 
     this.store.select(fromRegister.getRegisterError)
       .takeWhile(() => this.active)
@@ -81,12 +97,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.store.dispatch(new register.Register(model));
   }
 
-  recaptchaResolved() {
-    this.isRecaptchaResolved = true;
-  }
-
   // TODO refactor away
   catchBadRequest(errorResponse: HttpErrorResponse, formErrors: any): Observable<any> {
+    this.formErrors[''] = '';
     if (errorResponse && errorResponse.status === 400) {
       const modelState = errorResponse.error.modelState;
       for (const field of Object.keys(modelState)) {

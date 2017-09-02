@@ -37,7 +37,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store<fromLogin.State>) {}
+    private store: Store<fromLogin.State>) {
+      this.store.dispatch(new login.LoginReset());
+    }
 
   ngOnInit(): void {
     this.form = this.fb.group({

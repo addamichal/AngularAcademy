@@ -22,3 +22,8 @@ export const getRegisterPending = createSelector(
   selectRegisterRegister,
   fromRegister.getPending
 );
+
+export const getRegisterSuccess = createSelector(
+  selectRegisterRegister,
+  fromRegister.getSuccess
+);
