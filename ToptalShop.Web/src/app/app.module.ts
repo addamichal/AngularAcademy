@@ -23,6 +23,7 @@ import { TokenInterceptor } from './services/token-interceptor';
 import { ProductsLoadedGuard } from './product-list/services/products-loaded.guard.service';
 import { ProductExistGuard } from './product-list/services/product-exists.guard.service';
 import { RegisterModule } from './register/register.module';
+import { ProfileModule } from './profile/profile.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { RegisterModule } from './register/register.module';
     NgbModule.forRoot(),
     LoginModule,
     RegisterModule,
+    ProfileModule,
     RouterModule.forRoot([
       {
         path: 'products/:id',
