@@ -25,26 +25,15 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.params.subscribe(data => {
       const id = +data['id'];
-      console.log(id);
       this.store.select(fromRoot.getProducts)
-      .takeWhile(() => this.active)
-      .map(
-        products => products.filter(p => p.productId === id)[0]
-      ).subscribe(product => {
-        if (!product) {
-          console.log('now!');
-          this.toasterService.pop('warning', 'Product not found');
-          //this.router.navigateByUrl('/');
-        }
-
-        this.product = product;
-        console.log(this.product);
-      });
+        .takeWhile(() => this.active)
+        .map(products => products.filter(p => p.productId === id)[0])
+        .subscribe(product => this.product = product);
     });
   }
 
   ngOnDestroy() {
-    console.log('on destroy');
+    this.active = false;
   }
 
   addProductToCart() {

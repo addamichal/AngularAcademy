@@ -3,11 +3,13 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { CartDetails, Product, CartSummary, CartDetailsLine } from '../models';
 
 export interface CatalogState {
+  productsLoaded: boolean;
   products: Product[];
   cart: { [productId: number]: number };
 }
 
 export const initialState: CatalogState = {
+  productsLoaded: false,
   products: [],
   cart: {}
 };
@@ -21,6 +23,7 @@ export function reducer(
     case product.LOAD_PRODUCTS_SUCCESS: {
       const products = action.payload;
       return {
+        productsLoaded: true,
         products: products,
         cart: state.cart
       };
@@ -38,6 +41,7 @@ export function reducer(
       }
 
       return {
+        productsLoaded: state.productsLoaded,
         products: state.products,
         cart: cartCopy
       };
@@ -51,6 +55,7 @@ export function reducer(
       cartCopy[productId] = quantity;
 
       return {
+        productsLoaded: state.productsLoaded,
         products: state.products,
         cart: cartCopy
       };
@@ -64,6 +69,7 @@ export function reducer(
       }
 
       return {
+        productsLoaded: state.productsLoaded,
         products: state.products,
         cart: cartCopy
       };
@@ -73,6 +79,7 @@ export function reducer(
   return state;
 }
 
+export const getProductsLoaded = (state: CatalogState) => state.productsLoaded;
 export const getProducts = (state: CatalogState) => state.products;
 export const getCart = (state: CatalogState) => state.cart;
 

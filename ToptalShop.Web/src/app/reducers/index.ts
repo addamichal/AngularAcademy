@@ -31,3 +31,4 @@ export const getProducts = createSelector(getCatalog, fromProduct.getProducts);
 export const getCart = createSelector(getCatalog, fromProduct.getCart);
 export const getCartSummary = createSelector(getCatalog, fromProduct.getCartSummary);
 export const getCartDetails = createSelector(getCatalog, fromProduct.getCartDetails);
+export const getProductsLoaded = createSelector(getCatalog, fromProduct.getProductsLoaded);

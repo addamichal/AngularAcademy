@@ -8,14 +8,6 @@ import * as fromRoot from './reducers';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'app';
-
-  constructor(private store: Store<fromRoot.State>) {}
-
-  ngOnInit() {
-    this.store.dispatch(new products.LoadProductsAction());
-    console.log('RELOAD!!!');
-  }
-
 }

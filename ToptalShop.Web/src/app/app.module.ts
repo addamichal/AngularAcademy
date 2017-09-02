@@ -21,6 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ExceptionInterceptor } from './services/exception-interceptor';
 import { TokenInterceptor } from './services/token-interceptor';
+import { ProductsLoadedGuard } from './product-list/services/products-loaded.guard.service';
+import { ProductExistGuard } from './product-list/services/product-exists.guard.service';
 
 @NgModule({
   declarations: [
@@ -40,10 +42,11 @@ import { TokenInterceptor } from './services/token-interceptor';
       { path: 'register', component: RegisterComponent },
       {
         path: 'products/:id',
-        component: ProductDetailsComponent
+        component: ProductDetailsComponent,
+        canActivate: [ProductsLoadedGuard, ProductExistGuard]
       },
-      { path: 'products', component: ProductListComponent },
-      { path: 'cart', component: CartDetailsComponent },
+      { path: 'products', component: ProductListComponent, canActivate: [ProductsLoadedGuard] },
+      { path: 'cart', component: CartDetailsComponent, canActivate: [ProductsLoadedGuard] },
       { path: '', redirectTo: 'products', pathMatch: 'full' }
     ]),
     StoreModule.forRoot(reducers, { metaReducers }),
@@ -54,6 +57,8 @@ import { TokenInterceptor } from './services/token-interceptor';
     ToasterModule
   ],
   providers: [
+    ProductsLoadedGuard,
+    ProductExistGuard,
     ProductService,
     { provide: HTTP_INTERCEPTORS, useClass: ExceptionInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
