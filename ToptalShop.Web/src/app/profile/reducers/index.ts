@@ -3,22 +3,22 @@ import * as fromRoot from '../../reducers';
 import * as fromProfile from './profile';
 
 export interface State extends fromRoot.State {
-  profile: fromProfile.State;
+  profilePage: fromProfile.State;
 }
 
 export const reducers = {
-  profile: fromProfile.reducer
+  profilePage: fromProfile.reducer
 };
 
 export const selectProfile = createFeatureSelector<State>('profile');
-export const selectProfileProfile = createSelector(selectProfile, (state: State) => state.profile);
+export const selectProfileProfilePage = createSelector(selectProfile, (state: State) => state.profilePage);
 
-export const getProfileError = createSelector(
-  selectProfileProfile,
+export const getProfilePageError = createSelector(
+  selectProfileProfilePage,
   fromProfile.getError
 );
 
-export const getProfilePending = createSelector(
-  selectProfileProfile,
+export const getProfilePagePending = createSelector(
+  selectProfileProfilePage,
   fromProfile.getPending
 );
