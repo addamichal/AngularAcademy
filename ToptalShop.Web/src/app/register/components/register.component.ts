@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     this.registerValidation(this.form, this.formErrors, this.validationMessages);
 
-    this.store.select(fromRegister.getRegisterPending)
+    this.store.select(fromRegister.getRegisterPagePending)
     .takeWhile(() => this.active)
     .subscribe(pending => {
       if (pending) {
@@ -72,7 +72,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.store.select(fromRegister.getRegisterSuccess)
+    this.store.select(fromRegister.getRegisterPageSuccess)
       .takeWhile(() => this.active)
       .subscribe((success) => {
         if (success) {
@@ -82,7 +82,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.store.select(fromRegister.getRegisterError)
+    this.store.select(fromRegister.getRegisterPageError)
       .takeWhile(() => this.active)
       .subscribe(error => this.catchBadRequest(error, this.formErrors))
     ;

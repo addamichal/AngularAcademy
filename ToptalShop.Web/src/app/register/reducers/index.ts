@@ -1,29 +1,29 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import * as fromRoot from '../../reducers';
-import * as fromRegister from './register';
+import * as fromRegisterPage from './register-page';
 
 export interface State extends fromRoot.State {
-  register: fromRegister.State;
+  registerPage: fromRegisterPage.State;
 }
 
 export const reducers = {
-  register: fromRegister.reducer
+  registerPage: fromRegisterPage.reducer
 };
 
 export const selectRegister = createFeatureSelector<State>('register');
-export const selectRegisterRegister = createSelector(selectRegister, (state: State) => state.register);
+export const selectRegisterRegisterPage = createSelector(selectRegister, (state: State) => state.registerPage);
 
-export const getRegisterError = createSelector(
-  selectRegisterRegister,
-  fromRegister.getError
+export const getRegisterPageError = createSelector(
+  selectRegisterRegisterPage,
+  fromRegisterPage.getError
 );
 
-export const getRegisterPending = createSelector(
-  selectRegisterRegister,
-  fromRegister.getPending
+export const getRegisterPagePending = createSelector(
+  selectRegisterRegisterPage,
+  fromRegisterPage.getPending
 );
 
-export const getRegisterSuccess = createSelector(
-  selectRegisterRegister,
-  fromRegister.getSuccess
+export const getRegisterPageSuccess = createSelector(
+  selectRegisterRegisterPage,
+  fromRegisterPage.getSuccess
 );

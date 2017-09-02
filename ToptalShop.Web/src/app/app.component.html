@@ -2,7 +2,8 @@
   <div class="mr-auto">
     <a class="navbar-brand" routerLink="/">Toptal Shop</a>
   </div>
-  <button routerLink="/login" class="btn btn-outline-success my-2 my-sm-0">Login</button>
+  <button *ngIf="!(loggedIn$ | async)" routerLink="/login" class="btn btn-outline-success my-2 my-sm-0 mr-3">Login</button>
+  <button *ngIf="(loggedIn$ | async)" routerLink="/profile" class="btn btn-outline-success my-2 my-sm-0 mr-3">Profile</button>
   <app-cart-summary></app-cart-summary>
 </nav>
 <div class="container">
