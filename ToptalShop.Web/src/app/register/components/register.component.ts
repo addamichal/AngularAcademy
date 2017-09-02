@@ -6,6 +6,7 @@ import * as fromRegister from '../reducers';
 import * as register from '../actions/register';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -13,6 +14,8 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit, OnDestroy {
+  recaptchaKey = environment.recaptchaKey;
+  isRecaptchaResolved = false;
   active = true;
 
   form: FormGroup;
@@ -76,6 +79,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   submit() {
     const model = <RegistrationInfo>Object.assign({}, this.form.value);
     this.store.dispatch(new register.Register(model));
+  }
+
+  recaptchaResolved() {
+    this.isRecaptchaResolved = true;
   }
 
   // TODO refactor away

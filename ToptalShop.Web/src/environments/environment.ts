@@ -8,4 +8,5 @@ export const environment = {
   productUrl: 'http://localhost:5261/api/product',
   loginUrl: 'http://localhost:5261/token',
   profileUrl: 'http://localhost:5261/api/profile',
+  recaptchaKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
 };

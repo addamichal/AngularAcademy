@@ -8,6 +8,7 @@ import { RegisterEffects } from './effects/register.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { RegistrationService } from './services/registration.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     RouterModule.forChild([{ path: 'register', component: RegisterComponent }]),
     StoreModule.forFeature('register', reducers),
-    EffectsModule.forFeature([RegisterEffects])
+    EffectsModule.forFeature([RegisterEffects]),
+    RecaptchaModule
   ],
   declarations: [ RegisterComponent ],
   providers: [
