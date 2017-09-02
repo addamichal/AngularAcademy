@@ -16,21 +16,17 @@ export class ExceptionInterceptor implements HttpInterceptor {
     .catch((e: HttpErrorResponse) => {
       if (e.status === 404) {
         this.toasterService.pop('warning', 'Not found');
-        return Observable.of();
       }
 
       if (e.status === 0) {
-        console.log('handling 0');
         this.toasterService.pop('error', 'API not accessible');
-        return Observable.throw(e);
       }
 
       if (e.status === 500) {
         this.toasterService.pop('error', `Error - ${e.error.exceptionMessage}`);
-        return Observable.throw(e);
       }
 
-      return Observable.throw(e);
+      throw e;
     });
 
     return res;

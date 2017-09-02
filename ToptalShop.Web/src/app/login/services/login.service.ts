@@ -25,11 +25,6 @@ export class LoginService {
     return body.access_token || { };
   }
 
-  private handleError(error: any) {
-    console.log(error);
-    return _throw(error);
-  }
-
   logout() {
     return of(true);
   }

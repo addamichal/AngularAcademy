@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
-import { RegisterComponent } from './register/register.component';
 import { CartSummaryComponent } from './product-list/components/cart-summary.component';
 import { ProductListComponent } from './product-list/components/product-list.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
@@ -23,11 +22,11 @@ import { ExceptionInterceptor } from './services/exception-interceptor';
 import { TokenInterceptor } from './services/token-interceptor';
 import { ProductsLoadedGuard } from './product-list/services/products-loaded.guard.service';
 import { ProductExistGuard } from './product-list/services/product-exists.guard.service';
+import { RegisterModule } from './register/register.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterComponent,
     CartSummaryComponent,
     ProductListComponent,
     ProductDetailsComponent,
@@ -38,8 +37,8 @@ import { ProductExistGuard } from './product-list/services/product-exists.guard.
     BrowserAnimationsModule,
     NgbModule.forRoot(),
     LoginModule,
+    RegisterModule,
     RouterModule.forRoot([
-      { path: 'register', component: RegisterComponent },
       {
         path: 'products/:id',
         component: ProductDetailsComponent,

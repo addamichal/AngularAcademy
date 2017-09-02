@@ -14,14 +14,10 @@ export class ProductExistGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-    console.log('here???');
     return this.store.select(fromRoot.getProducts)
       .map(
         products => {
-          console.log(route.params['id']);
-          console.log(products);
           const filteredProducts = products.filter(product => product.productId === +route.params['id']);
-          console.log(filteredProducts);
           return filteredProducts.length > 0;
         })
       .do(productExists => {

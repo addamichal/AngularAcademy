@@ -12,11 +12,9 @@ export class ProductsLoadedGuard implements CanActivate {
   }
 
   canActivate(): Observable<boolean> {
-    console.log('can activate?');
     this.store.dispatch(new products.LoadProductsAction());
     return this.store.select(fromRoot.getProductsLoaded)
       .filter(loaded => loaded)
-      .do(() => { console.log('can activate finished?'); })
       .take(1);
   }
 }

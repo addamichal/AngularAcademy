@@ -20,9 +20,7 @@ export class Login implements Action {
 export class TokenSuccess implements Action {
   readonly type = TOKEN_SUCCESS;
 
-  constructor(public payload: Token) {
-    console.log(payload);
-  }
+  constructor(public payload: Token) {}
 }
 
 export class LoginSuccess implements Action {
@@ -34,9 +32,7 @@ export class LoginSuccess implements Action {
 export class LoginFailure implements Action {
   readonly type = LOGIN_FAILURE;
 
-  constructor(public payload: HttpErrorResponse) {
-    console.log(payload);
-  }
+  constructor(public payload: HttpErrorResponse) {}
 }
 
 export class LoginRedirect implements Action {

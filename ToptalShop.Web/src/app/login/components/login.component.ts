@@ -52,7 +52,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.store.select(fromLogin.getLoginPageError)
       .takeWhile(() => this.active)
       .subscribe(e => {
-        console.log('here');
         if (e && e.status === 400) {
           if (e.error.error_description) {
             this.formErrors[''] = e.error.error_description;
