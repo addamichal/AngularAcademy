@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import * as fromProfile from '../reducers';
 import * as fromLogin from '../../login/reducers';
 import * as profilePage from '../actions/profile';
+import * as login from '../../login/actions/login';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Profile } from '../models/profile';
@@ -52,6 +53,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .subscribe((success) => {
         if (success) {
           this.toasterService.pop('success', 'Profile updated');
+          this.store.dispatch(new login.LoadUser());
         }
       });
 

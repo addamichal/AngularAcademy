@@ -12,11 +12,13 @@ namespace ToptalShop.Api.Migrations
                 c => new
                     {
                         AddressId = c.Int(nullable: false, identity: true),
-                        Address1 = c.String(),
-                        Address2 = c.String(),
-                        City = c.String(),
-                        State = c.String(),
-                        Zip = c.Int(nullable: false),
+                        FirstName = c.String(nullable: false),
+                        LastName = c.String(nullable: false),
+                        Address1 = c.String(nullable: false),
+                        Address2 = c.String(nullable: false),
+                        City = c.String(nullable: false),
+                        State = c.String(nullable: false),
+                        Zip = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.AddressId);
             

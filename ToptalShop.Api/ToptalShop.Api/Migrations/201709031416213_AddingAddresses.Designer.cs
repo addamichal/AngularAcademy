@@ -13,7 +13,7 @@ namespace ToptalShop.Api.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201709030935502_AddingAddresses"; }
+            get { return "201709031416213_AddingAddresses"; }
         }
         
         string IMigrationMetadata.Source

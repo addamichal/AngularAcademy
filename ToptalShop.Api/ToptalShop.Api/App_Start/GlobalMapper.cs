@@ -22,9 +22,11 @@ namespace ToptalShop.Api
                 cfg.CreateMap<UpdateProfileBindingModel, EditToptalShopAppUser>()
                     .ForMember(w => w.UserRole, x => x.Ignore());
 
+                cfg.CreateMap<Address, ToptalShopAddUserAddress>();
                 cfg.CreateMap<ApplicationUser, ToptalShopAppUser>()
                     .ForMember(w => w.UserRole, x => x.Ignore());
 
+                cfg.CreateMap<EditAddress, Address>();
                 cfg.CreateMap<EditToptalShopAppUser, ApplicationUser>()
                     .ForMember(w => w.UserName, x => x.MapFrom(z => z.Email))
                     .ForMember(w => w.EmailConfirmed, x => x.Ignore())
@@ -55,9 +57,9 @@ namespace ToptalShop.Api
                     })
                 ;
 
-                cfg.CreateMap<EditAddress, Address>();
-
+                cfg.CreateMap<ToptalShopAddUserAddress, AddressViewModel>();
                 cfg.CreateMap<ToptalShopAppUser, UserViewModel>();
+
                 cfg.CreateMap<Product, ProductViewModel>();
             });
         }

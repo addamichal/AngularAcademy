@@ -9,7 +9,7 @@ export const LOGOUT = '[Login] Logout';
 export const LOGIN_SUCCESS = '[Login] Login Success';
 export const LOGIN_FAILURE = '[Login] Login Failure';
 export const LOGIN_REDIRECT = '[Login] Login Redirect';
-export const TOKEN_SUCCESS = '[Login] Token Success';
+export const LOAD_USER = '[Login] Token Success';
 export const TOKEN_ERROR = '[Login] Token Error';
 
 export class Login implements Action {
@@ -18,10 +18,10 @@ export class Login implements Action {
   constructor(public payload: Authenticate) {}
 }
 
-export class TokenSuccess implements Action {
-  readonly type = TOKEN_SUCCESS;
+export class LoadUser implements Action {
+  readonly type = LOAD_USER;
 
-  constructor(public payload: Token) {}
+  constructor() {}
 }
 
 export class LoginSuccess implements Action {

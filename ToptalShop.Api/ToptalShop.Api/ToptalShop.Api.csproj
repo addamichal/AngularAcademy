@@ -303,9 +303,9 @@
     <Compile Include="Migrations\201709011647063_AddingProducts.Designer.cs">
       <DependentUpon>201709011647063_AddingProducts.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709030935502_AddingAddresses.cs" />
-    <Compile Include="Migrations\201709030935502_AddingAddresses.Designer.cs">
-      <DependentUpon>201709030935502_AddingAddresses.cs</DependentUpon>
+    <Compile Include="Migrations\201709031416213_AddingAddresses.cs" />
+    <Compile Include="Migrations\201709031416213_AddingAddresses.Designer.cs">
+      <DependentUpon>201709031416213_AddingAddresses.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
@@ -409,8 +409,8 @@
     <EmbeddedResource Include="Migrations\201709011647063_AddingProducts.resx">
       <DependentUpon>201709011647063_AddingProducts.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709030935502_AddingAddresses.resx">
-      <DependentUpon>201709030935502_AddingAddresses.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709031416213_AddingAddresses.resx">
+      <DependentUpon>201709031416213_AddingAddresses.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

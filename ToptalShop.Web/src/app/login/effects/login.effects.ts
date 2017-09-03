@@ -23,14 +23,13 @@ export class LoginEffects {
       this.loginService
         .login(auth)
         .do(token => this.loginTokenService.setUserToken(token.access_token))
-        .map(token => new Login.TokenSuccess(token))
+        .map(() => new Login.LoadUser())
         .catch(error => of(new Login.LoginFailure(error)))
     );
 
   @Effect()
   $tokenSuccess = this.actions$
-    .ofType(Login.TOKEN_SUCCESS)
-    .map((action: Login.TokenSuccess) => action.payload)
+    .ofType(Login.LOAD_USER)
     .exhaustMap(token =>
       this.profileService
         .getProfile()
