@@ -30,4 +30,16 @@ namespace ToptalShop.Api.Models
         public string State { get; set; }
         public string Zip { get; set; }
     }
+
+    public class CartLineBindingModel
+    {
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+    }
+
+    public class PaymentBindingModel
+    {
+        public string PayerID { get; set; }
+        public string PaymentID { get; set; }
+    }
 }

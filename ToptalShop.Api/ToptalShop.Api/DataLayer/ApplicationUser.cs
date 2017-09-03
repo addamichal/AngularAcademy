@@ -22,8 +22,8 @@ namespace ToptalShop.Api.DataLayer
         }
         
         [ForeignKey(nameof(ShippingAddressId))]
-        public Address ShippingAddress { get; set; }
+        public virtual Address ShippingAddress { get; set; }
         [ForeignKey(nameof(BillingAddressId))]
-        public Address BillingAddress { get; set; }
+        public virtual Address BillingAddress { get; set; }
     }
 }

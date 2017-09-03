@@ -4,22 +4,43 @@ using System.Linq;
 using System.Net;
 
 using System.Web.Http;
+using AutoMapper;
 using PayPal.Api;
+using ToptalShop.Api.DataLayer;
+using ToptalShop.Api.Engines;
+using ToptalShop.Api.Models;
 
 namespace ToptalShop.Api.Controllers
 {
-    public class PaypalPaymentController : ApiController
+    public class PaypalPaymentController : BaseApiController
     {
-        public IHttpActionResult Post()
+        private readonly ToptalShopDbContext ctx;
+
+        public PaypalPaymentController(ToptalShopDbContext ctx, UserEngine userEngine) : base(userEngine)
+        {
+            this.ctx = ctx;
+        }
+
+        public IHttpActionResult Post(List<CartLineBindingModel> cartLines)
         {
             if (!ModelState.IsValid) throw new Exception();
 
+            var order = CreateSalesOrder(cartLines);
+            var paypalPayment = CreatePaypalPayment(order);
+            order.PaypalReference = paypalPayment.id;
+            this.ctx.SalesOrders.Add(order);
+            this.ctx.SaveChanges();
+
+            return Created("", paypalPayment);
+        }
+
+        private Payment CreatePaypalPayment(SalesOrder order)
+        {
             var apiContext = GetApiContext();
 
             // Create a new payment object
             var payment = new Payment
             {
-                experience_profile_id = "XP-5T6Z-S4T6-J8W8-U26E", // Created in the WebExperienceProfilesController. This one is for DigitalGoods.
                 intent = "sale",
                 payer = new Payer
                 {
@@ -29,37 +50,54 @@ namespace ToptalShop.Api.Controllers
                 {
                     new Transaction
                     {
-                        description = $"Brewery Tour (Single Payment)",
+                        description = "TotalShop Purchase",
                         amount = new Amount
                         {
                             currency = "USD",
-                            total = 20m.ToString(), // PayPal expects string amounts, eg. "20.00"
+                            total = order.TotalPrice.ToString(), // PayPal expects string amounts, eg. "20.00"
                         },
                         item_list = new ItemList()
                         {
-                            items = new List<Item>()
+                            items = order.Lines.Select(l => new Item()
                             {
-                                new Item()
-                                {
-                                    description = $"Brewery Tour (Single Payment)",
-                                    currency = "USD",
-                                    quantity = "1",
-                                    price = 20m.ToString(), // PayPal expects string amounts, eg. "20.00"                                        
-                                }
-                            }
+                                description = l.Description,
+                                currency = "USD",
+                                quantity = l.Quantity.ToString(),
+                                price = (l.Price / l.UnitPrice).ToString()
+                            }).ToList()
                         }
                     }
                 },
                 redirect_urls = new RedirectUrls
                 {
-                    return_url = "http://localhost/5261/api/paypalpayment/return",
-                    cancel_url = "http://localhost/5261/api/paypalpayment/cancel"
+                    return_url = Url.Link("DefaultApi", new { controller = nameof(PaypalPaymentExecuteController) }),
+                    cancel_url = Url.Link("DefaultApi", new { controller = nameof(PaypalPaymentExecuteController) })
                 }
             };
 
-            // Send the payment to PayPal
             var createdPayment = payment.Create(apiContext);
-            return Created("", createdPayment);
+            return createdPayment;
+        }
+
+        private SalesOrder CreateSalesOrder(List<CartLineBindingModel> cartLines)
+        {
+            var order = new SalesOrder();
+            order.Email = CurrentUser.Email;
+            order.ShippingAddress = Mapper.Map<DataLayer.Address>(CurrentUser.ShippingAddress);
+            order.BillingAddress = Mapper.Map<DataLayer.Address>(CurrentUser.BillingAddress);
+            foreach (var cartLine in cartLines)
+            {
+                var salesOrderLine = new SalesOrderLine();
+                var product = ctx.Products.SingleOrDefault(w => w.ProductId == cartLine.ProductId);
+                if (product == null) throw new Exception($"Product with ProductId: {cartLine.ProductId} not found");
+
+                salesOrderLine.Product = product;
+                salesOrderLine.UnitPrice = product.Price;
+                salesOrderLine.Quantity = cartLine.Quantity;
+                salesOrderLine.Price = salesOrderLine.Quantity * salesOrderLine.UnitPrice;
+            }
+            order.TotalPrice = order.Lines.Sum(w => w.Price);
+            return order;
         }
 
         private APIContext GetApiContext()
@@ -70,42 +108,5 @@ namespace ToptalShop.Api.Controllers
             var apiContext = new APIContext(accessToken);
             return apiContext;
         }
-    }
-
-    public class PaypalPaymentExecuteController : ApiController
-    {
-        public IHttpActionResult Post(PaymentDto paymentDto)
-        {
-            var apiContext = GetApiContext();
-
-            var paymentExecution = new PaymentExecution()
-            {
-                payer_id = paymentDto.PayerID
-            };
-
-            var payment = new Payment()
-            {
-                id = paymentDto.PaymentID
-            };
-
-            // Execute the Payment
-            var executedPayment = payment.Execute(apiContext, paymentExecution);
-            return Created("", executedPayment);
-        }
-
-        private APIContext GetApiContext()
-        {
-            // Authenticate with PayPal
-            var config = ConfigManager.Instance.GetProperties();
-            var accessToken = new OAuthTokenCredential(config).GetAccessToken();
-            var apiContext = new APIContext(accessToken);
-            return apiContext;
-        }
-    }
-
-    public class PaymentDto
-    {
-        public string PayerID { get; set; }
-        public string PaymentID { get; set; }
     }
 }

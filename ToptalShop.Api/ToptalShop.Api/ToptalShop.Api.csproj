@@ -286,6 +286,7 @@
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PaypalPaymentController.cs" />
+    <Compile Include="Controllers\PaypalPaymentExecuteController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -312,6 +313,10 @@
     <Compile Include="Migrations\201709031416213_AddingAddresses.cs" />
     <Compile Include="Migrations\201709031416213_AddingAddresses.Designer.cs">
       <DependentUpon>201709031416213_AddingAddresses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709031957563_AddingSalesOrders.cs" />
+    <Compile Include="Migrations\201709031957563_AddingSalesOrders.Designer.cs">
+      <DependentUpon>201709031957563_AddingSalesOrders.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
@@ -417,6 +422,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709031416213_AddingAddresses.resx">
       <DependentUpon>201709031416213_AddingAddresses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709031957563_AddingSalesOrders.resx">
+      <DependentUpon>201709031957563_AddingSalesOrders.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
