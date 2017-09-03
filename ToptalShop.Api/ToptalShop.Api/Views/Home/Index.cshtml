@@ -22,3 +22,40 @@
         <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
     </div>
 </div>
+<div id="paypal-button"></div>
+
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+<script>
+    var CREATE_PAYMENT_URL  = 'http://localhost:5261/api/paypalpayment';
+    var EXECUTE_PAYMENT_URL = 'http://localhost:5261/api/paypalpaymentexecute';
+
+    paypal.Button.render({
+
+        env: 'sandbox', // Or 'sandbox'
+
+        commit: true, // Show a 'Pay Now' button
+
+        payment: function() {
+            return paypal.request.post(CREATE_PAYMENT_URL).then(function(data) {
+                console.log(data);
+                return data.id;
+            });
+        },
+
+        onAuthorize: function (data) {
+            console.log('here!');
+            return paypal.request({
+                method: 'post',
+                url: EXECUTE_PAYMENT_URL,
+                json: {
+                    paymentID: data.paymentID,
+                    payerID: data.payerID
+                }
+            }).then(function (response) {
+                console.log(response);
+            });
+        }
+
+    }, '#paypal-button');
+</script>
