@@ -48,10 +48,10 @@ namespace ToptalShop.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var expenseAppUser = Mapper.Map<EditToptalShopAppUser>(model);
-            expenseAppUser.UserRole = ToptalShopAppUserRole.RegularUser;
+            var shopAppUser = Mapper.Map<EditToptalShopAppUser>(model);
+            shopAppUser.UserRole = ToptalShopAppUserRole.RegularUser;
 
-            var userResult = _userEngine.CreateUser(expenseAppUser);
+            var userResult = _userEngine.CreateUser(shopAppUser);
             if (!userResult.Succeeded)
                 return GetErrorResult(userResult);
 
@@ -74,10 +74,10 @@ namespace ToptalShop.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var expenseAppUser = Mapper.Map<EditToptalShopAppUser>(model);
-            expenseAppUser.UserRole = CurrentUser.UserRole;
+            var shopAppUser = Mapper.Map<EditToptalShopAppUser>(model);
+            shopAppUser.UserRole = CurrentUser.UserRole;
 
-            var userResult = _userEngine.UpdateUser(CurrentUser.Id, expenseAppUser);
+            var userResult = _userEngine.UpdateUser(CurrentUser.Id, shopAppUser);
             if (!userResult.Succeeded)
                 return GetErrorResult(userResult);
 

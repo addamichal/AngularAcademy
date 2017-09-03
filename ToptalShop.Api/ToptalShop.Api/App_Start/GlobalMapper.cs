@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Web.Configuration;
+using AutoMapper;
 using ToptalShop.Api.DataLayer;
 using ToptalShop.Api.Models;
 
@@ -13,6 +14,7 @@ namespace ToptalShop.Api
                 cfg.CreateMap<AddUserBindingModel, EditToptalShopAppUser>();
 
                 cfg.CreateMap<UpdateUserBindingModel, EditToptalShopAppUser>();
+                cfg.CreateMap<AddressBindingModel, EditAddress>();
 
                 cfg.CreateMap<AddProfileBindingModel, EditToptalShopAppUser>()
                     .ForMember(w => w.UserRole, x => x.Ignore());
@@ -37,10 +39,25 @@ namespace ToptalShop.Api
                     .ForMember(w => w.Claims, x => x.Ignore())
                     .ForMember(w => w.Logins, x => x.Ignore())
                     .ForMember(w => w.Id, x => x.Ignore())
-                    .ForMember(w => w.Roles, x => x.Ignore());
+                    .ForMember(w => w.Roles, x => x.Ignore())
+                    .ForMember(w => w.ShippingAddress, opt => opt.Condition(src => src.ShippingAddress != null))
+                    .ForMember(w => w.BillingAddress, opt => opt.Condition(src => src.BillingAddress != null))
+                    .AfterMap((src, dest) =>
+                    {
+                        if (dest.ShippingAddress != null && dest.ShippingAddressId.HasValue)
+                        {
+                            dest.ShippingAddress.AddressId = dest.ShippingAddressId.Value;
+                        }
+                        if (dest.BillingAddress != null && dest.BillingAddressId.HasValue)
+                        {
+                            dest.BillingAddress.AddressId = dest.BillingAddressId.Value;
+                        }
+                    })
+                ;
+
+                cfg.CreateMap<EditAddress, Address>();
 
                 cfg.CreateMap<ToptalShopAppUser, UserViewModel>();
-
                 cfg.CreateMap<Product, ProductViewModel>();
             });
         }

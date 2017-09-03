@@ -29,7 +29,7 @@ namespace ToptalShop.Api
                 builder.Register(c => new RoleStore<IdentityRole>(c.Resolve<ToptalShopDbContext>())).AsImplementedInterfaces().InstancePerLifetimeScope();
                 builder.Register(c => new IdentityFactoryOptions<ApplicationUserManager>
                 {
-                    DataProtectionProvider = new Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider("ExpenseApp​")
+                    DataProtectionProvider = new Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider("ShopApp​")
                 });
 
                 //http://stackoverflow.com/questions/21743262/autofac-mvc-5-registerwebapifilterprovider-causes-unresolveable-ioverridefilter

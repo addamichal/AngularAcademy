@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using AutoMapper;
@@ -33,7 +34,7 @@ namespace ToptalShop.Api.Engines
 
         public ToptalShopAppUser FindById(string id)
         {
-            var userFromDb = _toptalShopDbContext.Users.SingleOrDefault(w => w.Id == id);
+            var userFromDb = FindApplicationUserById(id);
             if (userFromDb == null)
                 return null;
 
@@ -74,12 +75,12 @@ namespace ToptalShop.Api.Engines
 
                     }
 
-                    var expenseAppUser = Map(user);
+                    var shopAppUser = Map(user);
 
                     transaction.Commit();
                     Log.Information("User: {User} successfully created", editToptalShopAppUser);
 
-                    return new UserResult(expenseAppUser);
+                    return new UserResult(shopAppUser);
                 }
                 catch (Exception e)
                 {
@@ -96,7 +97,7 @@ namespace ToptalShop.Api.Engines
             {
                 try
                 {
-                    var existingUser = _applicationUserManager.FindById(userId);
+                    var existingUser = FindApplicationUserById(userId);
                     if (existingUser == null)
                         throw new Exception("User does not exist: " + userId);
 
@@ -132,12 +133,12 @@ namespace ToptalShop.Api.Engines
                         }
                     }
 
-                    var expenseAppUser = Map(existingUser);
+                    var shopAppUser = Map(existingUser);
 
                     transaction.Commit();
                     Log.Information("User: {User} updated successfully", editToptalShopAppUser);
 
-                    return new UserResult(expenseAppUser);
+                    return new UserResult(shopAppUser);
                 }
                 catch (Exception e)
                 {
@@ -154,19 +155,19 @@ namespace ToptalShop.Api.Engines
             if (user == null)
                 throw new Exception("User does not exist: " + userId);
 
-            var expenseAppUser = Map(user);
+            var shopAppUser = Map(user);
             var deleteResult = _applicationUserManager.Delete(user);
             if (deleteResult.Succeeded)
-                return new UserResult(expenseAppUser);
+                return new UserResult(shopAppUser);
 
             return new UserResult(deleteResult.Errors);
         }
 
         private ToptalShopAppUser Map(ApplicationUser applicationUser)
         {
-            var expenseAppUser = Mapper.Map<ToptalShopAppUser>(applicationUser);
-            expenseAppUser.UserRole = GetUserRole(applicationUser);
-            return expenseAppUser;
+            var shopAppUser = Mapper.Map<ToptalShopAppUser>(applicationUser);
+            shopAppUser.UserRole = GetUserRole(applicationUser);
+            return shopAppUser;
         }
 
         private ToptalShopAppUserRole GetUserRole(ApplicationUser applicationUser)
@@ -179,6 +180,14 @@ namespace ToptalShop.Api.Engines
                 throw new Exception("Unable to parse Role: " + userRole);
 
             return toptalShopAppUserRole;
+        }
+
+        private ApplicationUser FindApplicationUserById(string id)
+        {
+            return _toptalShopDbContext.Users
+                .Include(w => w.ShippingAddress)
+                .Include(w => w.BillingAddress)
+                .SingleOrDefault(w => w.Id == id);
         }
     }
 }

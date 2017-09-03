@@ -284,6 +284,7 @@
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="CustomAuthorize.cs" />
+    <Compile Include="DataLayer\Address.cs" />
     <Compile Include="DataLayer\ApplicationUser.cs" />
     <Compile Include="DataLayer\Product.cs" />
     <Compile Include="DataLayer\ToptalShopDbContext.cs" />
@@ -301,6 +302,10 @@
     <Compile Include="Migrations\201709011647063_AddingProducts.cs" />
     <Compile Include="Migrations\201709011647063_AddingProducts.Designer.cs">
       <DependentUpon>201709011647063_AddingProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709030935502_AddingAddresses.cs" />
+    <Compile Include="Migrations\201709030935502_AddingAddresses.Designer.cs">
+      <DependentUpon>201709030935502_AddingAddresses.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
@@ -403,6 +408,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709011647063_AddingProducts.resx">
       <DependentUpon>201709011647063_AddingProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709030935502_AddingAddresses.resx">
+      <DependentUpon>201709030935502_AddingAddresses.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

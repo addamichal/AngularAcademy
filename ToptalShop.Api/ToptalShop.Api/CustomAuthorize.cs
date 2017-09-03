@@ -28,14 +28,14 @@ namespace ToptalShop.Api
                 using (var scope = ToptalShopAppContainer.Instance().BeginLifetimeScope())
                 {
                     var userEngine = scope.Resolve<UserEngine>();
-                    var expenseAppUser = userEngine.FindById(userId);
-                    if (expenseAppUser == null)
+                    var shopAppUser = userEngine.FindById(userId);
+                    if (shopAppUser == null)
                     {
                         Log.Information("User with UserId: {UserId} not found, was probably deleted, returning Unauthorized", userId);
                         return false;
                     }
 
-                    var userRoleFromDb = expenseAppUser.UserRole.ToString();
+                    var userRoleFromDb = shopAppUser.UserRole.ToString();
                     if (userRoleFromDb != currentRole)
                     {
                         Log.Information("User role changed from {OldUserRole} to UserRole: {NewUserRole}, UserId: {UserId}, returning Unauthorized", currentRole, userRoleFromDb, userId);

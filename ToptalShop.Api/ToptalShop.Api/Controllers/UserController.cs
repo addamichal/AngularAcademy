@@ -29,17 +29,17 @@ namespace ToptalShop.Api.Controllers
         [ResponseType(typeof(UserViewModel))]
         public IHttpActionResult Get(string id)
         {
-            var expenseAppUser = _userEngine.FindById(id);
-            if (expenseAppUser == null)
+            var shopAppUser = _userEngine.FindById(id);
+            if (shopAppUser == null)
                 return NotFound();
 
-            if (expenseAppUser.UserRole == ToptalShopAppUserRole.Admin && CurrentUser.UserRole == ToptalShopAppUserRole.UserManager)
+            if (shopAppUser.UserRole == ToptalShopAppUserRole.Admin && CurrentUser.UserRole == ToptalShopAppUserRole.UserManager)
             {
                 Log.Warning("Current user: {User} doesn't have privileges to get Admin user, UserId: {UserId}", CurrentUser, id);
                 throw new HttpResponseException(HttpStatusCode.Forbidden);
             }
 
-            var userInfoViewModel = Mapper.Map<UserViewModel>(expenseAppUser);
+            var userInfoViewModel = Mapper.Map<UserViewModel>(shopAppUser);
             return Ok(userInfoViewModel);
         }
 
@@ -78,14 +78,14 @@ namespace ToptalShop.Api.Controllers
                 throw new HttpResponseException(HttpStatusCode.Forbidden);
             }
 
-            var expenseAppUser = Mapper.Map<EditToptalShopAppUser>(model);
-            var createUserResult = _userEngine.CreateUser(expenseAppUser);
+            var shopAppUser = Mapper.Map<EditToptalShopAppUser>(model);
+            var createUserResult = _userEngine.CreateUser(shopAppUser);
 
             if (!createUserResult.Succeeded)
                 return GetErrorResult(createUserResult);
 
-            var createdExpenseAppUser = Mapper.Map<UserViewModel>(createUserResult.ToptalShopAppUser);
-            return CreatedAtRoute("DefaultApi", new { id = createdExpenseAppUser.Id }, createdExpenseAppUser);
+            var createdShopAppUser = Mapper.Map<UserViewModel>(createUserResult.ToptalShopAppUser);
+            return CreatedAtRoute("DefaultApi", new { id = createdShopAppUser.Id }, createdShopAppUser);
         }
 
         /// <summary>
@@ -118,8 +118,8 @@ namespace ToptalShop.Api.Controllers
                 throw new HttpResponseException(HttpStatusCode.Forbidden);
             }
 
-            var expenseAppUser = Mapper.Map<EditToptalShopAppUser>(model);
-            var userResult = _userEngine.UpdateUser(id, expenseAppUser);
+            var shopAppUser = Mapper.Map<EditToptalShopAppUser>(model);
+            var userResult = _userEngine.UpdateUser(id, shopAppUser);
 
             if (!userResult.Succeeded)
                 return GetErrorResult(userResult);

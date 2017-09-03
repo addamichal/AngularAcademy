@@ -21,5 +21,17 @@ namespace ToptalShop.Api.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public AddressBindingModel ShippingAddress { get; set; }
+        public AddressBindingModel BillingAddress { get; set; }
+    }
+
+    public class AddressBindingModel
+    {
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public int Zip { get; set; }
     }
 }

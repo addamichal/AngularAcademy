@@ -17,6 +17,7 @@ namespace ToptalShop.Api.DataLayer
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -15,5 +15,17 @@ namespace ToptalShop.Api.Models
 
         [JsonConverter(typeof(StringEnumConverter))]
         public ToptalShopAppUserRole UserRole { get; set; }
+
+        public AddressViewModel ShippingAddress { get; set; }
+        public AddressViewModel BillingAddress { get; set; }
+    }
+
+    public class AddressViewModel
+    {
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public int Zip { get; set; }
     }
 }
