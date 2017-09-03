@@ -2,11 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import * as fromProfile from '../reducers';
+import * as fromLogin from '../../login/reducers';
 import * as profilePage from '../actions/profile';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Profile } from '../models/profile';
 import { ToasterService } from 'angular2-toaster/src/toaster.service';
+import { Address } from '../../login/models/user';
 
 @Component({
   selector: 'app-profile',
@@ -31,12 +33,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.form = this.fb.group({
-      email: ['addamichal@gmail.com'],
-      password: [null],
-      confirmPassword: [null],
-      shippingAddress: this.buildFormAddress(),
-      billingAddress: this.buildFormAddress()
+    this.store.select(fromLogin.getUser).subscribe((user) => {
+      this.form = this.fb.group({
+        email: [user.email],
+        password: [null],
+        confirmPassword: [null],
+        shippingAddress: this.buildFormAddress(user.shippingAddress),
+        billingAddress: this.buildFormAddress(user.billingAddress)
+      });
     });
 
     this.store.select(fromProfile.getProfilePagePending)
@@ -83,15 +87,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  buildFormAddress() {
+  buildFormAddress(address: Address) {
     return this.fb.group({
-      firstName: ['Michal'],
-      lastName: ['Adda'],
-      address1: ['Tovarnicka'],
-      address2: ['1470/69'],
-      city: ['Topolcany'],
-      state: ['Slovakia'],
-      zip: ['95501']
+      firstName: [address ? address.firstName : ''],
+      lastName: [address ? address.firstName : ''],
+      address1: [address ? address.address1 : ''],
+      address2: [address ? address.address2 : ''],
+      city: [address ? address.city : ''],
+      state: [address ? address.state : ''],
+      zip: [address ? address.zip : '']
     });
   }
 }

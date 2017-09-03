@@ -9,7 +9,12 @@ export interface State {
 // TODO remove test values
 export const initialState: State = {
   loggedIn: true,
-  user: null,
+  user: {
+    email: 'addamichal@toptal.com',
+    userRole: 'regularUser',
+    billingAddress: null,
+    shippingAddress: null
+  },
 };
 
 export function reducer(state = initialState, action: login.Actions): State {
