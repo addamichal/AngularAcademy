@@ -26,8 +26,10 @@ namespace ToptalShop.Api.DataLayer
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
         }
 
         public static ToptalShopDbContext Create()
@@ -66,6 +68,8 @@ namespace ToptalShop.Api.DataLayer
         {
             Status = SalesOrderStatus.Opened;
             Lines = new List<SalesOrderLine>();
+            Created = DateTime.Now;
+            Modified = DateTime.Now;
         }
     }
 

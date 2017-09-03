@@ -2,8 +2,8 @@ namespace ToptalShop.Api.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-
-    public partial class AddDefaultData : DbMigration
+    
+    public partial class AddingDefaultData : DbMigration
     {
         public override void Up()
         {
@@ -19,7 +19,7 @@ namespace ToptalShop.Api.Migrations
             Sql("INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'3382160c-e170-48fc-bbe2-50bc289b1401', N'c4a48aa1-eaf0-43cf-9044-0844399e5e96')");
             Sql("INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'f29f03a0-6f58-49e0-8844-5a883eecee53', N'34152373-4254-442f-a1b2-a9604176f8e1')");
         }
-
+        
         public override void Down()
         {
         }

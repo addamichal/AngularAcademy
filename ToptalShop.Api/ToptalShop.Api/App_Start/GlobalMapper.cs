@@ -61,6 +61,8 @@ namespace ToptalShop.Api
                 cfg.CreateMap<ToptalShopAppUser, UserViewModel>();
 
                 cfg.CreateMap<Product, ProductViewModel>();
+
+                cfg.CreateMap<ToptalShopAddUserAddress, Address>();
             });
         }
     }

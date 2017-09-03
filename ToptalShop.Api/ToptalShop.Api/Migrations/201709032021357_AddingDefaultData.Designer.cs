@@ -7,13 +7,13 @@ namespace ToptalShop.Api.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddingProducts : IMigrationMetadata
+    public sealed partial class AddingDefaultData : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddingProducts));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddingDefaultData));
         
         string IMigrationMetadata.Id
         {
-            get { return "201709011647063_AddingProducts"; }
+            get { return "201709032021357_AddingDefaultData"; }
         }
         
         string IMigrationMetadata.Source

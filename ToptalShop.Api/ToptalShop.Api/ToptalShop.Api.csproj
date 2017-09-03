@@ -298,25 +298,13 @@
     <Compile Include="EditToptalShopAppUser.cs" />
     <Compile Include="Engines\UserEngine.cs" />
     <Compile Include="Engines\UserResult.cs" />
-    <Compile Include="Migrations\201708312128046_InitialCreate.cs" />
-    <Compile Include="Migrations\201708312128046_InitialCreate.Designer.cs">
-      <DependentUpon>201708312128046_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201709032018144_InitialCreate.cs" />
+    <Compile Include="Migrations\201709032018144_InitialCreate.Designer.cs">
+      <DependentUpon>201709032018144_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708312132274_AddDefaultData.cs" />
-    <Compile Include="Migrations\201708312132274_AddDefaultData.Designer.cs">
-      <DependentUpon>201708312132274_AddDefaultData.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709011647063_AddingProducts.cs" />
-    <Compile Include="Migrations\201709011647063_AddingProducts.Designer.cs">
-      <DependentUpon>201709011647063_AddingProducts.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709031416213_AddingAddresses.cs" />
-    <Compile Include="Migrations\201709031416213_AddingAddresses.Designer.cs">
-      <DependentUpon>201709031416213_AddingAddresses.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709031957563_AddingSalesOrders.cs" />
-    <Compile Include="Migrations\201709031957563_AddingSalesOrders.Designer.cs">
-      <DependentUpon>201709031957563_AddingSalesOrders.cs</DependentUpon>
+    <Compile Include="Migrations\201709032021357_AddingDefaultData.cs" />
+    <Compile Include="Migrations\201709032021357_AddingDefaultData.Designer.cs">
+      <DependentUpon>201709032021357_AddingDefaultData.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
@@ -411,20 +399,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708312128046_InitialCreate.resx">
-      <DependentUpon>201708312128046_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709032018144_InitialCreate.resx">
+      <DependentUpon>201709032018144_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708312132274_AddDefaultData.resx">
-      <DependentUpon>201708312132274_AddDefaultData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709011647063_AddingProducts.resx">
-      <DependentUpon>201709011647063_AddingProducts.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709031416213_AddingAddresses.resx">
-      <DependentUpon>201709031416213_AddingAddresses.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709031957563_AddingSalesOrders.resx">
-      <DependentUpon>201709031957563_AddingSalesOrders.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709032021357_AddingDefaultData.resx">
+      <DependentUpon>201709032021357_AddingDefaultData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

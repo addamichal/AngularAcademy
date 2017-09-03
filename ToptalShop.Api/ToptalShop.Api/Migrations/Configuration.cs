@@ -12,7 +12,6 @@ namespace ToptalShop.Api.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "ToptalShop.Api.DataLayer.ToptalShopDbContext";
         }
 
         protected override void Seed(ToptalShop.Api.DataLayer.ToptalShopDbContext context)

@@ -63,7 +63,7 @@ namespace ToptalShop.Api.Controllers
                                 description = l.Description,
                                 currency = "USD",
                                 quantity = l.Quantity.ToString(),
-                                price = (l.Price / l.UnitPrice).ToString()
+                                price = (l.UnitPrice).ToString()
                             }).ToList()
                         }
                     }
@@ -82,9 +82,12 @@ namespace ToptalShop.Api.Controllers
         private SalesOrder CreateSalesOrder(List<CartLineBindingModel> cartLines)
         {
             var order = new SalesOrder();
+
+            order.CreatedById = CurrentUser.Id;
             order.Email = CurrentUser.Email;
             order.ShippingAddress = Mapper.Map<DataLayer.Address>(CurrentUser.ShippingAddress);
             order.BillingAddress = Mapper.Map<DataLayer.Address>(CurrentUser.BillingAddress);
+
             foreach (var cartLine in cartLines)
             {
                 var salesOrderLine = new SalesOrderLine();
@@ -92,9 +95,12 @@ namespace ToptalShop.Api.Controllers
                 if (product == null) throw new Exception($"Product with ProductId: {cartLine.ProductId} not found");
 
                 salesOrderLine.Product = product;
+                salesOrderLine.Description = product.Description;
                 salesOrderLine.UnitPrice = product.Price;
                 salesOrderLine.Quantity = cartLine.Quantity;
                 salesOrderLine.Price = salesOrderLine.Quantity * salesOrderLine.UnitPrice;
+
+                order.Lines.Add(salesOrderLine);
             }
             order.TotalPrice = order.Lines.Sum(w => w.Price);
             return order;
