@@ -6,8 +6,9 @@ export interface State {
   user: User | null;
 }
 
+// TODO remove test values
 export const initialState: State = {
-  loggedIn: false,
+  loggedIn: true,
   user: null,
 };
 

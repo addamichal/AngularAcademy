@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class ProfileEffects {
   @Effect()
-  updateProfile = this.actions$
+  updateProfile$ = this.actions$
     .ofType(profile.UPDATE_PROFILE)
     .map((action: profile.UpdateProfile) => action.payload)
     .exhaustMap(r =>

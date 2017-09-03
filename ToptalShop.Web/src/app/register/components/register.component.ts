@@ -64,13 +64,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     this.store.select(fromRegister.getRegisterPagePending)
     .takeWhile(() => this.active)
-    .subscribe(pending => {
-      if (pending) {
-        this.form.disable();
-      } else {
-        this.form.enable();
-      }
-    });
+    .subscribe(pending => pending ? this.form.disable() : this.form.enable());
 
     this.store.select(fromRegister.getRegisterPageSuccess)
       .takeWhile(() => this.active)

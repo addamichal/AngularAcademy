@@ -11,6 +11,6 @@ export class ProfileService {
   constructor(private httpClient: HttpClient) {}
 
   updateProfile(profileInfo: Profile): Observable<any> {
-    return this.httpClient.post(this.url, profileInfo);
+    return this.httpClient.put(this.url, profileInfo);
   }
 }

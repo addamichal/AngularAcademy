@@ -4,12 +4,14 @@ import { clone } from 'lodash';
 
 export interface State {
   error: HttpErrorResponse | null;
-  pending: false;
+  pending: boolean;
+  success: boolean;
 }
 
 export const initialState: State = {
   error: null,
-  pending: false
+  pending: false,
+  success: false
 };
 
 export function reducer(state = initialState, action: profile.Actions) {
@@ -18,17 +20,24 @@ export function reducer(state = initialState, action: profile.Actions) {
     case profile.UPDATE_PROFILE: {
       stateClone.error = null;
       stateClone.pending = true;
+      stateClone.success = false;
       return stateClone;
     }
     case profile.UPDATE_PROFILE_SUCCESS: {
       stateClone.pending = false;
       stateClone.error = null;
+      stateClone.success = true;
       return stateClone;
     }
     case profile.UPDATE_PROFILE_FAILURE: {
       stateClone.pending = false;
       stateClone.error = action.payload;
+      stateClone.success = false;
       return stateClone;
+    }
+
+    case profile.UPDATE_PROFILE_RESET: {
+      return initialState;
     }
 
     default: {
@@ -37,8 +46,6 @@ export function reducer(state = initialState, action: profile.Actions) {
   }
 }
 
-export const getError = (state: State) => {
-  return state.error;
-};
-
+export const getError = (state: State) => state.error;
 export const getPending = (state: State) => state.pending;
+export const getSuccess = (state: State) => state.success;

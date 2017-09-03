@@ -22,3 +22,8 @@ export const getProfilePagePending = createSelector(
   selectProfileProfilePage,
   fromProfile.getPending
 );
+
+export const getProfilePageSuccess = createSelector(
+  selectProfileProfilePage,
+  fromProfile.getSuccess
+);
