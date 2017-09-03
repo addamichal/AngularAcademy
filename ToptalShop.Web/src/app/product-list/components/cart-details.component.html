@@ -45,9 +45,15 @@
           </tr>
         </tbody>
       </table>
+      <div *ngIf="!(loggedIn$ | async)">
+        <p class="lead">To continue to checkout, please <a routerLink="/login">Login</a></p>
+      </div>
+      <div *ngIf="(loggedIn$ | async) && !(hasFinishedProfile$ | async)">
+        <p class="lead">Please fill in your billing and shipping address in <a routerLink="/profile">your profile</a></p>
+      </div>
       <div class="mt-5 float-right">
         <button routerLink="/" type="button" class="btn btn-default">Continue Shopping</button>
-        <button type="button" class="btn btn-success">Checkout</button>
+        <button type="button" class="btn btn-success" *ngIf="hasFinishedProfile$ | async">Checkout</button>
       </div>
     </div>
   </div>

@@ -34,3 +34,6 @@ export function reducer(state = initialState, action: login.Actions): State {
 
 export const getLoggedIn = (state: State) => state.loggedIn;
 export const getUser = (state: State) => state.user;
+export const getHasFinishedProfile = (state: State) => {
+  return !!(state.user && state.user.shippingAddress && state.user.billingAddress);
+};

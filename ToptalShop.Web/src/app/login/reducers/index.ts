@@ -41,3 +41,7 @@ export const getLoginPagePending = createSelector(
   selectLoginPageState,
   fromLoginPage.getPending
 );
+export const getHasFinishedProfile = createSelector(
+  selectLoginStatusState,
+  fromLogin.getHasFinishedProfile
+);
