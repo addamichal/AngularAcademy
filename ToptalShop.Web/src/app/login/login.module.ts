@@ -32,4 +32,11 @@ export const COMPONENTS = [LoginComponent];
   declarations: COMPONENTS,
   exports: COMPONENTS,
 })
-export class LoginModule { }
+export class LoginModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: this,
+      providers: [LoginService, LoginGuard],
+    };
+  }
+}

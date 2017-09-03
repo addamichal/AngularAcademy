@@ -8,13 +8,14 @@ import { ProfileEffects } from './effects/profile.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { ProfileService } from './services/profile.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { LoginGuard } from '../login/services/login-guard.service';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild([{ path: 'profile', component: ProfileComponent }]),
+    RouterModule.forChild([{ path: 'profile', component: ProfileComponent, canActivate: [LoginGuard] }]),
     StoreModule.forFeature('profile', reducers),
     EffectsModule.forFeature([ProfileEffects])
   ],

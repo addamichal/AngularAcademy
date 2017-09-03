@@ -39,7 +39,7 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
     BrowserModule,
     BrowserAnimationsModule,
     NgbModule.forRoot(),
-    LoginModule,
+    LoginModule.forRoot(),
     RegisterModule,
     ProfileModule,
     RouterModule.forRoot([
