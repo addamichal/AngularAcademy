@@ -14,38 +14,11 @@ export const EXECUTE_PAYMENT_URL = 'http://localhost:5261/api/paypalpaymentexecu
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'app';
   loggedIn$: Observable<boolean>;
 
   constructor(private store: Store<fromRoot.State>) {
     this.loggedIn$ = this.store.select(fromLogin.getLoggedIn);
-  }
-
-  ngOnInit() {
-    paypal.Button.render({
-      env: 'sandbox', // Or 'sandbox'
-      commit: true, // Show a 'Pay Now' button
-        payment: function() {
-          return paypal.request.post(CREATE_PAYMENT_URL).then(function(data) {
-          return data.id;
-        });
-      },
-
-      onAuthorize: function (data) {
-        console.log('here!');
-        return paypal.request({
-          method: 'post',
-          url: EXECUTE_PAYMENT_URL,
-          json: {
-            paymentID: data.paymentID,
-            payerID: data.payerID
-        }
-        }).then(function (response) {
-          console.log(response);
-        });
-      }
-
-    }, '#paypal-button');
   }
 }

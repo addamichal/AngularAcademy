@@ -34,6 +34,7 @@ namespace ToptalShop.Api.Controllers
             if (salesOrder == null) throw new Exception($"Unable to find SalesOrder with PaypalReference: {paymentDto.PaymentID}");
 
             salesOrder.Status = SalesOrderStatus.Paid;
+            toptalShopDbContext.SaveChanges();
 
             // Execute the Payment
             var executedPayment = payment.Execute(apiContext, paymentExecution);

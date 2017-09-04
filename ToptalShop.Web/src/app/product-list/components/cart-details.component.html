@@ -1,60 +1,57 @@
-<div class="container" *ngIf="cartDetails">
+<div class="container">
   <div class="text-center" *ngIf="cartDetails.lines.length === 0">
     <p>Your cart is currently empty <button routerLink="/" type="button" class="btn btn-default">Continue Shopping</button></p>
   </div>
   <div class="row" *ngIf="cartDetails.lines.length > 0">
-    <div class="col-sm-12 col-md-10 col-md-offset-1">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th class="text-center">Price</th>
-            <th class="text-center">Sub</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let line of cartDetails.lines">
-            <td class="col-sm-8 col-md-6">
-              <div class="media">
-                <div class="media-body">
-                  <h4 class="media-heading"><a href="#">{{ line.productName }}</a></h4>
-                </div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th class="text-center">Price</th>
+          <th class="text-center">Sub</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let line of cartDetails.lines">
+          <td class="col-sm-8 col-md-6">
+            <div class="media">
+              <div class="media-body">
+                <h4 class="media-heading"><a href="#">{{ line.productName }}</a></h4>
               </div>
-            </td>
-            <td class="col-sm-1 col-md-1" style="text-align: center">
-              <input type="number" min="0" class="form-control" [value]="line.quantity" (change)="changeQuantity(line.productId, $event.target.value)">
-            </td>
-            <td class="col-sm-1 col-md-1 text-center"><strong>{{ line.price| currency:"USD":true }}</strong></td>
-            <td class="col-sm-1 col-md-1 text-center"><strong>{{ line.subTotal| currency:"USD":true }}</strong></td>
-            <td class="col-sm-1 col-md-1">
-              <button type="button" class="btn btn-danger" (click)="removeProductFromCart(line.productId)">Remove</button>
-            </td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-              <h3>Total</h3>
-            </td>
-            <td class="text-right">
-              <h3><strong>{{ cartDetails.total | currency:"USD":true }}</strong></h3>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div *ngIf="!(loggedIn$ | async)">
-        <p class="lead">To continue to checkout, please <a routerLink="/login">Login</a></p>
-      </div>
-      <div *ngIf="(loggedIn$ | async) && !(hasFinishedProfile$ | async)">
-        <p class="lead">Please fill in your billing and shipping address in <a routerLink="/profile">your profile</a></p>
-      </div>
-      <div class="mt-5 float-right">
-        <button routerLink="/" type="button" class="btn btn-default">Continue Shopping</button>
-        <button type="button" class="btn btn-success" *ngIf="hasFinishedProfile$ | async">Checkout</button>
-      </div>
+            </div>
+          </td>
+          <td class="col-sm-1 col-md-1" style="text-align: center">
+            <input type="number" min="0" class="form-control" [value]="line.quantity" (change)="changeQuantity(line.productId, $event.target.value)">
+          </td>
+          <td class="col-sm-1 col-md-1 text-center"><strong>{{ line.price| currency:"USD":true }}</strong></td>
+          <td class="col-sm-1 col-md-1 text-center"><strong>{{ line.subTotal| currency:"USD":true }}</strong></td>
+          <td class="col-sm-1 col-md-1">
+            <button type="button" class="btn btn-danger" (click)="removeProductFromCart(line.productId)">Remove</button>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            <h3>Total</h3>
+          </td>
+          <td class="text-right">
+            <h3><strong>{{ cartDetails.total | currency:"USD":true }}</strong></h3>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="!(loggedIn$ | async)">
+      <p class="lead">To continue to checkout, please <a routerLink="/login">Login</a></p>
     </div>
+    <div *ngIf="(loggedIn$ | async) && !(hasFinishedProfile$ | async)">
+      <p class="lead">Please fill in your billing and shipping address in <a routerLink="/profile">your profile</a></p>
+    </div>
+  </div>
+  <div class="mt-5 float-right" [hidden]="!(hasFinishedProfile$ | async)">
+    <div id="paypal-button"></div>
   </div>
 </div>
