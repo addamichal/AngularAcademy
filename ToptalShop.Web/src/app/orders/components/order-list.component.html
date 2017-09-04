@@ -1,0 +1,21 @@
+<h2>Your orders</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Order #</th>
+      <th>Order Date</th>
+      <th>Price</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let order of orders$|async">
+      <th scope="row">{{ order.id }}</th>
+      <td>{{ order.created | date }}</td>
+      <td>{{ order.totalPrice | currency:'usd':true }}</td>
+      <td><span class="badge badge-primary px-3 py-2">{{order.status}}</span></td>
+      <td><a [routerLink]="['/orders', order.id]">Show</a></td>
+    </tr>
+  </tbody>
+</table>

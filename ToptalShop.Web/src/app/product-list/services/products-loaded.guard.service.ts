@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router/src';
+import { CanActivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../reducers';
@@ -15,6 +15,8 @@ export class ProductsLoadedGuard implements CanActivate {
     this.store.dispatch(new products.LoadProductsAction());
     return this.store.select(fromRoot.getProductsLoaded)
       .filter(loaded => loaded)
-      .take(1);
+      .take(1).switchMap((data) => {
+        return Observable.of(data);
+      });
   }
 }

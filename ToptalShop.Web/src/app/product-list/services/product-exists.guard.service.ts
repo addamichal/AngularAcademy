@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router/src';
+import { CanActivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as products from '../actions/products';
 import 'rxjs/add/operator/filter';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
-import { ToasterService } from 'angular2-toaster/src/toaster.service';
+import { ToasterService } from 'angular2-toaster';
 
 @Injectable()
 export class ProductExistGuard implements CanActivate {
@@ -14,10 +14,16 @@ export class ProductExistGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-    return this.store.select(fromRoot.getProducts)
+    return (this.store.select(fromRoot.getProductsLoaded)
+    .filter(loaded => loaded))
+    .take(1)
+    .switchMap((data) => {
+      return this.store.select(fromRoot.getProducts)
       .map(
         products => {
-          const filteredProducts = products.filter(product => product.productId === +route.params['id']);
+          console.log(products);
+          const filteredProducts = products.filter(order => order.productId === +route.params['id']);
+          console.log(filteredProducts);
           return filteredProducts.length > 0;
         })
       .do(productExists => {
@@ -26,5 +32,6 @@ export class ProductExistGuard implements CanActivate {
           this.router.navigateByUrl('/');
         }
       });
+    });
   }
 }

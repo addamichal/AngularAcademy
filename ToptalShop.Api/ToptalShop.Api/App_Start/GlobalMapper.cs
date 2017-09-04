@@ -63,6 +63,11 @@ namespace ToptalShop.Api
                 cfg.CreateMap<Product, ProductViewModel>();
 
                 cfg.CreateMap<ToptalShopAddUserAddress, Address>();
+
+                cfg.CreateMap<SalesOrder, SalesOrderViewModel>()
+                    .ForMember(w => w.Id, o => o.MapFrom(s => s.SalesOrderId));
+                cfg.CreateMap<SalesOrderLine, SalesOrderLineViewModel>();
+                cfg.CreateMap<Address, AddressViewModel>();
             });
         }
     }

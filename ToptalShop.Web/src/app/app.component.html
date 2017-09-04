@@ -2,8 +2,16 @@
   <div class="mr-auto">
     <a class="navbar-brand" routerLink="/">Toptal Shop</a>
   </div>
+  <div ngbDropdown *ngIf="(loggedIn$ | async)" class="my-2 my-sm-0 mr-3">
+    <button class="btn btn-outline-success" id="dropdownBasic2" ngbDropdownToggle>Your profile</button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+      <button routerLink="/profile" class="dropdown-item">Profile info</button>
+      <button routerLink="/orders" class="dropdown-item">Orders</button>
+      <hr>
+      <button routerLink="/logout" class="dropdown-item">Logout</button>
+    </div>
+  </div>
   <button *ngIf="!(loggedIn$ | async)" routerLink="/login" class="btn btn-outline-success my-2 my-sm-0 mr-3">Login</button>
-  <button *ngIf="(loggedIn$ | async)" routerLink="/profile" class="btn btn-outline-success my-2 my-sm-0 mr-3">Profile</button>
   <app-cart-summary></app-cart-summary>
 </nav>
 <div class="container">

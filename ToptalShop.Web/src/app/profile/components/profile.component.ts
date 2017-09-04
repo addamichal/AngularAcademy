@@ -8,7 +8,7 @@ import * as login from '../../login/actions/login';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Profile } from '../models/profile';
-import { ToasterService } from 'angular2-toaster/src/toaster.service';
+import { ToasterService } from 'angular2-toaster';
 import { Address } from '../../login/models/user';
 
 @Component({

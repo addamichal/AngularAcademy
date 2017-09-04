@@ -89,14 +89,4 @@ namespace ToptalShop.Api.DataLayer
         [ForeignKey(nameof(SalesOrderId))]
         public virtual SalesOrder SalesOrder { get; set; }
     }
-
-    public enum SalesOrderStatus
-    {
-        Opened = 1,
-        Paid,
-        Processed,
-        Finished,
-        Refunded,
-        Cancelled
-    }
 }

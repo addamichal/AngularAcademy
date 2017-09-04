@@ -6,6 +6,7 @@
 export const environment = {
   production: false,
   productUrl: 'http://localhost:5261/api/product',
+  orderUrl: 'http://localhost:5261/api/order',
   loginUrl: 'http://localhost:5261/token',
   profileUrl: 'http://localhost:5261/api/profile',
   recaptchaKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',

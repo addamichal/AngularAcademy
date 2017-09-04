@@ -289,11 +289,13 @@
     <Compile Include="Controllers\PaypalPaymentExecuteController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="CustomAuthorize.cs" />
     <Compile Include="DataLayer\Address.cs" />
     <Compile Include="DataLayer\ApplicationUser.cs" />
     <Compile Include="DataLayer\Product.cs" />
+    <Compile Include="SalesOrderStatus.cs" />
     <Compile Include="DataLayer\ToptalShopDbContext.cs" />
     <Compile Include="EditToptalShopAppUser.cs" />
     <Compile Include="Engines\UserEngine.cs" />

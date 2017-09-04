@@ -26,6 +26,7 @@ import { RegisterModule } from './register/register.module';
 import { ProfileModule } from './profile/profile.module';
 import { RecaptchaModule, } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
+import { OrdersModule } from './orders/orders.module';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
     NgbModule.forRoot(),
     LoginModule.forRoot(),
     RegisterModule,
+    OrdersModule,
     ProfileModule,
     RouterModule.forRoot([
       {
