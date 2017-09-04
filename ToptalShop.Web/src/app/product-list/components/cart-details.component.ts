@@ -16,6 +16,7 @@ declare var paypal: any;
   styleUrls: ['./cart-details.component.css']
 })
 export class CartDetailsComponent implements OnInit, OnDestroy {
+  orderSuccess = false;
   active = true;
   cartDetails: CartDetails;
   loggedIn$: Observable<boolean>;
@@ -36,7 +37,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       commit: true,
       payment: () => this.payment().then((data) => data.id),
       onAuthorize: (data) => this.onAuthorize(data).then(() => {
-        console.log('great success!');
+        this.onSuccess();
       })
     }, '#paypal-button');
   }
@@ -47,6 +48,11 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
   onAuthorize(data) {
     return this.httpClient.post<any>(environment.paypalPaymentExecuteUrl, data).toPromise();
+  }
+
+  onSuccess() {
+    this.store.dispatch(new product.ResetCart());
+    this.orderSuccess = true;
   }
 
   ngOnDestroy() {

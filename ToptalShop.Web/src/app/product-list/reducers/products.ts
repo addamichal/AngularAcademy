@@ -74,6 +74,14 @@ export function reducer(
         cart: cartCopy
       };
     }
+
+    case product.RESET_CART: {
+      return {
+        productsLoaded: state.productsLoaded,
+        products: state.products,
+        cart: {}
+      };
+    }
   }
 
   return state;
