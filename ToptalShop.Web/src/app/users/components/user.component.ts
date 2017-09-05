@@ -35,7 +35,9 @@ export class UserComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private store: Store<fromUsers.State>,
     private toasterService: ToasterService
-  ) { }
+  ) {
+    this.store.dispatch(new user.SaveUserReset());
+  }
 
   ngOnInit() {
     this.currentUser$ = this.store.select(fromLogin.getUser);
@@ -50,7 +52,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
     this.store.select(fromUsers.getUserPagePending)
       .takeWhile(() => this.active)
-      .subscribe(pending => pending ? this.form.disable : this.form.enable());
+      .subscribe(pending => pending ? this.form.disable() : this.form.enable());
 
     this.store.select(fromUsers.getUserPageSuccess)
       .takeWhile(() => this.active)
@@ -58,6 +60,7 @@ export class UserComponent implements OnInit, OnDestroy {
         if (success) {
           const message = this.isUpdate() ? 'User updated' : 'User created';
           this.toasterService.pop('success', message);
+          this.router.navigateByUrl('/users');
         }
       });
 
@@ -65,7 +68,7 @@ export class UserComponent implements OnInit, OnDestroy {
       .takeWhile(() => this.active)
       .subscribe(error => this.catchBadRequest(error, this.formErrors));
 
-    this.store.select(fromUsers.getUserPageError)
+    this.store.select(fromUsers.getUserPageDeleteError)
       .takeWhile(() => this.active)
       .subscribe(error => this.catchBadRequest(error, this.formErrors));
 
@@ -95,6 +98,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.active = false;
+    this.store.dispatch(new user.SaveUserReset());
   }
 
   isUpdate() {

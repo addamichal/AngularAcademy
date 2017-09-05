@@ -22,7 +22,7 @@ export class ProductExistGuard implements CanActivate {
       .map(
         products => {
           console.log(products);
-          const filteredProducts = products.filter(order => order.productId === +route.params['id']);
+          const filteredProducts = products.filter(order => order.id === +route.params['id']);
           console.log(filteredProducts);
           return filteredProducts.length > 0;
         })

@@ -21,6 +21,6 @@ export class ProductListComponent {
   }
 
   addProductToCart(product: Product) {
-    this.store.dispatch(new products.AddProductToCart(product.productId, 1));
+    this.store.dispatch(new products.AddProductToCart(product.id, 1));
   }
 }

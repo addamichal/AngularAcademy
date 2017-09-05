@@ -46,7 +46,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     this.store.select(fromProfile.getProfilePagePending)
       .takeWhile(() => this.active)
-      .subscribe(pending => pending ? this.form.disable : this.form.enable());
+      .subscribe(pending => pending ? this.form.disable() : this.form.enable());
 
     this.store.select(fromProfile.getProfilePageSuccess)
       .takeWhile(() => this.active)

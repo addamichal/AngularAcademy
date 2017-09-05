@@ -32,4 +32,8 @@ export class OrderComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.active = false;
   }
+
+  delete() {
+    console.log('gonna delete this!');
+  }
 }

@@ -23,14 +23,38 @@ namespace ToptalShop.Api.Controllers
 
         public IEnumerable<SalesOrderViewModel> Get()
         {
-            return ctx.SalesOrders
-                .Where(o => o.CreatedById == CurrentUser.Id && o.Status != SalesOrderStatus.Opened)
-                .Include(o => o.ShippingAddress)
-                .Include(o => o.BillingAddress)
-                .Include(o => o.Lines)
+            return GetOrders()
                 .ToList()
                 .Select(Mapper.Map<SalesOrder, SalesOrderViewModel>)
                 .ToList();
+        }
+
+        public IHttpActionResult Delete(int id)
+        {
+            var existingSalesOrder = ctx.SalesOrders.SingleOrDefault(w => w.SalesOrderId == id);
+            if (existingSalesOrder == null)
+                return NotFound();
+
+            ctx.SalesOrders.Remove(existingSalesOrder);
+            ctx.SaveChanges();
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        private IQueryable<SalesOrder> GetOrders()
+        {
+            var ordersQuery = ctx.SalesOrders
+                .Where(o => o.Status != SalesOrderStatus.Opened)
+                .Include(o => o.ShippingAddress)
+                .Include(o => o.BillingAddress)
+                .Include(o => o.Lines);
+
+            if (CurrentUser.UserRole == ToptalShopAppUserRole.RegularUser)
+            {
+                ordersQuery = ordersQuery.Where(o => o.CreatedById == CurrentUser.Id);
+            }
+
+            return ordersQuery;
         }
     }
 }

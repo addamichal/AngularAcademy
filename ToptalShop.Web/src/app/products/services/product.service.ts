@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Product, SaveProduct } from '../models/Product';
+import { Product } from '../models/Product';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -15,12 +15,12 @@ export class ProductService {
     return this.httpClient.get<Product[]>(this.url);
   }
 
-  updateProduct(product: SaveProduct) {
+  updateProduct(product: Product) {
     if (product.id) {
       const updateUrl = `${this.url}/${product.id}`;
-      return this.httpClient.put<SaveProduct>(updateUrl, product);
+      return this.httpClient.put<Product>(updateUrl, product);
     }
-    return this.httpClient.post<SaveProduct>(this.url, product);
+    return this.httpClient.post<Product>(this.url, product);
   }
 
   deleteProduct(id: string) {

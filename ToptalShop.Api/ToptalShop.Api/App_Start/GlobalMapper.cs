@@ -60,7 +60,8 @@ namespace ToptalShop.Api
                 cfg.CreateMap<ToptalShopAddUserAddress, AddressViewModel>();
                 cfg.CreateMap<ToptalShopAppUser, UserViewModel>();
 
-                cfg.CreateMap<Product, ProductViewModel>();
+                cfg.CreateMap<Product, ProductViewModel>().ForMember(w => w.Id, o => o.MapFrom(s => s.ProductId));
+                cfg.CreateMap<ProductViewModel, Product>().ForMember(w => w.ProductId, o => o.MapFrom(s => s.Id));
 
                 cfg.CreateMap<ToptalShopAddUserAddress, Address>();
 

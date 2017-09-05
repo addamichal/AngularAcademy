@@ -1,3 +1,25 @@
-<p>
-  product works!
-</p>
+<div class="container">
+  <h3>{{ isUpdate() ? "Update product" : "Add new product" }}</h3>
+  <div class="alert alert-danger" role="alert" *ngIf="formErrors['']">
+    {{ formErrors[''] }}
+  </div>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-group">
+      <label for="name">Description</label>
+      <input type="text" class="form-control" id="name" formControlName="name" aria-describedby="name" placeholder="Enter name">
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input type="text" class="form-control" id="description" formControlName="description" aria-describedby="description" placeholder="Enter description">
+    </div>
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input type="number" class="form-control" id="price" formControlName="price" aria-describedby="price" placeholder="Enter price">
+    </div>
+    <button type="button" class="btn" routerLink="/products">Back</button>
+    <button type="submit" class="btn btn-success" [disabled]="!form.valid || form.disabled">Save</button>
+    <button *ngIf="isUpdate()" type="button" [disabled]="form.disabled"
+      class="btn btn-danger float-right"
+      [swal]="['Delete?', 'This cannot be undone.', 'warning']" (confirm)="delete()">Delete</button>
+  </form>
+</div>

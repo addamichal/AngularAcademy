@@ -27,7 +27,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       const id = +data['id'];
       this.store.select(fromRoot.getProducts)
         .takeWhile(() => this.active)
-        .map(products => products.filter(p => p.productId === id)[0])
+        .map(products => products.filter(p => p.id === id)[0])
         .subscribe(product => this.product = product);
     });
   }
@@ -37,6 +37,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
 
   addProductToCart() {
-    this.store.dispatch(new products.AddProductToCart(this.product.productId, 1));
+    this.store.dispatch(new products.AddProductToCart(this.product.id, 1));
   }
 }

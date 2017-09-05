@@ -102,7 +102,7 @@ export const getCartSummary = createSelector(
 
     for (const productId of getCartProductIds(cart)) {
       const quantity = cart[productId];
-      const product = products.filter(p => p.productId === productId)[0];
+      const product = products.filter(p => p.id === productId)[0];
       cartSummary.totalPrice += product.price * quantity;
       cartSummary.totalItems += quantity;
     }
@@ -120,8 +120,8 @@ export const getCartDetails = createSelector(
 
       for (const productId of getCartProductIds(cart)) {
         const line = {} as CartDetailsLine;
-        const product = products.filter(p => p.productId === productId)[0];
-        line.productId = product.productId;
+        const product = products.filter(p => p.id === productId)[0];
+        line.productId = product.id;
         line.price = product.price;
         line.productName = product.name;
         line.quantity = cart[productId];
