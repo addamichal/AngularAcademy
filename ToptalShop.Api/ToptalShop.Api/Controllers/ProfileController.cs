@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -7,6 +8,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.ModelBinding;
 using AutoMapper;
+using Newtonsoft.Json.Linq;
 using ToptalShop.Api.Engines;
 using ToptalShop.Api.Models;
 
@@ -48,6 +50,11 @@ namespace ToptalShop.Api.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (!IsRecaptchaValid(model))
+            {
+                return BadRequest("Recaptcha error");
+            }
+
             var shopAppUser = Mapper.Map<EditToptalShopAppUser>(model);
             shopAppUser.UserRole = ToptalShopAppUserRole.RegularUser;
 
@@ -82,6 +89,18 @@ namespace ToptalShop.Api.Controllers
                 return GetErrorResult(userResult);
 
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        private static bool IsRecaptchaValid(AddProfileBindingModel model)
+        {
+            string secretKey = ConfigurationManager.AppSettings["Recaptcha"];
+            var client = new WebClient();
+            var recaptcha =
+                client.DownloadString(
+                    $"https://www.google.com/recaptcha/api/siteverify?secret={secretKey}&response={model.Recaptcha}");
+            var obj = JObject.Parse(recaptcha);
+            var recaptchaResult = (bool)obj.SelectToken("success");
+            return recaptchaResult;
         }
     }
 }
