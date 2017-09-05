@@ -49,25 +49,42 @@ export class UserComponent implements OnInit, OnDestroy {
     });
 
     this.store.select(fromUsers.getUserPagePending)
-    .takeWhile(() => this.active)
-    .subscribe(pending => pending ? this.form.disable : this.form.enable());
+      .takeWhile(() => this.active)
+      .subscribe(pending => pending ? this.form.disable : this.form.enable());
 
-  this.store.select(fromUsers.getUserPageSuccess)
-    .takeWhile(() => this.active)
-    .subscribe((success) => {
-      if (success) {
-        const message = this.isUpdate() ? 'User updated' : 'User created';
-        this.toasterService.pop('success', message);
-      }
-    });
+    this.store.select(fromUsers.getUserPageSuccess)
+      .takeWhile(() => this.active)
+      .subscribe((success) => {
+        if (success) {
+          const message = this.isUpdate() ? 'User updated' : 'User created';
+          this.toasterService.pop('success', message);
+        }
+      });
 
-  this.store.select(fromUsers.getUserPageError)
-    .takeWhile(() => this.active)
-    .subscribe(error => this.catchBadRequest(error, this.formErrors));
+    this.store.select(fromUsers.getUserPageError)
+      .takeWhile(() => this.active)
+      .subscribe(error => this.catchBadRequest(error, this.formErrors));
+
+    this.store.select(fromUsers.getUserPageError)
+      .takeWhile(() => this.active)
+      .subscribe(error => this.catchBadRequest(error, this.formErrors));
+
+    this.store.select(fromUsers.getUserPageDeleteError)
+      .takeWhile(() => this.active)
+      .subscribe(error => this.catchBadRequest(error, this.formErrors));
+
+    this.store.select(fromUsers.getUserPageDeleteSuccess)
+      .takeWhile(() => this.active)
+      .subscribe(success => {
+        if (success) {
+          this.toasterService.pop('success', 'User successfully deleted');
+          this.router.navigateByUrl('/users');
+        }
+      });
   }
 
   submit() {
-    const model = Object.assign({ id:  this.id}, this.form.value);
+    const model = Object.assign({ id: this.id }, this.form.value);
     console.log(model);
     this.store.dispatch(new user.SaveUser(model));
   }
@@ -95,19 +112,19 @@ export class UserComponent implements OnInit, OnDestroy {
     // TODO add validators
   }
 
-    // TODO refactor away
-    catchBadRequest(errorResponse: HttpErrorResponse, formErrors: any): Observable<any> {
-      this.formErrors[''] = '';
-      if (errorResponse && errorResponse.status === 400) {
-        const modelState = errorResponse.error.modelState;
-        for (const field of Object.keys(modelState)) {
-          if (formErrors.hasOwnProperty(field)) {
-            formErrors[field] = modelState[field].slice(0, 1);
-          } else {
-            formErrors[''] = modelState[field].join(' ');
-          }
+  // TODO refactor away
+  catchBadRequest(errorResponse: HttpErrorResponse, formErrors: any): Observable<any> {
+    this.formErrors[''] = '';
+    if (errorResponse && errorResponse.status === 400) {
+      const modelState = errorResponse.error.modelState;
+      for (const field of Object.keys(modelState)) {
+        if (formErrors.hasOwnProperty(field)) {
+          formErrors[field] = modelState[field].slice(0, 1);
+        } else {
+          formErrors[''] = modelState[field].join(' ');
         }
-        return Observable.of();
       }
+      return Observable.of();
     }
+  }
 }

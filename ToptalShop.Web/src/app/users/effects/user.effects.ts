@@ -18,5 +18,17 @@ export class UserEffects {
         })
     );
 
+  @Effect()
+  deleteUser$ = this.actions$
+    .ofType(user.DELETE_USER)
+    .map((action: user.DeleteUser) => action.payload)
+    .exhaustMap(r =>
+      this.userService.deleteUser(r)
+        .map(response => new user.DeleteUserSuccess())
+        .catch(error => {
+          return Observable.of(new user.DeleteUserFailure(error));
+        })
+    );
+
   constructor(private actions$: Actions, private userService: UserService) { }
 }

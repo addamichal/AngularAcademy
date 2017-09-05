@@ -10,14 +10,14 @@ export const DELETE_USER = '[User] Delete User';
 export const DELETE_USER_SUCCESS = '[User] Delete User Success';
 export const DELETE_USER_FAILURE = '[User] Delete User Failure';
 
+export class SaveUserReset implements Action {
+  readonly type = SAVE_USER_RESET;
+}
+
 export class SaveUser implements Action {
   readonly type = SAVE_USER;
 
   constructor(public payload: SaveUserData) { }
-}
-
-export class SaveUserReset implements Action {
-  readonly type = SAVE_USER_RESET;
 }
 
 export class SaveUserSuccess implements Action {
@@ -26,26 +26,26 @@ export class SaveUserSuccess implements Action {
   constructor() { }
 }
 
-export class DeleteUser implements Action {
-  readonly type = SAVE_USER;
-
-  constructor(public payload: string) { }
-}
-
 export class SaveUserFailure implements Action {
   readonly type = SAVE_USER_FAILURE;
 
   constructor(public payload: HttpErrorResponse) {}
 }
 
+export class DeleteUser implements Action {
+  readonly type = DELETE_USER;
+
+  constructor(public payload: string) { }
+}
+
 export class DeleteUserSuccess implements Action {
-  readonly type = SAVE_USER_SUCCESS;
+  readonly type = DELETE_USER_SUCCESS;
 
   constructor() { }
 }
 
 export class DeleteUserFailure implements Action {
-  readonly type = SAVE_USER_FAILURE;
+  readonly type = DELETE_USER_FAILURE;
 
   constructor(public payload: HttpErrorResponse) {}
 }

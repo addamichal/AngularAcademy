@@ -43,3 +43,13 @@ export const getUserPageSuccess = createSelector(
   selectUserUserPage,
   fromUser.getSuccess
 );
+
+export const getUserPageDeleteError = createSelector(
+  selectUserUserPage,
+  fromUser.getDeleteError
+);
+
+export const getUserPageDeleteSuccess = createSelector(
+  selectUserUserPage,
+  fromUser.getDeleteSuccess
+);

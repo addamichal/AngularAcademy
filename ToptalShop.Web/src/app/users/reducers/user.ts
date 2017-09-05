@@ -4,14 +4,18 @@ import { clone } from 'lodash';
 
 export interface State {
   error: HttpErrorResponse | null;
+  deleteError: HttpErrorResponse | null;
   pending: boolean;
   success: boolean;
+  deleteSuccess: boolean;
 }
 
 export const initialState: State = {
   error: null,
+  deleteError: null,
   pending: false,
-  success: false
+  success: false,
+  deleteSuccess: false
 };
 
 export function reducer(state = initialState, action: user.Actions) {
@@ -35,9 +39,23 @@ export function reducer(state = initialState, action: user.Actions) {
       stateClone.success = false;
       return stateClone;
     }
-
     case user.SAVE_USER_RESET: {
       return initialState;
+    }
+    case user.DELETE_USER: {
+      stateClone.deleteError = null;
+      stateClone.deleteSuccess = false;
+      return stateClone;
+    }
+    case user.DELETE_USER_SUCCESS: {
+      stateClone.deleteError = null;
+      stateClone.deleteSuccess = true;
+      return stateClone;
+    }
+    case user.DELETE_USER_FAILURE: {
+      stateClone.deleteError = action.payload;
+      stateClone.deleteSuccess = false;
+      return stateClone;
     }
 
     default: {
@@ -46,6 +64,8 @@ export function reducer(state = initialState, action: user.Actions) {
   }
 }
 
-export const getError = (state: State) => state.error;
 export const getPending = (state: State) => state.pending;
+export const getError = (state: State) => state.error;
 export const getSuccess = (state: State) => state.success;
+export const getDeleteError = (state: State) => state.deleteError;
+export const getDeleteSuccess = (state: State) => state.deleteSuccess;
