@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Product } from '../product-list/models';
-import * as products from '../product-list/actions/products';
-import * as fromRoot from '../reducers';
+import { Product } from '../models';
+import * as products from '../actions/products';
+import * as fromRoot from '../../reducers';
 import { Store } from '@ngrx/store';
 import { ToasterService } from 'angular2-toaster/angular2-toaster';
 

@@ -5,7 +5,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { CartSummaryComponent } from './product-list/components/cart-summary.component';
 import { ProductListComponent } from './product-list/components/product-list.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
+import { ProductDetailsComponent } from './product-list/components/product-details.component';
 import { reducers, metaReducers } from './reducers';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
