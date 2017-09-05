@@ -28,6 +28,8 @@ import { RecaptchaModule, } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { OrdersModule } from './orders/orders.module';
 import { UsersModule } from './users/users.module';
+import { SweetAlert2Module } from '@toverux/ngsweetalert2';
+
 
 @NgModule({
   declarations: [
@@ -63,7 +65,8 @@ import { UsersModule } from './users/users.module';
     ReactiveFormsModule,
     ToasterModule,
     RecaptchaModule.forRoot(),
-    RecaptchaFormsModule
+    RecaptchaFormsModule,
+    SweetAlert2Module
   ],
   providers: [
     ProductsLoadedGuard,

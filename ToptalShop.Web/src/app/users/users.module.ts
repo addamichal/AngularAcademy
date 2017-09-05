@@ -12,6 +12,7 @@ import { UserService } from './services/user.service';
 import { UsersLoadedGuard } from './services/users-loaded.guard.service';
 import { UserExistGuard } from './services/user-exists.guard.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SweetAlert2Module } from '@toverux/ngsweetalert2';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
       { path: 'users', component: UserListComponent, canActivate: [UsersLoadedGuard] }
     ]),
     ReactiveFormsModule,
+    SweetAlert2Module,
     StoreModule.forFeature('users', reducers),
     EffectsModule.forFeature([UsersEffects, UserEffects])
   ],

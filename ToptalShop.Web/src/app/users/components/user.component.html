@@ -29,6 +29,8 @@
     </div>
     <button type="button" class="btn" routerLink="/users">Back</button>
     <button type="submit" class="btn btn-success" [disabled]="!form.valid || form.disabled">Save</button>
-    <button *ngIf="isUpdate() && (currentUser$ | async).id !== id" type="button" class="btn btn-danger float-right" (click)="delete()">Delete</button>
+    <button *ngIf="isUpdate() && (currentUser$ | async).id !== id" type="button"
+      class="btn btn-danger float-right"
+      [swal]="['Delete?', 'This cannot be undone.', 'warning']" (confirm)="delete()">Delete</button>
   </form>
 </div>
