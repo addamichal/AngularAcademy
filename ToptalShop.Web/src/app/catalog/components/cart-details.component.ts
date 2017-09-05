@@ -63,11 +63,11 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     this.store.dispatch(new product.RemoveProductFromCart(productId));
   }
 
-  changeQuantity(productId: number, quantity: number) {
-    if (!quantity || quantity <= 0) {
+  changeQuantity(productId: number, quantity: string) {
+    if (!quantity || +quantity <= 0) {
       this.store.dispatch(new product.RemoveProductFromCart(productId));
     } else {
-      this.store.dispatch(new product.ChangeProductQuantity(productId, quantity));
+      this.store.dispatch(new product.ChangeProductQuantity(productId, +quantity));
     }
   }
 }
