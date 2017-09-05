@@ -21,7 +21,7 @@
           <td class="col-sm-8 col-md-6">
             <div class="media">
               <div class="media-body">
-                <h4 class="media-heading"><a href="#">{{ line.productName }}</a></h4>
+                <h4 class="media-heading"><a [routerLink]="['/catalog', line.productId]">{{ line.productName }}</a></h4>
               </div>
             </div>
           </td>

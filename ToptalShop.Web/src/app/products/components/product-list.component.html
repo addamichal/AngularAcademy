@@ -1,0 +1,24 @@
+<div class="container">
+  <h3>Product management</h3>
+  <div class="clearfix">
+    <a class="btn btn-success float-right mb-3" [routerLink]="['/products/add']">Add</a>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ProductId</th>
+        <th>Name</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products$ | async">
+        <td>{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>
+          <a [routerLink]="['/products/update', product.id]">Edit</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

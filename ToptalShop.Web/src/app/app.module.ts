@@ -29,6 +29,7 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { OrdersModule } from './orders/orders.module';
 import { UsersModule } from './users/users.module';
 import { SweetAlert2Module } from '@toverux/ngsweetalert2';
+import { ProductsModule } from './products/products.module';
 
 
 @NgModule({
@@ -48,15 +49,16 @@ import { SweetAlert2Module } from '@toverux/ngsweetalert2';
     OrdersModule,
     ProfileModule,
     UsersModule,
+    ProductsModule,
     RouterModule.forRoot([
       {
-        path: 'products/:id',
+        path: 'catalog/:id',
         component: ProductDetailsComponent,
         canActivate: [ProductsLoadedGuard, ProductExistGuard]
       },
-      { path: 'products', component: ProductListComponent, canActivate: [ProductsLoadedGuard] },
+      { path: 'catalog', component: ProductListComponent, canActivate: [ProductsLoadedGuard] },
       { path: 'cart', component: CartDetailsComponent, canActivate: [ProductsLoadedGuard] },
-      { path: '', redirectTo: 'products', pathMatch: 'full' }
+      { path: '', redirectTo: 'catalog', pathMatch: 'full' }
     ]),
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([ProductsEffects]),
