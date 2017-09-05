@@ -29,13 +29,29 @@ namespace ToptalShop.Api.Controllers
                 .ToList();
         }
 
-        public IHttpActionResult Delete(int id)
+        public IHttpActionResult Put(int id, UpdateSalesOrderStatusBindingModel model)
         {
-            var existingSalesOrder = ctx.SalesOrders.SingleOrDefault(w => w.SalesOrderId == id);
+            var existingSalesOrder = GetOrders().SingleOrDefault(w => w.SalesOrderId == id);
             if (existingSalesOrder == null)
                 return NotFound();
 
+            existingSalesOrder.Status = model.Status;
+            ctx.SaveChanges();
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        public IHttpActionResult Delete(int id)
+        {
+            var existingSalesOrder = GetOrders().SingleOrDefault(w => w.SalesOrderId == id);
+            if (existingSalesOrder == null)
+                return NotFound();
+
+            ctx.SalesOrderLines.RemoveRange(existingSalesOrder.Lines);
+            ctx.Addresses.Remove(existingSalesOrder.ShippingAddress);
+            ctx.Addresses.Remove(existingSalesOrder.BillingAddress);
             ctx.SalesOrders.Remove(existingSalesOrder);
+
             ctx.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);

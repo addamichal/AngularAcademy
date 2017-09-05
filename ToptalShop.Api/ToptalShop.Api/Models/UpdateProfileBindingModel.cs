@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace ToptalShop.Api.Models
 {
@@ -35,5 +37,12 @@ namespace ToptalShop.Api.Models
         public string City { get; set; }
         public string State { get; set; }
         public int Zip { get; set; }
+    }
+
+    public class UpdateSalesOrderStatusBindingModel
+    {
+        public int Id { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public SalesOrderStatus Status { get; set; }
     }
 }

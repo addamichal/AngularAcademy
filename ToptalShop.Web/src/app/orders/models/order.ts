@@ -19,3 +19,8 @@ export interface OrderLine {
   unitPrice: number;
   price: number;
 }
+
+export interface UpdateOrderStatus {
+  id: number;
+  status: string;
+}

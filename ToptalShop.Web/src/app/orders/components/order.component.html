@@ -7,7 +7,18 @@
   </div>
   <dl class="row">
     <dt class="col-sm-3">Status</dt>
-    <dd class="col-sm-9"><span class="badge badge-primary px-3 py-2">{{ order.status }}</span></dd>
+    <form class="form-inline" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-group mx-sm-3">
+        <select class="form-control" formControlName="status">
+          <option>Paid</option>
+          <option>Processed</option>
+          <option>Finished</option>
+          <option>Refunded</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+    <!-- <dd class="col-sm-9"><span class="badge badge-primary px-3 py-2">{{ order.status }}</span></dd> -->
   </dl>
   <dl class="row">
     <dt class="col-sm-3">Created</dt>
@@ -41,28 +52,28 @@
   <p class="text-right font-weight-bold h4">Total: {{ order.totalPrice | currency:'usd':true }}</p>
   <div class="row mt-4">
     <div class="col-3">
-        <div class="card">
-          <div class="card-body">
-            <h6 class="card-title">Shipping address:</h6>
-            <address>
-              <strong>{{ order.shippingAddress.firstName }} {{ order.shippingAddress.lastName }}</strong><br>
-              {{ order.shippingAddress.address1 }} {{ order.shippingAddress.address2 }}<br>
-              {{ order.shippingAddress.city }}, {{ order.shippingAddress.state }} {{ order.shippingAddress.zip }}<br>
-            </address>
-          </div>
+      <div class="card">
+        <div class="card-body">
+          <h6 class="card-title">Shipping address:</h6>
+          <address>
+            <strong>{{ order.shippingAddress.firstName }} {{ order.shippingAddress.lastName }}</strong><br> {{ order.shippingAddress.address1
+            }} {{ order.shippingAddress.address2 }}<br> {{ order.shippingAddress.city }}, {{ order.shippingAddress.state
+            }} {{ order.shippingAddress.zip }}<br>
+          </address>
         </div>
       </div>
-      <div class="col-3">
-        <div class="card">
-          <div class="card-body">
-            <h6 class="card-title">Billing address:</h6>
-            <address>
-              <strong>{{ order.billingAddress.firstName }} {{ order.billingAddress.lastName }}</strong><br>
-              {{ order.billingAddress.address1 }} {{ order.billingAddress.address2 }}<br>
-              {{ order.billingAddress.city }}, {{ order.billingAddress.state }} {{ order.billingAddress.zip }}<br>
-            </address>
-          </div>
+    </div>
+    <div class="col-3">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="card-title">Billing address:</h6>
+          <address>
+            <strong>{{ order.billingAddress.firstName }} {{ order.billingAddress.lastName }}</strong><br> {{ order.billingAddress.address1
+            }} {{ order.billingAddress.address2 }}<br> {{ order.billingAddress.city }}, {{ order.billingAddress.state }}
+            {{ order.billingAddress.zip }}<br>
+          </address>
         </div>
       </div>
+    </div>
   </div>
 </div>

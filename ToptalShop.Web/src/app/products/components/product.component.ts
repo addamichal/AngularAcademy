@@ -16,7 +16,6 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: './product.component.html'
 })
 export class ProductComponent implements OnInit, OnDestroy {
-  currentProduct$: Observable<any>;
   id: string;
   active = true;
   product: Product;

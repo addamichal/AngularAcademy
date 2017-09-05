@@ -10,6 +10,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { OrderService } from './services/order.service';
 import { OrdersLoadedGuard } from './services/orders-loaded.guard.service';
 import { OrderExistGuard } from './services/order-exists.guard.service';
+import { OrderEffects } from './effects/order.effects';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -19,7 +21,8 @@ import { OrderExistGuard } from './services/order-exists.guard.service';
       { path: 'orders', component: OrderListComponent, canActivate: [OrdersLoadedGuard] }
     ]),
     StoreModule.forFeature('orders', reducers),
-    EffectsModule.forFeature([OrdersEffects])
+    EffectsModule.forFeature([OrdersEffects, OrderEffects]),
+    ReactiveFormsModule
   ],
   declarations: [ OrderComponent, OrderListComponent ],
   providers: [
