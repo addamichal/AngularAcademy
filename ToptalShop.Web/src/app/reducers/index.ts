@@ -1,4 +1,4 @@
-import * as fromProduct from '../product-list/reducers/products';
+import * as fromProduct from '../catalog/reducers/products';
 import { ActionReducerMap, ActionReducer, MetaReducer, createSelector } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 
