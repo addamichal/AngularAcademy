@@ -4,6 +4,7 @@ export interface Authenticate {
 }
 
 export interface User {
+  id: string;
   email: string;
   userRole: string;
   billingAddress: Address;

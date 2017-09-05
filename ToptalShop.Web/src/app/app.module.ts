@@ -27,6 +27,7 @@ import { ProfileModule } from './profile/profile.module';
 import { RecaptchaModule, } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { OrdersModule } from './orders/orders.module';
+import { UsersModule } from './users/users.module';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { OrdersModule } from './orders/orders.module';
     RegisterModule,
     OrdersModule,
     ProfileModule,
+    UsersModule,
     RouterModule.forRoot([
       {
         path: 'products/:id',

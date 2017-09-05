@@ -1,0 +1,28 @@
+<div class="container">
+  <h3>User management</h3>
+  <div class="form-group form-inline">
+    <div class="form-group">
+      <input type="text" class="form-control" name="email" placeholder="Email">
+    </div>
+    <a class="btn btn-success pull-right" [routerLink]="['/users/add']">Add</a>
+    <div class="clearfix"></div>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>User role</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users$ | async">
+        <td>{{ user.email }}</td>
+        <td>{{ user.userRole }}</td>
+        <td>
+          <a [routerLink]="['/users/update', user.id]">Edit</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
