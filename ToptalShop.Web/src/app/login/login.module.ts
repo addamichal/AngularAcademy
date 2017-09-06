@@ -13,6 +13,7 @@ import { HttpModule } from '@angular/http';
 import { LoginTokenService } from './services/login-token.service';
 import { ProfileService } from './services/profile.service';
 import { AdvancedUserGuard } from './services/advanced-user-guard.service';
+import { AdminGuard } from './services/admin-guard.service';
 
 export const COMPONENTS = [LoginComponent];
 
@@ -37,7 +38,7 @@ export class LoginModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: LoginModule,
-      providers: [LoginService, LoginGuard, AdvancedUserGuard],
+      providers: [LoginService, LoginGuard, AdminGuard, AdvancedUserGuard],
     };
   }
 }

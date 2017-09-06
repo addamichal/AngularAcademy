@@ -20,7 +20,7 @@ import { AdminGuard } from '../login/services/admin-guard.service';
     CommonModule,
     RouterModule.forChild([
       { path: 'users/add', component: UserComponent, pathMatch: 'full', canActivate: [UsersLoadedGuard, AdminGuard] },
-      { path: 'users/update/:id', component: UserComponent, canActivate: [UsersLoadedGuard, AdminGuard] },
+      { path: 'users/update/:id', component: UserComponent, canActivate: [UsersLoadedGuard, AdminGuard, UserExistGuard] },
       { path: 'users', component: UserListComponent, canActivate: [UsersLoadedGuard, AdminGuard] }
     ]),
     ReactiveFormsModule,
