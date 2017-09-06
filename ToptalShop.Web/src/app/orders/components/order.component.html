@@ -1,13 +1,13 @@
 <div class="container">
   <div class="float-right">
-    <button class="btn btn-danger" (click)="delete()">Delete</button>
+    <button class="btn btn-danger" (click)="delete()" *roles="['Admin']">Delete</button>
   </div>
   <div class="row mb-4">
     <h2>Order {{ order.id }}</h2>
   </div>
   <dl class="row">
     <dt class="col-sm-3">Status</dt>
-    <form class="form-inline" [formGroup]="form" (ngSubmit)="submit()">
+    <form class="form-inline" [formGroup]="form" (ngSubmit)="submit()" *roles="['UserManager']">
       <div class="form-group mx-sm-3">
         <select class="form-control" formControlName="status">
           <option>Paid</option>
@@ -18,7 +18,7 @@
       </div>
       <button type="submit" class="btn btn-primary">Update</button>
     </form>
-    <!-- <dd class="col-sm-9"><span class="badge badge-primary px-3 py-2">{{ order.status }}</span></dd> -->
+    <dd *roles="['Admin', 'RegularUser']" class="col-sm-9"><span class="badge badge-primary px-3 py-2">{{ order.status }}</span></dd>
   </dl>
   <dl class="row">
     <dt class="col-sm-3">Created</dt>

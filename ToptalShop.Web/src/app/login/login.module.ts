@@ -35,7 +35,7 @@ export const COMPONENTS = [LoginComponent];
 export class LoginModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: this,
+      ngModule: LoginModule,
       providers: [LoginService, LoginGuard],
     };
   }

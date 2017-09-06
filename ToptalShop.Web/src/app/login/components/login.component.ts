@@ -43,8 +43,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      email: ['regularuser@toptalshop.com', [Validators.required, Validators.email]],
-      password: ['regularuser', [Validators.required]]
+      email: ['administrator@toptalshop.com', [Validators.required, Validators.email]],
+      password: ['administrator', [Validators.required]]
     });
 
     this.registerValidation(this.form, this.formErrors, this.validationMessages);

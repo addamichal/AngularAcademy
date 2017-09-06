@@ -13,10 +13,12 @@ import { ProductsLoadedGuard } from './services/products-loaded.guard.service';
 import { ProductExistGuard } from './services/product-exists.guard.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@toverux/ngsweetalert2';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    CoreModule,
     RouterModule.forChild([
       { path: 'products/add', component: ProductComponent, pathMatch: 'full', canActivate: [ProductsLoadedGuard] },
       { path: 'products/update/:id', component: ProductComponent, canActivate: [ProductsLoadedGuard] },

@@ -30,6 +30,7 @@ import { OrdersModule } from './orders/orders.module';
 import { UsersModule } from './users/users.module';
 import { SweetAlert2Module } from '@toverux/ngsweetalert2';
 import { ProductsModule } from './products/products.module';
+import { CoreModule } from './core/core.module';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { ProductsModule } from './products/products.module';
     BrowserModule,
     BrowserAnimationsModule,
     NgbModule.forRoot(),
+    CoreModule,
     LoginModule.forRoot(),
     RegisterModule,
     OrdersModule,

@@ -63,6 +63,7 @@ namespace ToptalShop.Api.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        [CustomAuthorize(Roles = "Admin")]
         public IHttpActionResult Delete(int id)
         {
             var existingProduct = ctx.Products.SingleOrDefault(w => w.ProductId == id);

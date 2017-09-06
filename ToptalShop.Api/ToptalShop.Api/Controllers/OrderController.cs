@@ -29,6 +29,7 @@ namespace ToptalShop.Api.Controllers
                 .ToList();
         }
 
+        [CustomAuthorize(Roles = nameof(ToptalShopAppUserRole.UserManager))]
         public IHttpActionResult Put(int id, UpdateSalesOrderStatusBindingModel model)
         {
             var existingSalesOrder = GetOrders().SingleOrDefault(w => w.SalesOrderId == id);
@@ -41,6 +42,7 @@ namespace ToptalShop.Api.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        [CustomAuthorize(Roles = nameof(ToptalShopAppUserRole.Admin))]
         public IHttpActionResult Delete(int id)
         {
             var existingSalesOrder = GetOrders().SingleOrDefault(w => w.SalesOrderId == id);

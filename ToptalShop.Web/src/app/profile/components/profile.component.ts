@@ -34,14 +34,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.select(fromLogin.getUser).subscribe((user) => {
-      this.form = this.fb.group({
-        email: [user.email],
-        password: [null],
-        confirmPassword: [null],
-        shippingAddress: this.buildFormAddress(user.shippingAddress),
-        billingAddress: this.buildFormAddress(user.billingAddress)
-      });
+    this.store.select(fromLogin.getUser)
+    .takeWhile(() => this.active)
+      .subscribe((user) => {
+        if (user) {
+          this.form = this.fb.group({
+            email: [user.email],
+            password: [null],
+            confirmPassword: [null],
+            shippingAddress: this.buildFormAddress(user.shippingAddress),
+            billingAddress: this.buildFormAddress(user.billingAddress)
+          });
+        }
     });
 
     this.store.select(fromProfile.getProfilePagePending)

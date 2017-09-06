@@ -69,10 +69,6 @@ export class ProductComponent implements OnInit, OnDestroy {
       .takeWhile(() => this.active)
       .subscribe(error => this.catchBadRequest(error, this.formErrors));
 
-    this.store.select(fromProducts.getProductPageDeleteError)
-      .takeWhile(() => this.active)
-      .subscribe(error => this.catchBadRequest(error, this.formErrors));
-
     this.store.select(fromProducts.getProductPageDeleteSuccess)
       .takeWhile(() => this.active)
       .subscribe(success => {

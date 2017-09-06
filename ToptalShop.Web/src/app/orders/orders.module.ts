@@ -12,10 +12,12 @@ import { OrdersLoadedGuard } from './services/orders-loaded.guard.service';
 import { OrderExistGuard } from './services/order-exists.guard.service';
 import { OrderEffects } from './effects/order.effects';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    CoreModule,
     RouterModule.forChild([
       { path: 'orders/:id', component: OrderComponent, canActivate: [OrdersLoadedGuard, OrderExistGuard] },
       { path: 'orders', component: OrderListComponent, canActivate: [OrdersLoadedGuard] }

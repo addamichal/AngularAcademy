@@ -6,9 +6,10 @@
     <button class="btn btn-outline-success" id="dropdownBasic2" ngbDropdownToggle>Your profile</button>
     <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
       <button routerLink="/profile" class="dropdown-item">Profile info</button>
-      <button routerLink="/orders" class="dropdown-item">Orders</button>
-      <button routerLink="/users" class="dropdown-item">User management</button>
-      <button routerLink="/products" class="dropdown-item">Product management</button>
+      <button *roles="['RegularUser']" routerLink="/orders" class="dropdown-item">Your orders</button>
+      <button *advanced-user routerLink="/orders" class="dropdown-item">Order management</button>
+      <button *roles="['Admin']" routerLink="/users" class="dropdown-item">User management</button>
+      <button *advanced-user routerLink="/products" class="dropdown-item">Product management</button>
       <hr>
       <button class="dropdown-item" (click)="logout()">Logout</button>
     </div>
