@@ -14,15 +14,16 @@ import { ProductExistGuard } from './services/product-exists.guard.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@toverux/ngsweetalert2';
 import { CoreModule } from '../core/core.module';
+import { AdvancedUserGuard } from '../login/services/advanced-user-guard.service';
 
 @NgModule({
   imports: [
     CommonModule,
     CoreModule,
     RouterModule.forChild([
-      { path: 'products/add', component: ProductComponent, pathMatch: 'full', canActivate: [ProductsLoadedGuard] },
-      { path: 'products/update/:id', component: ProductComponent, canActivate: [ProductsLoadedGuard] },
-      { path: 'products', component: ProductListComponent, canActivate: [ProductsLoadedGuard] }
+      { path: 'products/add', component: ProductComponent, pathMatch: 'full', canActivate: [ProductsLoadedGuard, AdvancedUserGuard] },
+      { path: 'products/update/:id', component: ProductComponent, canActivate: [ProductsLoadedGuard, AdvancedUserGuard] },
+      { path: 'products', component: ProductListComponent, canActivate: [ProductsLoadedGuard, AdvancedUserGuard] }
     ]),
     ReactiveFormsModule,
     SweetAlert2Module,

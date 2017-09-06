@@ -13,14 +13,15 @@ import { UsersLoadedGuard } from './services/users-loaded.guard.service';
 import { UserExistGuard } from './services/user-exists.guard.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@toverux/ngsweetalert2';
+import { AdminGuard } from '../login/services/admin-guard.service';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild([
-      { path: 'users/add', component: UserComponent, pathMatch: 'full', canActivate: [UsersLoadedGuard] },
-      { path: 'users/update/:id', component: UserComponent, canActivate: [UsersLoadedGuard] },
-      { path: 'users', component: UserListComponent, canActivate: [UsersLoadedGuard] }
+      { path: 'users/add', component: UserComponent, pathMatch: 'full', canActivate: [UsersLoadedGuard, AdminGuard] },
+      { path: 'users/update/:id', component: UserComponent, canActivate: [UsersLoadedGuard, AdminGuard] },
+      { path: 'users', component: UserListComponent, canActivate: [UsersLoadedGuard, AdminGuard] }
     ]),
     ReactiveFormsModule,
     SweetAlert2Module,
