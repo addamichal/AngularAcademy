@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as products from './catalog/actions/products';
+import * as login from './login/actions/login';
 import * as fromRoot from './reducers';
 import * as fromLogin from './login/reducers';
 import { Observable } from 'rxjs/Observable';
@@ -20,5 +21,9 @@ export class AppComponent {
 
   constructor(private store: Store<fromRoot.State>) {
     this.loggedIn$ = this.store.select(fromLogin.getLoggedIn);
+  }
+
+  logout() {
+    this.store.dispatch(new login.Logout());
   }
 }

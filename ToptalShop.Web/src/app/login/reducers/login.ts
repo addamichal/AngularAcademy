@@ -8,14 +8,15 @@ export interface State {
 
 // TODO remove test values
 export const initialState: State = {
-  loggedIn: true,
-  user: {
-    id: '3382160c-e170-48fc-bbe2-50bc289b1401',
-    email: 'aaa',
-    userRole: 'Administrator',
-    billingAddress: null,
-    shippingAddress: null
-  },
+  loggedIn: false,
+  user: null
+  //user: {
+  //  id: '3382160c-e170-48fc-bbe2-50bc289b1401',
+  //  email: 'aaa',
+  //  userRole: 'Administrator',
+  //  billingAddress: null,
+  //  shippingAddress: null
+  //},
 };
 
 export function reducer(state = initialState, action: login.Actions): State {

@@ -10,7 +10,7 @@
       <button routerLink="/users" class="dropdown-item">User management</button>
       <button routerLink="/products" class="dropdown-item">Product management</button>
       <hr>
-      <button routerLink="/logout" class="dropdown-item">Logout</button>
+      <button class="dropdown-item" (click)="logout()">Logout</button>
     </div>
   </div>
   <button *ngIf="!(loggedIn$ | async)" routerLink="/login" class="btn btn-outline-success my-2 my-sm-0 mr-3">Login</button>

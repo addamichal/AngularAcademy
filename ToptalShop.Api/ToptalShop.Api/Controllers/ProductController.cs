@@ -22,6 +22,7 @@ namespace ToptalShop.Api.Controllers
             this.ctx = ctx;
         }
 
+        [AllowAnonymous]
         public IHttpActionResult Get()
         {
             var products = ctx.Products.ToList();

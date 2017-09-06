@@ -51,6 +51,7 @@ export class LoginEffects {
   loginRedirect$ = this.actions$
     .ofType(Login.LOGIN_REDIRECT, Login.LOGOUT)
     .do(loggedIn => {
+      this.loginTokenService.removeUserToken();
       this.router.navigate(['/login']);
     });
 
