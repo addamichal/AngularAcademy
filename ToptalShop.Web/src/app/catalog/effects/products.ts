@@ -12,10 +12,11 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toArray';
 import { mapKeys, keys, isObject } from 'lodash';
 import { Product } from '../models/product';
+import { ToasterService } from 'angular2-toaster';
 
 @Injectable()
 export class ProductsEffects {
-  constructor(private actions$: Actions, private productService: ProductService) {
+  constructor(private actions$: Actions, private productService: ProductService, private toasterService: ToasterService) {
   }
 
   @Effect()
@@ -26,4 +27,9 @@ export class ProductsEffects {
       .map((p: Product[]) => new products.LoadSuccessAction(p))
       .catch(error => of(new products.LoadFailedAction(error)))
   );
+
+  @Effect({ dispatch: false })
+  addToCard: Observable<Action> = this.actions$
+    .ofType(products.INCREMENT_PRODUCT_QUANTITY)
+    .do(() => this.toasterService.pop('success', 'Added to cart'));
 }
