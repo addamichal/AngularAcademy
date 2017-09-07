@@ -26,6 +26,9 @@
           <div class="invalid-feedback">{{ formErrors['passwordGroup'] }}</div>
         </div>
       </div>
+      <div class="form-group">
+        <re-captcha formControlName="recaptcha" [siteKey]="recaptchaKey"></re-captcha>
+      </div>
       <button type="submit" class="btn btn-success" [disabled]="!form.valid || form.disabled">Register</button>
     </form>
   </div>

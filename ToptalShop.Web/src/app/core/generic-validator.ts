@@ -1,29 +1,33 @@
 import { FormGroup } from '@angular/forms';
+import 'rxjs/add/operator/debounceTime';
 
 export class GenericValidator {
 
   constructor(private validationMessages: { [key: string]: { [key: string]: string } }) {
   }
 
-  registerValidation(form: FormGroup, formErrors: any) {
+  registerValidation(form: FormGroup, formErrors: any, recursive: boolean = true) {
     Object.keys(form.controls).forEach(key => {
       const formControl = form.get(key);
-      formControl.valueChanges.debounceTime(500).subscribe(value => {
-        this.processMessages(form, formErrors);
+      formControl.valueChanges.subscribe(value => {
+        this.processMessages(form, formErrors, recursive);
       });
     });
   }
 
-  processMessages(container: FormGroup, messages: any): any {
+  processMessages(container: FormGroup, messages: any, recursive: boolean): any {
     for (const controlKey in container.controls) {
       if (container.controls.hasOwnProperty(controlKey)) {
         const c = container.controls[controlKey];
         // If it is a FormGroup, process its child controls.
         if (c instanceof FormGroup) {
-          this.processMessages(c, messages);
 
+          if (recursive) {
+            this.processMessages(c, messages, recursive);
+          }
+
+          messages[controlKey] = '';
           if (c.errors) {
-            messages[controlKey] = '';
             Object.keys(c.errors).map(messageKey => {
               if (this.validationMessages[controlKey][messageKey]) {
                 if (messages[controlKey] === '') {
@@ -50,7 +54,7 @@ export class GenericValidator {
       }
     }
 
-    return messages;
+    console.log(messages);
   }
 
   getErrorCount(container: FormGroup): number {

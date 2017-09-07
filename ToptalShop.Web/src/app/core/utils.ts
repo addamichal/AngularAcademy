@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 function catchBadRequest(errorResponse: HttpErrorResponse, formErrors: any): Observable<any> {
-  this.formErrors[''] = '';
+  formErrors[''] = '';
   if (errorResponse && errorResponse.status === 400) {
     if (errorResponse.error.modelState) {
       const modelState = errorResponse.error.modelState;

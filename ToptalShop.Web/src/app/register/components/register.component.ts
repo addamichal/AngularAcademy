@@ -42,9 +42,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     confirmPassword: {
       required: 'Please repeat Password'
     },
-    recaptcha: {
-      required: 'Recaptcha is required'
-    },
     passwordGroup: {
       match: 'Passwords must match'
     }
@@ -91,7 +88,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    const model = <RegistrationInfo>Object.assign({}, this.form.value);
+    const model = <RegistrationInfo>Object.assign({}, {
+      email: this.form.value.email,
+      password: this.form.value.passwordGroup.password,
+      confirmPassword: this.form.value.passwordGroup.confirmPassword,
+      recaptcha: this.form.value.recaptcha
+    });
     this.store.dispatch(new register.Register(model));
   }
 }
