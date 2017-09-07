@@ -10,6 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { Profile } from '../models/profile';
 import { ToasterService } from 'angular2-toaster';
 import { Address } from '../../login/models/user';
+import { catchBadRequest } from '../../core/utils';
 
 @Component({
   selector: 'app-profile',
@@ -63,7 +64,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     this.store.select(fromProfile.getProfilePageError)
       .takeWhile(() => this.active)
-      .subscribe(error => this.catchBadRequest(error, this.formErrors));
+      .subscribe(error => catchBadRequest(error, this.formErrors));
   }
 
   ngOnDestroy() {
@@ -74,23 +75,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   submit() {
     const profile = <Profile>Object.assign({}, this.form.value);
     this.store.dispatch(new profilePage.UpdateProfile(profile));
-  }
-
-
-  // TODO refactor away
-  catchBadRequest(errorResponse: HttpErrorResponse, formErrors: any): Observable<any> {
-    this.formErrors[''] = '';
-    if (errorResponse && errorResponse.status === 400) {
-      const modelState = errorResponse.error.modelState;
-      for (const field of Object.keys(modelState)) {
-        if (formErrors.hasOwnProperty(field)) {
-          formErrors[field] = modelState[field].slice(0, 1);
-        } else {
-          formErrors[''] = modelState[field].join(' ');
-        }
-      }
-      return Observable.of();
-    }
   }
 
   buildFormAddress(address: Address) {

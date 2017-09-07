@@ -10,6 +10,7 @@ import { passwordMatcher } from '../../core/validators';
 import { ToasterService } from 'angular2-toaster/angular2-toaster';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { catchBadRequest } from '../../core/utils';
 
 @Component({
   selector: 'app-user',
@@ -66,15 +67,11 @@ export class UserComponent implements OnInit, OnDestroy {
 
     this.store.select(fromUsers.getUserPageError)
       .takeWhile(() => this.active)
-      .subscribe(error => this.catchBadRequest(error, this.formErrors));
+      .subscribe(error => catchBadRequest(error, this.formErrors));
 
     this.store.select(fromUsers.getUserPageDeleteError)
       .takeWhile(() => this.active)
-      .subscribe(error => this.catchBadRequest(error, this.formErrors));
-
-    this.store.select(fromUsers.getUserPageDeleteError)
-      .takeWhile(() => this.active)
-      .subscribe(error => this.catchBadRequest(error, this.formErrors));
+      .subscribe(error => catchBadRequest(error, this.formErrors));
 
     this.store.select(fromUsers.getUserPageDeleteSuccess)
       .takeWhile(() => this.active)
@@ -114,21 +111,5 @@ export class UserComponent implements OnInit, OnDestroy {
     }, { validator: passwordMatcher });
 
     // TODO add validators
-  }
-
-  // TODO refactor away
-  catchBadRequest(errorResponse: HttpErrorResponse, formErrors: any): Observable<any> {
-    this.formErrors[''] = '';
-    if (errorResponse && errorResponse.status === 400) {
-      const modelState = errorResponse.error.modelState;
-      for (const field of Object.keys(modelState)) {
-        if (formErrors.hasOwnProperty(field)) {
-          formErrors[field] = modelState[field].slice(0, 1);
-        } else {
-          formErrors[''] = modelState[field].join(' ');
-        }
-      }
-      return Observable.of();
-    }
   }
 }

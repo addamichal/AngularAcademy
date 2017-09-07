@@ -11,6 +11,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../../login/models/user';
+import { catchBadRequest } from '../../core/utils';
 
 @Component({
   selector: 'app-order',
@@ -63,15 +64,15 @@ export class OrderComponent implements OnInit, OnDestroy {
 
     this.store.select(fromOrders.getOrderPageError)
       .takeWhile(() => this.active)
-      .subscribe(error => this.catchBadRequest(error, this.formErrors));
+      .subscribe(error => catchBadRequest(error, this.formErrors));
 
     this.store.select(fromOrders.getOrderPageDeleteError)
       .takeWhile(() => this.active)
-      .subscribe(error => this.catchBadRequest(error, this.formErrors));
+      .subscribe(error => catchBadRequest(error, this.formErrors));
 
     this.store.select(fromOrders.getOrderPageDeleteError)
       .takeWhile(() => this.active)
-      .subscribe(error => this.catchBadRequest(error, this.formErrors));
+      .subscribe(error => catchBadRequest(error, this.formErrors));
 
     this.store.select(fromOrders.getOrderPageDeleteSuccess)
       .takeWhile(() => this.active)
@@ -103,28 +104,5 @@ export class OrderComponent implements OnInit, OnDestroy {
     return this.fb.group({
       status: [order.status, [Validators.required]],
     });
-  }
-
-  // TODO refactor away
-  catchBadRequest(errorResponse: HttpErrorResponse, formErrors: any): Observable<any> {
-    this.formErrors[''] = '';
-    if (errorResponse && errorResponse.status === 400) {
-      if (errorResponse.error.modelState) {
-        const modelState = errorResponse.error.modelState;
-        for (const field of Object.keys(modelState)) {
-          if (formErrors.hasOwnProperty(field)) {
-            formErrors[field] = modelState[field].slice(0, 1);
-          } else {
-            formErrors[''] = modelState[field].join(' ');
-          }
-        }
-        return Observable.of();
-      }
-
-      if (errorResponse.error.message) {
-        formErrors[''] = errorResponse.error.message;
-        return Observable.of();
-      }
-    }
   }
 }
