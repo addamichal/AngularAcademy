@@ -1,21 +1,24 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../models/product';
 import * as product from '../actions/product';
 import * as fromProducts from '../reducers';
 import * as fromLogin from '../../login/reducers';
 import { Store } from '@ngrx/store';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControlName } from '@angular/forms';
 import { passwordMatcher } from '../../core/validators';
 import { ToasterService } from 'angular2-toaster/angular2-toaster';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { GenericValidator } from '../../core/generic-validator';
+import { catchBadRequest } from '../../core/utils';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html'
 })
 export class ProductComponent implements OnInit, OnDestroy {
+  genericValidator: GenericValidator;
   id: string;
   active = true;
   product: Product;
@@ -25,7 +28,16 @@ export class ProductComponent implements OnInit, OnDestroy {
   };
 
   validationMessages = {
-
+    name: {
+      required: 'Name is required'
+    },
+    description: {
+      required: 'Description is required'
+    },
+    price: {
+      required: 'Price is required',
+      min: 'Minimal price is $0.1'
+    }
   };
 
   constructor(
@@ -36,9 +48,13 @@ export class ProductComponent implements OnInit, OnDestroy {
     private toasterService: ToasterService
   ) {
     this.store.dispatch(new product.SaveProductReset());
+
+    this.genericValidator = new GenericValidator(this.validationMessages);
   }
 
   ngOnInit() {
+    this.genericValidator.registerValidation(this.form, this.formErrors);
+
     this.route.params.subscribe(data => {
       this.id = data['id'];
       this.store.select(fromProducts.getProducts)
@@ -63,11 +79,11 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     this.store.select(fromProducts.getProductPageError)
       .takeWhile(() => this.active)
-      .subscribe(error => this.catchBadRequest(error, this.formErrors));
+      .subscribe(error => catchBadRequest(error, this.formErrors));
 
     this.store.select(fromProducts.getProductPageDeleteError)
       .takeWhile(() => this.active)
-      .subscribe(error => this.catchBadRequest(error, this.formErrors));
+      .subscribe(error => catchBadRequest(error, this.formErrors));
 
     this.store.select(fromProducts.getProductPageDeleteSuccess)
       .takeWhile(() => this.active)
@@ -104,30 +120,6 @@ export class ProductComponent implements OnInit, OnDestroy {
       description: [product ? product.description : '', [Validators.required]],
       price: [product ? product.price : 10, [Validators.required, Validators.min(0.01)]]
     });
-
-    // TODO add validators
   }
 
-  // TODO refactor away
-  catchBadRequest(errorResponse: HttpErrorResponse, formErrors: any): Observable<any> {
-    this.formErrors[''] = '';
-    if (errorResponse && errorResponse.status === 400) {
-      if (errorResponse.error.modelState) {
-        const modelState = errorResponse.error.modelState;
-        for (const field of Object.keys(modelState)) {
-          if (formErrors.hasOwnProperty(field)) {
-            formErrors[field] = modelState[field].slice(0, 1);
-          } else {
-            formErrors[''] = modelState[field].join(' ');
-          }
-        }
-        return Observable.of();
-      }
-
-      if (errorResponse.error.message) {
-        formErrors[''] = errorResponse.error.message;
-        return Observable.of();
-      }
-    }
-  }
 }

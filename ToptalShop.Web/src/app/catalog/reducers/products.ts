@@ -100,6 +100,10 @@ export const getCartSummary = createSelector(
       totalPrice: 0
     };
 
+    if (!cart || !products) {
+      return cartSummary;
+    }
+
     for (const productId of getCartProductIds(cart)) {
       const quantity = cart[productId];
       const product = products.filter(p => p.id === productId)[0];
@@ -114,25 +118,29 @@ export const getCartDetails = createSelector(
   getProducts,
   getCart,
   (products, cart) => {
-      const cartDetails = {} as CartDetails;
-      cartDetails.total = 0;
-      cartDetails.lines = [];
+    const cartDetails = {} as CartDetails;
+    cartDetails.total = 0;
+    cartDetails.lines = [];
 
-      for (const productId of getCartProductIds(cart)) {
-        const line = {} as CartDetailsLine;
-        const product = products.filter(p => p.id === productId)[0];
-        line.productId = product.id;
-        line.price = product.price;
-        line.productName = product.name;
-        line.quantity = cart[productId];
-        line.subTotal = line.price * line.quantity;
-
-        cartDetails.total += line.subTotal;
-
-        cartDetails.lines.push(line);
-      }
-
+    if (!cart || !products) {
       return cartDetails;
+    }
+
+    for (const productId of getCartProductIds(cart)) {
+      const line = {} as CartDetailsLine;
+      const product = products.filter(p => p.id === productId)[0];
+      line.productId = product.id;
+      line.price = product.price;
+      line.productName = product.name;
+      line.quantity = cart[productId];
+      line.subTotal = line.price * line.quantity;
+
+      cartDetails.total += line.subTotal;
+
+      cartDetails.lines.push(line);
+    }
+
+    return cartDetails;
   }
 );
 

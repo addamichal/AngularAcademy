@@ -1,4 +1,5 @@
 <div class="container">
+  <h2>Register</h2>
   <div class="alert alert-success" role="alert" *ngIf="registerSuccess">
     Registration successful! You can <a routerLink="/login">Login</a> now.
   </div>
@@ -6,83 +7,26 @@
     <div class="alert alert-danger" role="alert" *ngIf="formErrors['']">
       {{ formErrors[''] }}
     </div>
-    <form novalidate [formGroup]=form (ngSubmit)="submit()">
-      <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-          <h2>Register</h2>
-          <hr>
-        </div>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input [ngClass]="{'is-invalid': formErrors['email'] }" type="email" class="form-control" id="email" formControlName="email" aria-describedby="emailHelp" placeholder="Enter email">
+        <div class="invalid-feedback">{{ formErrors['email'] }}</div>
       </div>
-      <div class="row">
-        <div class="col-md-3 field-label-responsive">
-          <label for="email">E-Mail</label>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-              <input type="text" name="email" class="form-control" id="email" placeholder="you@example.com" autofocus formControlName="email">
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-control-feedback">
-            <span class="text-danger align-middle" *ngIf="formErrors.email">{{ formErrors.email }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-3 field-label-responsive">
+      <div formGroupName="passwordGroup">
+        <div class="form-group">
           <label for="password">Password</label>
+          <input [ngClass]="{'is-invalid': formErrors['password'] }" type="password" class="form-control" id="password" placeholder="Password" formControlName="password">
+          <div class="invalid-feedback">{{ formErrors['password'] }}</div>
         </div>
-        <div class="col-md-6">
-          <div class="form-group has-danger">
-            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-              <input type="password" name="password" class="form-control" id="password" placeholder="Password" formControlName="password">
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-control-feedback">
-            <span class="text-danger align-middle">
-                <span class="text-danger align-middle" *ngIf="formErrors.password">{{ formErrors.password }}</span>
-            </span>
-          </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm password</label>
+          <input [ngClass]="{'is-invalid': formErrors['confirmPassword'] || formErrors['passwordGroup'] }" type="password" class="form-control" id="confirm password" placeholder="Password" formControlName="confirmPassword">
+          <div class="invalid-feedback">{{ formErrors['confirmPassword'] }}</div>
+          <div class="invalid-feedback">{{ formErrors['passwordGroup'] }}</div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-3 field-label-responsive">
-          <label for="password">Confirm Password</label>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-              <input type="password" name="password-confirmation" class="form-control" id="password-confirm" placeholder="Confirm password"
-                formControlName="confirmPassword">
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-control-feedback">
-            <span class="text-danger align-middle">
-                <span class="text-danger align-middle" *ngIf="formErrors.confirmPassword">{{ formErrors.confirmPassword }}</span>
-            <span class="text-danger align-middle" *ngIf="formErrors.form">{{ formErrors.form }}</span>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="row mb-4">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-          <re-captcha formControlName="recaptcha" [siteKey]="recaptchaKey"></re-captcha>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-          <button type="submit" class="btn btn-success" [disabled]="!form.valid || form.disabled">Register</button>
-        </div>
-      </div>
+      <button type="submit" class="btn btn-success" [disabled]="!form.valid || form.disabled">Register</button>
     </form>
   </div>
 </div>

@@ -6,15 +6,18 @@
   <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="form-group">
       <label for="name">Name</label>
-      <input type="text" class="form-control" id="name" formControlName="name" aria-describedby="name" placeholder="Enter name">
+      <input [ngClass]="{'is-invalid': formErrors['name'] }" type="text" class="form-control" id="name" formControlName="name" aria-describedby="name" placeholder="Enter name">
+      <div class="invalid-feedback">{{ formErrors['name'] }}</div>
     </div>
     <div class="form-group">
       <label for="description">Description</label>
-      <input type="text" class="form-control" id="description" formControlName="description" aria-describedby="description" placeholder="Enter description">
+      <input [ngClass]="{'is-invalid': formErrors.description }" type="text" class="form-control" id="description" formControlName="description" aria-describedby="description" placeholder="Enter description">
+      <div class="invalid-feedback">{{ formErrors['description'] }}</div>
     </div>
     <div class="form-group">
       <label for="price">Price</label>
-      <input type="number" class="form-control" id="price" formControlName="price" aria-describedby="price" placeholder="Enter price">
+      <input [ngClass]="{'is-invalid': formErrors.price }" type="number" class="form-control" id="price" formControlName="price" aria-describedby="price" placeholder="Enter price">
+      <div class="invalid-feedback">{{ formErrors['price'] }}</div>
     </div>
     <button type="button" class="btn" routerLink="/products">Back</button>
     <button type="submit" class="btn btn-success" [disabled]="!form.valid || form.disabled">Save</button>
