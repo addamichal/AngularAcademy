@@ -16,7 +16,6 @@ export class OrdersLoadedGuard implements CanActivate {
     return (this.store.select(fromOrders.getOrdersLoaded)
       .filter(loaded => loaded))
       .take(1).switchMap((data) => {
-        console.log(data);
         return Observable.of(data);
       });
   }

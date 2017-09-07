@@ -16,7 +16,6 @@ export class ProductsLoadedGuard implements CanActivate {
     return (this.store.select(fromProducts.getProductsLoaded)
       .filter(loaded => loaded))
       .take(1).switchMap((data) => {
-        console.log(data);
         return Observable.of(data);
       });
   }

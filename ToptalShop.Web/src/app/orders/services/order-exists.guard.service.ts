@@ -21,9 +21,7 @@ export class OrderExistGuard implements CanActivate {
       return this.store.select(fromOrders.getOrders)
       .map(
         orders => {
-          console.log(orders);
           const filteredOrders = orders.filter(order => order.id === +route.params['id']);
-          console.log(filteredOrders);
           return filteredOrders.length > 0;
         })
       .do(orderExists => {

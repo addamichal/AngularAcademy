@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../models/user';
+import { User, SaveUserData } from '../models/user';
 import * as user from '../actions/user';
 import * as fromUsers from '../reducers';
 import * as fromLogin from '../../login/reducers';
@@ -11,12 +11,14 @@ import { ToasterService } from 'angular2-toaster/angular2-toaster';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { catchBadRequest } from '../../core/utils';
+import { GenericValidator } from '../../core/generic-validator';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html'
 })
 export class UserComponent implements OnInit, OnDestroy {
+  genericValidator: GenericValidator;
   currentUser$: Observable<any>;
   id: string;
   active = true;
@@ -27,7 +29,23 @@ export class UserComponent implements OnInit, OnDestroy {
   };
 
   validationMessages = {
-
+    form: {
+      match: 'Passwords must match'
+    },
+    email: {
+      required: 'Please enter Email',
+      email: 'Please enter Valid Email'
+    },
+    password: {
+      required: 'Please enter Password',
+      minlength: 'Password must have at least 6 characters'
+    },
+    confirmPassword: {
+      required: 'Please repeat Password'
+    },
+    passwordGroup: {
+      match: 'Passwords must match'
+    }
   };
 
   constructor(
@@ -38,6 +56,7 @@ export class UserComponent implements OnInit, OnDestroy {
     private toasterService: ToasterService
   ) {
     this.store.dispatch(new user.SaveUserReset());
+    this.genericValidator = new GenericValidator(this.validationMessages);
   }
 
   ngOnInit() {
@@ -48,7 +67,10 @@ export class UserComponent implements OnInit, OnDestroy {
       this.store.select(fromUsers.getUsers)
         .takeWhile(() => this.active)
         .map(users => users.filter(p => p.id === this.id)[0])
-        .subscribe(user => this.form = this.createForm(user));
+        .subscribe(user => {
+          this.form = this.createForm(user);
+          this.genericValidator.registerValidation(this.form, this.formErrors);
+        });
     });
 
     this.store.select(fromUsers.getUserPagePending)
@@ -84,8 +106,13 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    const model = Object.assign({ id: this.id }, this.form.value);
-    console.log(model);
+    const model = <SaveUserData>{
+      id: this.id,
+      email: this.form.value.email,
+      password: this.form.value.passwordGroup.password,
+      confirmPassword: this.form.value.passwordGroup.confirmPassword,
+      userRole: this.form.value.userRole
+    };
     this.store.dispatch(new user.SaveUser(model));
   }
 
@@ -103,13 +130,21 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   createForm(user: User) {
-    return this.fb.group({
+    const form = this.fb.group({
       email: [user ? user.email : '', [Validators.required, Validators.email]],
       userRole: [user ? user.userRole : 'RegularUser', [Validators.required]],
-      password: [null, [Validators.minLength(6)]],
-      confirmPassword: [null],
-    }, { validator: passwordMatcher });
+      passwordGroup: this.fb.group({
+        password: [null, [Validators.minLength(6)]],
+        confirmPassword: [null]
+      }, { validator: passwordMatcher })
+    });
 
-    // TODO add validators
+    if (!this.isUpdate()) {
+      const passwordGroup = form.get('passwordGroup');
+      passwordGroup.get('password').setValidators([Validators.required, Validators.minLength(6)]);
+      passwordGroup.get('confirmPassword').setValidators(Validators.required);
+    }
+
+    return form;
   }
 }

@@ -21,9 +21,7 @@ export class ProductExistGuard implements CanActivate {
       return this.store.select(fromRoot.getProducts)
       .map(
         products => {
-          console.log(products);
           const filteredProducts = products.filter(order => order.id === +route.params['id']);
-          console.log(filteredProducts);
           return filteredProducts.length > 0;
         })
       .do(productExists => {

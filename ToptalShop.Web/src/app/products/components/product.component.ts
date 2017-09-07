@@ -97,7 +97,6 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   submit() {
     const model = Object.assign({ id: this.id }, this.form.value);
-    console.log(model);
     this.store.dispatch(new product.SaveProduct(model));
   }
 

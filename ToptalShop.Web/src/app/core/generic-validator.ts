@@ -53,20 +53,5 @@ export class GenericValidator {
         }
       }
     }
-
-    console.log(messages);
-  }
-
-  getErrorCount(container: FormGroup): number {
-    let errorCount = 0;
-    for (const controlKey in container.controls) {
-      if (container.controls.hasOwnProperty(controlKey)) {
-        if (container.controls[controlKey].errors) {
-          errorCount += Object.keys(container.controls[controlKey].errors).length;
-          console.log(errorCount);
-        }
-      }
-    }
-    return errorCount;
   }
 }

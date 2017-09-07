@@ -21,9 +21,7 @@ export class UserExistGuard implements CanActivate {
       return this.store.select(fromUsers.getUsers)
       .map(
         users => {
-          console.log(users);
           const filteredUsers = users.filter(user => user.id === route.params['id']);
-          console.log(filteredUsers);
           return filteredUsers.length > 0;
         })
       .do(userExists => {

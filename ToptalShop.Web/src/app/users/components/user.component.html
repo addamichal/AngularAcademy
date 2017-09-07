@@ -9,7 +9,9 @@
     </div>
     <div class="form-group">
       <label for="email">Email address</label>
-      <input type="email" class="form-control" id="email" formControlName="email" aria-describedby="emailHelp" placeholder="Enter email">
+      <input [ngClass]="{'is-invalid': formErrors['email'] }" type="email" class="form-control" id="email" formControlName="email"
+        aria-describedby="emailHelp" placeholder="Enter email">
+      <div class="invalid-feedback">{{ formErrors['email'] }}</div>
     </div>
     <div class="form-group">
       <label for="email">User role</label>
@@ -19,18 +21,23 @@
         <option value="RegularUser">User</option>
       </select>
     </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password">
-    </div>
-    <div class="form-group">
-      <label for="confirmPassword">Confirm password</label>
-      <input type="password" class="form-control" id="confirm password" placeholder="Password" formControlName="confirmPassword">
+    <div formGroupName="passwordGroup">
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input [ngClass]="{'is-invalid': formErrors['password'] }" type="password" class="form-control" id="password" placeholder="Password"
+          formControlName="password">
+        <div class="invalid-feedback">{{ formErrors['password'] }}</div>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm password</label>
+        <input [ngClass]="{'is-invalid': formErrors['confirmPassword'] || formErrors['passwordGroup'] }" type="password" class="form-control" id="confirm password" placeholder="Password" formControlName="confirmPassword">
+        <div class="invalid-feedback">{{ formErrors['confirmPassword'] }}</div>
+        <div class="invalid-feedback">{{ formErrors['passwordGroup'] }}</div>
+      </div>
     </div>
     <button type="button" class="btn" routerLink="/users">Back</button>
     <button type="submit" class="btn btn-success" [disabled]="!form.valid || form.disabled">Save</button>
-    <button *ngIf="isUpdate() && (currentUser$ | async).id !== id" type="button"
-      class="btn btn-danger float-right"
-      [swal]="['Delete?', 'This cannot be undone.', 'warning']" (confirm)="delete()">Delete</button>
+    <button *ngIf="isUpdate() && (currentUser$ | async).id !== id" type="button" class="btn btn-danger float-right" [swal]="['Delete?', 'This cannot be undone.', 'warning']"
+      (confirm)="delete()">Delete</button>
   </form>
 </div>
