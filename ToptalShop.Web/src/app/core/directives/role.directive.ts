@@ -18,10 +18,10 @@ export class RolesDirective implements OnDestroy {
     this.store.select(fromLogin.getUser)
       .takeWhile(() => this.active)
       .subscribe(user => {
+        this.viewContainer.clear();
+
         if (user && roles.some(role => user.userRole === role)) {
           this.viewContainer.createEmbeddedView(this.templateRef);
-        } else {
-          this.viewContainer.clear();
         }
       }
     );
@@ -48,10 +48,10 @@ export class AdvancedUserDirective implements OnInit, OnDestroy {
     this.store.select(fromLogin.getUser)
     .takeWhile(() => this.active)
     .subscribe(user => {
+      this.viewContainer.clear();
+
       if (user && user.userRole !== 'RegularUser') {
         this.viewContainer.createEmbeddedView(this.templateRef);
-      } else {
-        this.viewContainer.clear();
       }
     }
   );

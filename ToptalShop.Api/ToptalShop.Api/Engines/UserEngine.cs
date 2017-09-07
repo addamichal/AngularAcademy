@@ -151,12 +151,13 @@ namespace ToptalShop.Api.Engines
 
         public UserResult Delete(string userId)
         {
-            var user = _applicationUserManager.FindById(userId);
+            var user = FindApplicationUserById(userId);
             if (user == null)
                 throw new Exception("User does not exist: " + userId);
 
             var shopAppUser = Map(user);
-            var deleteResult = _applicationUserManager.Delete(user);
+
+            var deleteResult = DeleteUser(user);
             if (deleteResult.Succeeded)
                 return new UserResult(shopAppUser);
 
@@ -188,6 +189,28 @@ namespace ToptalShop.Api.Engines
                 .Include(w => w.ShippingAddress)
                 .Include(w => w.BillingAddress)
                 .SingleOrDefault(w => w.Id == id);
+        }
+
+        private IdentityResult DeleteUser(ApplicationUser user)
+        {
+            var salesOrders = this._toptalShopDbContext.SalesOrders
+                .Include(w => w.ShippingAddress)
+                .Include(w => w.BillingAddress)
+                .Include(w => w.Lines)
+                .Where(w => w.CreatedById == user.Id).ToList();
+
+            foreach (var salesOrder in salesOrders)
+            {
+                _toptalShopDbContext.SalesOrderLines.RemoveRange(salesOrder.Lines);
+                _toptalShopDbContext.Addresses.Remove(salesOrder.ShippingAddress);
+                _toptalShopDbContext.Addresses.Remove(salesOrder.BillingAddress);
+                _toptalShopDbContext.SalesOrders.Remove(salesOrder);
+            }
+
+            _toptalShopDbContext.Addresses.Remove(user.ShippingAddress);
+            _toptalShopDbContext.Addresses.Remove(user.BillingAddress);
+
+            return _applicationUserManager.Delete(user);
         }
     }
 }
