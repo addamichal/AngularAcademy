@@ -21,9 +21,9 @@ import { AdvancedUserGuard } from '../login/services/advanced-user-guard.service
     CommonModule,
     CoreModule,
     RouterModule.forChild([
-      { path: 'products/add', component: ProductComponent, pathMatch: 'full', canActivate: [ProductsLoadedGuard, AdvancedUserGuard] },
-      { path: 'products/update/:id', component: ProductComponent, canActivate: [ProductsLoadedGuard, AdvancedUserGuard] },
-      { path: 'products', component: ProductListComponent, canActivate: [ProductsLoadedGuard, AdvancedUserGuard] }
+      { path: '', component: ProductListComponent, canActivate: [ProductsLoadedGuard, AdvancedUserGuard] },
+      { path: 'add', component: ProductComponent, pathMatch: 'full', canActivate: [ProductsLoadedGuard, AdvancedUserGuard] },
+      { path: 'update/:id', component: ProductComponent, canActivate: [ProductsLoadedGuard, AdvancedUserGuard] },
     ]),
     ReactiveFormsModule,
     SweetAlert2Module,

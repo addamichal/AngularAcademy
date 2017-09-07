@@ -19,8 +19,8 @@ import { CoreModule } from '../core/core.module';
     CommonModule,
     CoreModule,
     RouterModule.forChild([
-      { path: 'orders/:id', component: OrderComponent, canActivate: [OrdersLoadedGuard, OrderExistGuard] },
-      { path: 'orders', component: OrderListComponent, canActivate: [OrdersLoadedGuard] }
+      { path: '', component: OrderListComponent, canActivate: [OrdersLoadedGuard] },
+      { path: ':id', component: OrderComponent, canActivate: [OrdersLoadedGuard, OrderExistGuard] },
     ]),
     StoreModule.forFeature('orders', reducers),
     EffectsModule.forFeature([OrdersEffects, OrderEffects]),

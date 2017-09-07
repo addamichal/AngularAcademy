@@ -26,11 +26,11 @@ import { RegisterModule } from './register/register.module';
 import { ProfileModule } from './profile/profile.module';
 import { RecaptchaModule, } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
-import { OrdersModule } from './orders/orders.module';
-import { UsersModule } from './users/users.module';
 import { SweetAlert2Module } from '@toverux/ngsweetalert2';
-import { ProductsModule } from './products/products.module';
 import { CoreModule } from './core/core.module';
+import { AdminGuard } from './login/services/admin-guard.service';
+import { AdvancedUserGuard } from './login/services/advanced-user-guard.service';
+import { LoginGuard } from './login/services/login-guard.service';
 
 
 @NgModule({
@@ -48,10 +48,7 @@ import { CoreModule } from './core/core.module';
     CoreModule,
     LoginModule.forRoot(),
     RegisterModule,
-    OrdersModule,
     ProfileModule,
-    UsersModule,
-    ProductsModule,
     RouterModule.forRoot([
       {
         path: 'catalog/:id',
@@ -60,6 +57,21 @@ import { CoreModule } from './core/core.module';
       },
       { path: 'catalog', component: ProductListComponent, canActivate: [ProductsLoadedGuard] },
       { path: 'cart', component: CartDetailsComponent, canActivate: [ProductsLoadedGuard] },
+      {
+        path: 'users',
+        loadChildren: 'app/users/users.module#UsersModule',
+        canLoad: [AdminGuard]
+      },
+      {
+        path: 'products',
+        loadChildren: 'app/products/products.module#ProductsModule',
+        canLoad: [AdvancedUserGuard]
+      },
+      {
+        path: 'orders',
+        loadChildren: 'app/orders/orders.module#OrdersModule',
+        canLoad: [LoginGuard]
+      },
       { path: '', redirectTo: 'catalog', pathMatch: 'full' }
     ]),
     StoreModule.forRoot(reducers, { metaReducers }),
