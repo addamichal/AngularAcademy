@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import * as fromProfile from '../reducers';
 import * as fromLogin from '../../login/reducers';
@@ -11,6 +11,7 @@ import { Profile } from '../models/profile';
 import { ToasterService } from 'angular2-toaster';
 import { Address } from '../../login/models/user';
 import { catchBadRequest } from '../../core/utils';
+import { GenericValidator } from '../../core/generic-validator';
 
 @Component({
   selector: 'app-profile',
@@ -18,34 +19,67 @@ import { catchBadRequest } from '../../core/utils';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit, OnDestroy {
+  genericValidator: GenericValidator;
   active = true;
 
   form: FormGroup;
 
   formErrors = {
+    sa: {},
+    ba: {}
   };
 
   validationMessages = {
-
+    email: {
+      required: 'Email is required'
+    },
+    firstName: {
+      required: 'First name is required'
+    },
+    lastName: {
+      required: 'Last name is required'
+    },
+    address1: {
+      required: 'Address is required'
+    },
+    address2: {
+      required: 'Address 2 is required'
+    },
+    city: {
+      required: 'City is required'
+    },
+    state: {
+      required: 'State is required'
+    },
+    zip: {
+      required: 'Zip is required'
+    }
   };
 
   constructor(
     private fb: FormBuilder,
     private store: Store<fromProfile.State>, private toasterService: ToasterService) {
+      this.genericValidator = new GenericValidator(this.validationMessages);
   }
 
   ngOnInit() {
-    this.store.select(fromLogin.getUser)
+        this.store.select(fromLogin.getUser)
     .takeWhile(() => this.active)
       .subscribe((user) => {
         if (user) {
           this.form = this.fb.group({
-            email: [user.email],
+            email: [user.email, Validators.required],
             password: [null],
             confirmPassword: [null],
             shippingAddress: this.buildFormAddress(user.shippingAddress),
             billingAddress: this.buildFormAddress(user.billingAddress)
           });
+
+          const shippingAddress = this.form.get('shippingAddress') as FormGroup;
+          const billingAddress = this.form.get('billingAddress') as FormGroup;
+          this.genericValidator.registerValidation(this.form, this.formErrors, false);
+          this.genericValidator.registerValidation(shippingAddress, this.formErrors.sa, false);
+          this.genericValidator.registerValidation(billingAddress, this.formErrors.ba, false);
         }
     });
 
@@ -79,13 +113,19 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   buildFormAddress(address: Address) {
     return this.fb.group({
-      firstName: [address ? address.firstName : ''],
-      lastName: [address ? address.firstName : ''],
-      address1: [address ? address.address1 : ''],
-      address2: [address ? address.address2 : ''],
-      city: [address ? address.city : ''],
-      state: [address ? address.state : ''],
-      zip: [address ? address.zip : '']
+      firstName: [address ? address.firstName : '', Validators.required],
+      lastName: [address ? address.firstName : '', Validators.required],
+      address1: [address ? address.address1 : '', Validators.required],
+      address2: [address ? address.address2 : '', Validators.required],
+      city: [address ? address.city : '', Validators.required],
+      state: [address ? address.state : '', Validators.required],
+      zip: [address ? address.zip : '', Validators.required]
+    });
+  }
+
+  copyBillingAddress() {
+    this.form.patchValue({
+      billingAddress: this.form.value.shippingAddress
     });
   }
 }
