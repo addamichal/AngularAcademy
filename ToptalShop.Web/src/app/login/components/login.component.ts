@@ -7,6 +7,7 @@ import { Authenticate } from '../models/user';
 import { Observable } from 'rxjs/Observable';
 import { HttpErrorResponse } from '@angular/common/http';
 import 'rxjs/add/observable/of';
+import { GenericValidator } from '../../core/generic-validator';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ import 'rxjs/add/observable/of';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  genericValidator: GenericValidator;
   form: FormGroup;
 
   formErrors = {
@@ -35,11 +37,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   loggedIn$: Observable<boolean>;
   active = true;
 
-  constructor(
-    private fb: FormBuilder,
-    private store: Store<fromLogin.State>) {
-      this.store.dispatch(new login.LoginReset());
-    }
+  constructor(private fb: FormBuilder, private store: Store<fromLogin.State>) {
+    this.store.dispatch(new login.LoginReset());
+    this.genericValidator = new GenericValidator(this.validationMessages);
+  }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -47,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: ['administrator', [Validators.required]]
     });
 
-    this.registerValidation(this.form, this.formErrors, this.validationMessages);
+    this.genericValidator.registerValidation(this.form, this.formErrors);
 
     this.loggedIn$ = this.store.select(fromLogin.getLoggedIn);
 
@@ -60,7 +61,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           }
         }
       }
-    );
+      );
 
     this.store.select(fromLogin.getLoginPagePending)
       .takeWhile(() => this.active)
@@ -80,20 +81,5 @@ export class LoginComponent implements OnInit, OnDestroy {
   submit() {
     const model = <Authenticate>Object.assign({}, this.form.value);
     this.store.dispatch(new login.Login(model));
-  }
-
-  // TODO refactor away
-  private registerValidation(formGroup: FormGroup, formErrors: any, validationMessages: any) {
-    Object.keys(formGroup.controls).forEach(key => {
-      const formControl = formGroup.get(key);
-      formControl.valueChanges.subscribe(value => this.setMessage(key, formControl, formErrors, validationMessages));
-    });
-  }
-
-  private setMessage(controlName: string, c: AbstractControl, formErrors: any, validationMessages: any): void {
-    formErrors[controlName] = '';
-    if ((c.touched || c.dirty) && c.errors) {
-        formErrors[controlName] = Object.keys(c.errors).map(key => validationMessages[controlName][key]).slice(0, 1);
-    }
   }
 }
