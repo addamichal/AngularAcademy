@@ -1,22 +1,15 @@
 import * as login from '../actions/login';
-import { User } from '../models/user';
+import { Profile } from '../models';
 
 export interface State {
   loggedIn: boolean;
-  user: User | null;
+  user: Profile | null;
 }
 
 // TODO remove test values
 export const initialState: State = {
   loggedIn: false,
   user: null
-  //user: {
-  //  id: '3382160c-e170-48fc-bbe2-50bc289b1401',
-  //  email: 'aaa',
-  //  userRole: 'Administrator',
-  //  billingAddress: null,
-  //  shippingAddress: null
-  //},
 };
 
 export function reducer(state = initialState, action: login.Actions): State {

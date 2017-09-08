@@ -23,7 +23,6 @@ import { TokenInterceptor } from './services/token-interceptor';
 import { ProductsLoadedGuard } from './catalog/services/products-loaded.guard.service';
 import { ProductExistGuard } from './catalog/services/product-exists.guard.service';
 import { RegisterModule } from './register/register.module';
-import { ProfileModule } from './profile/profile.module';
 import { RecaptchaModule, } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { SweetAlert2Module } from '@toverux/ngsweetalert2';
@@ -48,7 +47,6 @@ import { LoginGuard } from './login/services/login-guard.service';
     CoreModule,
     LoginModule.forRoot(),
     RegisterModule,
-    ProfileModule,
     RouterModule.forRoot([
       {
         path: 'catalog/:id',
@@ -70,6 +68,11 @@ import { LoginGuard } from './login/services/login-guard.service';
       {
         path: 'orders',
         loadChildren: 'app/orders/orders.module#OrdersModule',
+        canLoad: [LoginGuard]
+      },
+      {
+        path: 'profile',
+        loadChildren: 'app/profile/profile.module#ProfileModule',
         canLoad: [LoginGuard]
       },
       { path: '', redirectTo: 'catalog', pathMatch: 'full' }

@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { User, Authenticate } from '../models/user';
+import { Profile, Authenticate } from '../models';
 import { Token } from '../models/token';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -27,7 +27,7 @@ export class LoadUser implements Action {
 export class LoginSuccess implements Action {
   readonly type = LOGIN_SUCCESS;
 
-  constructor(public payload: { user: User }) {}
+  constructor(public payload: { user: Profile }) {}
 }
 
 export class LoginFailure implements Action {

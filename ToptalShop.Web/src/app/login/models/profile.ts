@@ -3,7 +3,7 @@ export interface Authenticate {
   password: string;
 }
 
-export interface User {
+export interface Profile {
   id: string;
   email: string;
   userRole: string;

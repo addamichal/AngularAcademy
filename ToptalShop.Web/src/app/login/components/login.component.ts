@@ -3,7 +3,7 @@ import * as fromLogin from '../reducers';
 import { Store } from '@ngrx/store';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import * as login from '../actions/login';
-import { Authenticate } from '../models/user';
+import { Authenticate } from '../models';
 import { Observable } from 'rxjs/Observable';
 import { HttpErrorResponse } from '@angular/common/http';
 import 'rxjs/add/observable/of';

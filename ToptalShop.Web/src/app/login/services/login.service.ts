@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs/observable/of';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { User, Authenticate } from '../models/user';
+import { Profile, Authenticate } from '../models';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 import { _throw } from 'rxjs/observable/throw';

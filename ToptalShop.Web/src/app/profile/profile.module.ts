@@ -15,7 +15,7 @@ import { LoginGuard } from '../login/services/login-guard.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild([{ path: 'profile', component: ProfileComponent, canActivate: [LoginGuard] }]),
+    RouterModule.forChild([{ path: '', component: ProfileComponent }]),
     StoreModule.forFeature('profile', reducers),
     EffectsModule.forFeature([ProfileEffects])
   ],

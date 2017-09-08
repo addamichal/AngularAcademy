@@ -1,4 +1,4 @@
-import { Address } from '../../login/models/user';
+import { Address } from '../../login/models';
 
 export interface Order {
   id: number;

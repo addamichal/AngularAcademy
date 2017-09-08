@@ -7,9 +7,8 @@ import * as profilePage from '../actions/profile';
 import * as login from '../../login/actions/login';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { Profile } from '../models/profile';
 import { ToasterService } from 'angular2-toaster';
-import { Address } from '../../login/models/user';
+import { Address, Profile } from '../../login/models';
 import { catchBadRequest } from '../../core/utils';
 import { GenericValidator } from '../../core/generic-validator';
 
@@ -111,10 +110,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.store.dispatch(new profilePage.UpdateProfile(profile));
   }
 
-  buildFormAddress(address: Address) {
+  copyBillingAddress() {
+    this.form.patchValue({
+      billingAddress: this.form.value.shippingAddress
+    });
+  }
+
+  private buildFormAddress(address: Address) {
     return this.fb.group({
       firstName: [address ? address.firstName : '', Validators.required],
-      lastName: [address ? address.firstName : '', Validators.required],
+      lastName: [address ? address.lastName : '', Validators.required],
       address1: [address ? address.address1 : '', Validators.required],
       address2: [address ? address.address2 : '', Validators.required],
       city: [address ? address.city : '', Validators.required],
@@ -123,9 +128,4 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
   }
 
-  copyBillingAddress() {
-    this.form.patchValue({
-      billingAddress: this.form.value.shippingAddress
-    });
-  }
 }

@@ -11,12 +11,12 @@
     </div>
     <div class="form-group">
       <label for="description">Description</label>
-      <input [ngClass]="{'is-invalid': formErrors.description }" type="text" class="form-control" id="description" formControlName="description" aria-describedby="description" placeholder="Enter description">
+      <input [ngClass]="{'is-invalid': formErrors['description'] }" type="text" class="form-control" id="description" formControlName="description" aria-describedby="description" placeholder="Enter description">
       <div class="invalid-feedback">{{ formErrors['description'] }}</div>
     </div>
     <div class="form-group">
       <label for="price">Price</label>
-      <input [ngClass]="{'is-invalid': formErrors.price }" type="number" class="form-control" id="price" formControlName="price" aria-describedby="price" placeholder="Enter price">
+      <input [ngClass]="{'is-invalid': formErrors['price'] }" type="number" class="form-control" id="price" formControlName="price" aria-describedby="price" placeholder="Enter price">
       <div class="invalid-feedback">{{ formErrors['price'] }}</div>
     </div>
     <button type="button" class="btn" routerLink="/products">Back</button>

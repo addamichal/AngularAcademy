@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Profile } from '../models/profile';
 import { Observable } from 'rxjs/Observable';
+import { Profile } from '../../login/models';
 
 @Injectable()
 export class ProfileService {
