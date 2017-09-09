@@ -8,7 +8,7 @@ import * as login from '../../login/actions/login';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { ToasterService } from 'angular2-toaster';
-import { Address, Profile } from '../../login/models';
+import { Address, Profile } from '../../core/models';
 import { catchBadRequest } from '../../core/utils';
 import { GenericValidator } from '../../core/generic-validator';
 

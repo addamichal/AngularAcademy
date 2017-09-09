@@ -6,3 +6,8 @@ export class Token {
   userName: string;
   token_type: string;
 }
+
+export interface Authenticate {
+  email: string;
+  password: string;
+}

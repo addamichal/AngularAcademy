@@ -1,7 +1,8 @@
 import { Action } from '@ngrx/store';
-import { Profile, Authenticate } from '../models';
+import { Authenticate } from '../models';
 import { Token } from '../models/token';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Profile } from '../../core/models';
 
 export const LOGIN = '[Login] Login';
 export const LOGIN_RESET = '[Login] Reset';

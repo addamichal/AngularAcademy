@@ -1,8 +1,3 @@
-export interface Authenticate {
-  email: string;
-  password: string;
-}
-
 export interface Profile {
   id: string;
   email: string;

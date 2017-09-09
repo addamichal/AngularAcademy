@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Profile } from '../../login/models';
+import { Profile } from '../../core/models';
 
 export const UPDATE_PROFILE = '[Profile] Update Profile';
 export const UPDATE_PROFILE_RESET = '[Profile] Update Profile Reset';

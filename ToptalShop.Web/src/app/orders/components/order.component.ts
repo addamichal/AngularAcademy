@@ -10,7 +10,6 @@ import { ToasterService } from 'angular2-toaster/angular2-toaster';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { Profile } from '../../login/models';
 import { catchBadRequest } from '../../core/utils';
 
 @Component({

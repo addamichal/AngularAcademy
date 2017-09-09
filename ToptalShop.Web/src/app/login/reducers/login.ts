@@ -1,5 +1,5 @@
 import * as login from '../actions/login';
-import { Profile } from '../models';
+import { Profile } from '../../core/models';
 
 export interface State {
   loggedIn: boolean;
