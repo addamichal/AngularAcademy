@@ -53,14 +53,15 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.genericValidator.registerValidation(this.form, this.formErrors);
-
     this.route.params.subscribe(data => {
       this.id = data['id'];
       this.store.select(fromProducts.getProducts)
         .takeWhile(() => this.active)
         .map(products => products.filter(p => p.id === +this.id)[0])
-        .subscribe(product => this.form = this.createForm(product));
+        .subscribe(product => {
+          this.form = this.createForm(product);
+          this.genericValidator.registerValidation(this.form, this.formErrors);
+        });
     });
 
     this.store.select(fromProducts.getProductPagePending)
