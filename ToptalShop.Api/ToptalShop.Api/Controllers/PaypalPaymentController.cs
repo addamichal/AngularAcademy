@@ -39,6 +39,7 @@ namespace ToptalShop.Api.Controllers
             var apiContext = GetApiContext();
 
             // Create a new payment object
+            var shippingAddress = this.CurrentUser.ShippingAddress;
             var payment = new Payment
             {
                 intent = "sale",
@@ -64,7 +65,17 @@ namespace ToptalShop.Api.Controllers
                                 currency = "USD",
                                 quantity = l.Quantity.ToString(),
                                 price = (l.UnitPrice).ToString()
-                            }).ToList()
+                            }).ToList(),
+                            shipping_address = new ShippingAddress()
+                            {
+                                recipient_name = shippingAddress.FirstName + " " + shippingAddress.LastName,
+                                line1 = shippingAddress.Address1,
+                                line2 = shippingAddress.Address2,
+                                city = shippingAddress.City,
+                                country_code = "US",
+                                postal_code = shippingAddress.Zip,
+                                state = shippingAddress.State
+                            }
                         }
                     }
                 },
