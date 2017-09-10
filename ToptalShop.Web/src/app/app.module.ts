@@ -30,6 +30,7 @@ import { CoreModule } from './core/core.module';
 import { AdminGuard } from './login/services/admin-guard.service';
 import { AdvancedUserGuard } from './login/services/advanced-user-guard.service';
 import { LoginGuard } from './login/services/login-guard.service';
+import { NgHttpLoaderModule } from 'ng-http-loader/ng-http-loader.module';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { LoginGuard } from './login/services/login-guard.service';
     BrowserAnimationsModule,
     NgbModule.forRoot(),
     CoreModule,
+    NgHttpLoaderModule,
     LoginModule.forRoot(),
     RegisterModule,
     RouterModule.forRoot([
