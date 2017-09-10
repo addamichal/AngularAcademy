@@ -1,2 +1,2 @@
-# AngularAcademy
-Angular academy final assignment
+# Angular Academy
+Angular Academy final assignment
