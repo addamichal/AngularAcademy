@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { CartSummaryComponent } from './catalog/components/cart-summary.component';
 import { ProductListComponent } from './catalog/components/product-list.component';
@@ -31,6 +31,7 @@ import { AdminGuard } from './login/services/admin-guard.service';
 import { AdvancedUserGuard } from './login/services/advanced-user-guard.service';
 import { LoginGuard } from './login/services/login-guard.service';
 import { NgHttpLoaderModule } from 'ng-http-loader/ng-http-loader.module';
+import { PageNotFoundComponent } from './core/components/page-not-found-component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { NgHttpLoaderModule } from 'ng-http-loader/ng-http-loader.module';
     CartSummaryComponent,
     ProductListComponent,
     ProductDetailsComponent,
-    CartDetailsComponent
+    CartDetailsComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +79,8 @@ import { NgHttpLoaderModule } from 'ng-http-loader/ng-http-loader.module';
         loadChildren: 'app/profile/profile.module#ProfileModule',
         canLoad: [LoginGuard]
       },
-      { path: '', redirectTo: 'catalog', pathMatch: 'full' }
+      { path: '', redirectTo: 'catalog', pathMatch: 'full' },
+      { path: '**', component: PageNotFoundComponent }
     ]),
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([ProductsEffects]),
