@@ -22,6 +22,10 @@ namespace ToptalShop.Api.Controllers
             this.ctx = ctx;
         }
 
+        /// <summary>
+        /// Allows to list all available products
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public IHttpActionResult Get()
         {
@@ -31,6 +35,11 @@ namespace ToptalShop.Api.Controllers
             return Ok(productDtos);
         }
 
+        /// <summary>
+        /// Allows creation of product
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public IHttpActionResult Post(ProductViewModel model)
         {
             if (!ModelState.IsValid)
@@ -46,6 +55,12 @@ namespace ToptalShop.Api.Controllers
             return Created("", result);
         }
 
+        /// <summary>
+        /// Allows aupdate of product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public IHttpActionResult Put(int id, ProductViewModel model)
         {
             if (!ModelState.IsValid)
@@ -63,6 +78,11 @@ namespace ToptalShop.Api.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        /// <summary>
+        /// Allows deletion of product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [CustomAuthorize(Roles = "Admin")]
         public IHttpActionResult Delete(int id)
         {

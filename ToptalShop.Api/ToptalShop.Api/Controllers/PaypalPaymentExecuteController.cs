@@ -16,6 +16,11 @@ namespace ToptalShop.Api.Controllers
             this.toptalShopDbContext = toptalShopDbContext;
         }
 
+        /// <summary>
+        /// Allows confirmation of paypal payment
+        /// </summary>
+        /// <param name="paymentDto"></param>
+        /// <returns></returns>
         public IHttpActionResult Post(PaymentBindingModel paymentDto)
         {
             var apiContext = GetApiContext();

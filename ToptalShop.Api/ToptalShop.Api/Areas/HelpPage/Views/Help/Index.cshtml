@@ -2,11 +2,10 @@
 @using System.Web.Http.Controllers
 @using System.Web.Http.Description
 @using System.Collections.ObjectModel
-@using ToptalShop.Api.Areas.HelpPage.Models
 @model Collection<ApiDescription>
 
 @{
-    ViewBag.Title = "ASP.NET Web API Help Page";
+    ViewBag.Title = "ToptalShop API";
 
     // Group APIs by controller
     ILookup<HttpControllerDescriptor, ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor);
@@ -25,8 +24,44 @@
         <div class="content-wrapper">
             <h2>Introduction</h2>
             <p>
-                Provide a general description of your APIs here.
+                To be able to call API, you have to add Authorization header with every HTTP call (except of POST api/User).
             </p>
+            <p>
+                Authorization header is in format Bearer {AccessToken}.
+            </p>
+            <p>
+                @{
+                    var tokenUrl = Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/token";
+                }
+                To get access token, you have sent POST request to <a href="@tokenUrl">@tokenUrl</a> with body in <i>x-www-form-urlencoded</i> format.
+            </p>
+            <p>
+                Parameters are:
+                <ul>
+                    <li>username: email of user, with which you want to login</li>
+                    <li>password: password of the user</li>
+                    <li>grant_type: value password</li>
+                </ul>
+            </p>
+            <p>Example Request:
+                <pre>
+    username=user@example.com&password=userpassword&grant_type=password
+</pre>
+            </p>
+            <p>
+                Example Response:
+                <pre>
+{
+  "access_token": "access token",
+  "token_type": "bearer",
+  "expires_in": 1209599,
+  "userName": "administrator@toptalshop.com",
+  ".issued": "Thu, 9 Sept 2017 20:46:03 GMT",
+  ".expires": "Thu, 23 Sept 2017 20:46:03 GMT"
+}
+</pre>
+            </p>
+            <p>Token is valid for 2 weeks. Use access_token to authorize in all subsequent API calls.</p>
         </div>
     </section>
     <section class="content-wrapper main-content clear-fix">

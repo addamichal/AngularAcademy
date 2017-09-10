@@ -21,6 +21,10 @@ namespace ToptalShop.Api.Controllers
             this.ctx = ctx;
         }
 
+        /// <summary>
+        /// Retrieves orders all orders for Admin or manager user. For regular user, it shows his orders.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<SalesOrderViewModel> Get()
         {
             return GetOrders()
@@ -29,6 +33,12 @@ namespace ToptalShop.Api.Controllers
                 .ToList();
         }
 
+        /// <summary>
+        /// Allows change of order status
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [CustomAuthorize(Roles = nameof(ToptalShopAppUserRole.Manager))]
         public IHttpActionResult Put(int id, UpdateSalesOrderStatusBindingModel model)
         {
@@ -42,6 +52,11 @@ namespace ToptalShop.Api.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        /// <summary>
+        /// Allows deletion of order
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [CustomAuthorize(Roles = nameof(ToptalShopAppUserRole.Admin))]
         public IHttpActionResult Delete(int id)
         {

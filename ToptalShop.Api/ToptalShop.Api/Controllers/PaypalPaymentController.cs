@@ -21,6 +21,11 @@ namespace ToptalShop.Api.Controllers
             this.ctx = ctx;
         }
 
+        /// <summary>
+        /// Allows creation of paypal payment
+        /// </summary>
+        /// <param name="cartLines"></param>
+        /// <returns></returns>
         public IHttpActionResult Post(List<CartLineBindingModel> cartLines)
         {
             if (!ModelState.IsValid) throw new Exception();

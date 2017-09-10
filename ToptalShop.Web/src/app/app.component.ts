@@ -7,9 +7,6 @@ import * as fromLogin from './login/reducers';
 import { Observable } from 'rxjs/Observable';
 declare var paypal: any;
 
-export const CREATE_PAYMENT_URL  = 'http://localhost:5261/api/paypalpayment';
-export const EXECUTE_PAYMENT_URL = 'http://localhost:5261/api/paypalpaymentexecute';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
