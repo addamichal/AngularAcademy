@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
-import { Product } from '../models/product';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Product } from '../../catalog/models';
 
 export const SAVE_PRODUCT = '[Product] Save Product';
 export const SAVE_PRODUCT_RESET = '[Product] Save Product Reset';

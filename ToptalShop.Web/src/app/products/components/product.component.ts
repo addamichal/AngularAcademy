@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Product } from '../models/product';
 import * as product from '../actions/product';
 import * as fromRoot from '../../reducers';
 import * as fromProducts from '../reducers';
@@ -13,6 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { GenericValidator } from '../../core/generic-validator';
 import { catchBadRequest } from '../../core/utils';
+import { Product } from '../../catalog/models';
 
 @Component({
   selector: 'app-product',
