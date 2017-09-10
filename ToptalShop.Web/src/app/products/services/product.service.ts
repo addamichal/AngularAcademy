@@ -11,10 +11,6 @@ export class ProductService {
     this.url = environment.productUrl;
   }
 
-  getProducts(): Observable<Product[]> {
-    return this.httpClient.get<Product[]>(this.url);
-  }
-
   updateProduct(product: Product) {
     if (product.id) {
       const updateUrl = `${this.url}/${product.id}`;

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChildren }
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../models/product';
 import * as product from '../actions/product';
+import * as fromRoot from '../../reducers';
 import * as fromProducts from '../reducers';
 import * as fromLogin from '../../login/reducers';
 import { Store } from '@ngrx/store';
@@ -44,7 +45,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private store: Store<fromProducts.State>,
+    private store: Store<fromRoot.State>,
     private toasterService: ToasterService
   ) {
     this.store.dispatch(new product.SaveProductReset());
@@ -55,7 +56,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.params.subscribe(data => {
       this.id = data['id'];
-      this.store.select(fromProducts.getProducts)
+      this.store.select(fromRoot.getProducts)
         .takeWhile(() => this.active)
         .map(products => products.filter(p => p.id === +this.id)[0])
         .subscribe(product => {

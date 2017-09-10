@@ -28,7 +28,7 @@ export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionRedu
   return localStorageSync({ keys: [{ login: ['status'] }, { catalog: ['cart'] }], rehydrate: true })(reducer);
 }
 
-function logout(reducer) {
+export function logout(reducer) {
   return function (state, action) {
     return reducer(action.type === login.LOGOUT ? { catalog: state.catalog } : state, action);
   };
