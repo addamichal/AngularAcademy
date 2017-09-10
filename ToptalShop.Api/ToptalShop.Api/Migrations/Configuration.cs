@@ -90,7 +90,7 @@ namespace ToptalShop.Api.Migrations
             {
                 Email = createdUser.Email,
                 CreatedById = createdUser.Id,
-                TotalPrice = 10,
+                TotalPrice = product1.Price,
                 Status = SalesOrderStatus.Paid,
                 Lines = new List<SalesOrderLine>()
                 {
