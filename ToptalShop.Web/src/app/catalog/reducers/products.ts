@@ -2,13 +2,13 @@ import * as product from '../actions/products';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { CartDetails, Product, CartSummary, CartDetailsLine } from '../models';
 
-export interface CatalogState {
+export interface State {
   productsLoaded: boolean;
   products: Product[];
   cart: { [productId: number]: number };
 }
 
-export const initialState: CatalogState = {
+export const initialState: State = {
   productsLoaded: false,
   products: [],
   cart: {}
@@ -17,7 +17,7 @@ export const initialState: CatalogState = {
 export function reducer(
   state = initialState,
   action: product.Actions
-): CatalogState {
+): State {
 
   switch (action.type) {
     case product.LOAD_PRODUCTS_SUCCESS: {
@@ -87,9 +87,9 @@ export function reducer(
   return state;
 }
 
-export const getProductsLoaded = (state: CatalogState) => state.productsLoaded;
-export const getProducts = (state: CatalogState) => state.products;
-export const getCart = (state: CatalogState) => state.cart;
+export const getProductsLoaded = (state: State) => state.productsLoaded;
+export const getProducts = (state: State) => state.products;
+export const getCart = (state: State) => state.cart;
 
 export const getCartSummary = createSelector(
   getProducts,

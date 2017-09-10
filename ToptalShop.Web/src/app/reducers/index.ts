@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment';
 import { localStorageSync } from 'ngrx-store-localstorage';
 
 export interface State {
-  catalog: fromProduct.CatalogState;
+  catalog: fromProduct.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
