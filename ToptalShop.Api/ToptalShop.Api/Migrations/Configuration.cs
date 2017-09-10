@@ -3,6 +3,7 @@ using AutoMapper;
 using Bogus;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 using ToptalShop.Api.DataLayer;
 using ToptalShop.Api.Engines;
 
@@ -103,8 +104,8 @@ namespace ToptalShop.Api.Migrations
                         Quantity = 1,
                     }
                 },
-                BillingAddress = address,
-                ShippingAddress = address,
+                BillingAddress = Clone(address),
+                ShippingAddress = Clone(address),
                 PaypalReference = "PP-0000" + counter
             };
 
@@ -125,8 +126,8 @@ namespace ToptalShop.Api.Migrations
 
             var createdUser = CreateUser(user);
             var updatedUser = ctx.Users.SingleOrDefault(w => w.Id == createdUser.Id);
-            updatedUser.ShippingAddress = address;
-            updatedUser.BillingAddress = address;
+            updatedUser.ShippingAddress = Clone(address);
+            updatedUser.BillingAddress = Clone(address);
             ctx.Users.AddOrUpdate(updatedUser);
             return updatedUser;
         }
@@ -136,6 +137,12 @@ namespace ToptalShop.Api.Migrations
             userEngine.CreateUser(user);
             var regularUser = userEngine.FindByEmail(user.Email);
             return regularUser;
+        }
+
+        public static T Clone<T>(T source)
+        {
+            var serialized = JsonConvert.SerializeObject(source);
+            return JsonConvert.DeserializeObject<T>(serialized);
         }
     }
 }
