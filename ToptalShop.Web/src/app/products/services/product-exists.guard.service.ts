@@ -3,7 +3,6 @@ import { CanActivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../reducers';
-import * as products from '../actions/products';
 import 'rxjs/add/operator/filter';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
