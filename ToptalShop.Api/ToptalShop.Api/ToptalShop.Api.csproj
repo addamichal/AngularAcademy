@@ -64,6 +64,10 @@
       <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Bogus, Version=17.0.1.0, Culture=neutral, PublicKeyToken=fa1bb3f3f218129a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bogus.17.0.1\lib\net40\Bogus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Formo, Version=1.4.4.41776, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Formo.1.4.4.41776\lib\net40\Formo.dll</HintPath>
       <Private>True</Private>
@@ -109,8 +113,8 @@
       <HintPath>..\packages\Microsoft.Owin.Cors.3.1.0\lib\net45\Microsoft.Owin.Cors.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PayPal, Version=1.8.0.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
@@ -304,10 +308,6 @@
     <Compile Include="Migrations\201709032018144_InitialCreate.Designer.cs">
       <DependentUpon>201709032018144_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709032021357_AddingDefaultData.cs" />
-    <Compile Include="Migrations\201709032021357_AddingDefaultData.Designer.cs">
-      <DependentUpon>201709032021357_AddingDefaultData.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="ToptalShopAppLogger.cs" />
@@ -403,9 +403,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201709032018144_InitialCreate.resx">
       <DependentUpon>201709032018144_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709032021357_AddingDefaultData.resx">
-      <DependentUpon>201709032021357_AddingDefaultData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

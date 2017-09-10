@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using AutoMapper;
+using Bogus;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ToptalShop.Api.DataLayer;
@@ -14,6 +16,8 @@ namespace ToptalShop.Api.Migrations
     internal sealed class Configuration : DbMigrationsConfiguration<ToptalShop.Api.DataLayer.ToptalShopDbContext>
     {
         public static int counter = 1;
+        private UserEngine userEngine;
+        private ToptalShopDbContext ctx;
 
         public Configuration()
         {
@@ -22,6 +26,7 @@ namespace ToptalShop.Api.Migrations
 
         protected override void Seed(ToptalShop.Api.DataLayer.ToptalShopDbContext context)
         {
+            this.ctx = context;
             GlobalMapper.Initialize();
 
             //create products
@@ -42,34 +47,49 @@ namespace ToptalShop.Api.Migrations
             //create users
             var applicationUserManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
 
-            var userEngine = new UserEngine(applicationUserManager, applicationRoleManager, context);
-            var regularUser = CreateUser(userEngine, new EditToptalShopAppUser()
+            userEngine = new UserEngine(applicationUserManager, applicationRoleManager, context);
+            CreateUser(new EditToptalShopAppUser()
             {
                 Email = "regularuser@toptalshop.com",
                 Password = "regularuser",
                 ConfirmPassword = "regularuser",
                 UserRole = ToptalShopAppUserRole.RegularUser
             });
+
             userEngine.CreateUser(new EditToptalShopAppUser() { Email = "manager@toptalshop.com", Password = "manager", ConfirmPassword = "manager", UserRole = ToptalShopAppUserRole.Manager });
             userEngine.CreateUser(new EditToptalShopAppUser() { Email = "administrator@toptalshop.com", Password = "administrator", ConfirmPassword = "administrator", UserRole = ToptalShopAppUserRole.Admin });
 
 
-            //create orders
-            var order1 = GetOrder(regularUser, product1);
-            var order2 = GetOrder(regularUser, product2);
-            var order3 = GetOrder(regularUser, product3);
-            CreateOrder(context, order1);
-            CreateOrder(context, order2);
-            CreateOrder(context, order3);
+            if (!ctx.SalesOrders.Any())
+            {
+                var random = new Random();
+                var products = ctx.Products.ToList();
+                for (int i = 0; i < 10; i++)
+                {
+                    var randomProductIndex = random.Next(0, products.Count);
+                    CreateOrder(products[randomProductIndex]);
+                }
+            }
         }
 
-        private static SalesOrder GetOrder(ToptalShopAppUser regularUser, Product product1)
+        private SalesOrder CreateOrder(Product product1)
         {
+            var faker = new Faker();
+            var address = new Address();
+            address.FirstName = faker.Name.FirstName();
+            address.LastName = faker.Name.FirstName();
+            address.Address1 = faker.Address.StreetAddress();
+            address.Address2 = faker.Address.SecondaryAddress();
+            address.City = faker.Address.City();
+            address.State = faker.Address.State();
+            address.Zip = faker.Address.ZipCode();
+
+            var createdUser = CreateFakeUser(address);
+
             var order = new SalesOrder()
             {
-                SalesOrderId = counter,
-                Email = regularUser.Email,
-                CreatedById = regularUser.Id,
+                Email = createdUser.Email,
+                CreatedById = createdUser.Id,
                 TotalPrice = 10,
                 Status = SalesOrderStatus.Paid,
                 Lines = new List<SalesOrderLine>()
@@ -83,40 +103,35 @@ namespace ToptalShop.Api.Migrations
                         Quantity = 1,
                     }
                 },
-                BillingAddress = new Address()
-                {
-                    FirstName = "Joseph",
-                    LastName = "Jackson",
-                    Address1 = "4814 Berkley Street",
-                    Address2 = "4814",
-                    City = "Saxapahaw",
-                    State = "North Carolina",
-                    Zip = "27340"
-                },
-                ShippingAddress = new Address()
-                {
-                    FirstName = "Joseph",
-                    LastName = "Jackson",
-                    Address1 = "4814 Berkley Street",
-                    Address2 = "4814",
-                    City = "Saxapahaw",
-                    State = "North Carolina",
-                    Zip = "27340"
-                },
+                BillingAddress = address,
+                ShippingAddress = address,
                 PaypalReference = "PP-0000" + counter
             };
+
+            ctx.SalesOrders.AddOrUpdate(order);
+
             return order;
         }
 
-        private static void CreateOrder(ToptalShopDbContext context, SalesOrder order)
+        private ApplicationUser CreateFakeUser(Address address)
         {
-            if (context.SalesOrders.SingleOrDefault(w => w.SalesOrderId == order.SalesOrderId) == null)
-            {
-                context.SalesOrders.AddOrUpdate(order);
-            }
+            var faker = new Faker();
+
+            var user = new EditToptalShopAppUser();
+            user.Email = faker.Internet.Email(address.FirstName, address.LastName);
+            user.Password = faker.Internet.Password();
+            user.ConfirmPassword = user.Password;
+            user.UserRole = ToptalShopAppUserRole.RegularUser;
+
+            var createdUser = CreateUser(user);
+            var updatedUser = ctx.Users.SingleOrDefault(w => w.Id == createdUser.Id);
+            updatedUser.ShippingAddress = address;
+            updatedUser.BillingAddress = address;
+            ctx.Users.AddOrUpdate(updatedUser);
+            return updatedUser;
         }
 
-        private static ToptalShopAppUser CreateUser(UserEngine userEngine, EditToptalShopAppUser user)
+        private ToptalShopAppUser CreateUser(EditToptalShopAppUser user)
         {
             userEngine.CreateUser(user);
             var regularUser = userEngine.FindByEmail(user.Email);
