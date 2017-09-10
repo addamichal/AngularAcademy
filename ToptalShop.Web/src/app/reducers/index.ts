@@ -1,4 +1,5 @@
 import * as fromProduct from '../catalog/reducers/products';
+import * as login from '../login/actions/login';
 import { ActionReducerMap, ActionReducer, MetaReducer, createSelector } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 import { localStorageSync } from 'ngrx-store-localstorage';
@@ -27,9 +28,15 @@ export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionRedu
   return localStorageSync({ keys: [{ login: ['status'] }, { catalog: ['cart'] }], rehydrate: true })(reducer);
 }
 
+function logout(reducer) {
+  return function (state, action) {
+    return reducer(action.type === login.LOGOUT ? { catalog: state.catalog } : state, action);
+  };
+}
+
 export const metaReducers: MetaReducer<State>[] = !environment.production
-  ? [logger, localStorageSyncReducer]
-  : [localStorageSyncReducer];
+  ? [logger, localStorageSyncReducer, logout]
+  : [localStorageSyncReducer, logout];
 
 export const getCatalog = (state: State) => state.catalog;
 export const getProducts = createSelector(getCatalog, fromProduct.getProducts);

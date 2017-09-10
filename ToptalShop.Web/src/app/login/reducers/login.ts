@@ -6,7 +6,6 @@ export interface State {
   user: Profile | null;
 }
 
-// TODO remove test values
 export const initialState: State = {
   loggedIn: false,
   user: null
@@ -20,10 +19,6 @@ export function reducer(state = initialState, action: login.Actions): State {
         loggedIn: true,
         user: action.payload.user,
       };
-    }
-
-    case login.LOGOUT: {
-      return initialState;
     }
 
     default: {
