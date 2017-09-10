@@ -29,7 +29,7 @@ namespace ToptalShop.Api.Controllers
                 .ToList();
         }
 
-        [CustomAuthorize(Roles = nameof(ToptalShopAppUserRole.UserManager))]
+        [CustomAuthorize(Roles = nameof(ToptalShopAppUserRole.Manager))]
         public IHttpActionResult Put(int id, UpdateSalesOrderStatusBindingModel model)
         {
             var existingSalesOrder = GetOrders().SingleOrDefault(w => w.SalesOrderId == id);

@@ -8,7 +8,7 @@ namespace ToptalShop.Api
     public enum ToptalShopAppUserRole
     {
         RegularUser = 1,
-        UserManager,
+        Manager,
         Admin
     }
 }

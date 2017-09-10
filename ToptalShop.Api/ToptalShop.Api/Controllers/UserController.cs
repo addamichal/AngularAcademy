@@ -33,7 +33,7 @@ namespace ToptalShop.Api.Controllers
             if (shopAppUser == null)
                 return NotFound();
 
-            if (shopAppUser.UserRole == ToptalShopAppUserRole.Admin && CurrentUser.UserRole == ToptalShopAppUserRole.UserManager)
+            if (shopAppUser.UserRole == ToptalShopAppUserRole.Admin && CurrentUser.UserRole == ToptalShopAppUserRole.Manager)
             {
                 Log.Warning("Current user: {User} doesn't have privileges to get Admin user, UserId: {UserId}", CurrentUser, id);
                 throw new HttpResponseException(HttpStatusCode.Forbidden);
@@ -51,7 +51,7 @@ namespace ToptalShop.Api.Controllers
         public IHttpActionResult Get()
         {
             var users = _userEngine.GetAllUsers();
-            if (CurrentUser.UserRole == ToptalShopAppUserRole.UserManager)
+            if (CurrentUser.UserRole == ToptalShopAppUserRole.Manager)
                 users = users.Where(user => user.UserRole != ToptalShopAppUserRole.Admin).ToList();
 
             var userViewModels = users.Select(Mapper.Map<UserViewModel>);
@@ -72,7 +72,7 @@ namespace ToptalShop.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (CurrentUser.UserRole == ToptalShopAppUserRole.UserManager && model.UserRole == ToptalShopAppUserRole.Admin)
+            if (CurrentUser.UserRole == ToptalShopAppUserRole.Manager && model.UserRole == ToptalShopAppUserRole.Admin)
             {
                 Log.Warning("Current user: {User} doesn't have privileges to create Admin users", CurrentUser);
                 throw new HttpResponseException(HttpStatusCode.Forbidden);
@@ -103,7 +103,7 @@ namespace ToptalShop.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (model.UserRole == ToptalShopAppUserRole.Admin && CurrentUser.UserRole == ToptalShopAppUserRole.UserManager)
+            if (model.UserRole == ToptalShopAppUserRole.Admin && CurrentUser.UserRole == ToptalShopAppUserRole.Manager)
             {
                 Log.Warning("Current user: {User} doesn't have privileges to set Admin role for user", CurrentUser);
                 throw new HttpResponseException(HttpStatusCode.Forbidden);
@@ -112,7 +112,7 @@ namespace ToptalShop.Api.Controllers
             if (existingUser == null)
                 return NotFound();
 
-            if (existingUser.UserRole == ToptalShopAppUserRole.Admin && CurrentUser.UserRole == ToptalShopAppUserRole.UserManager)
+            if (existingUser.UserRole == ToptalShopAppUserRole.Admin && CurrentUser.UserRole == ToptalShopAppUserRole.Manager)
             {
                 Log.Warning("Current user: {User} doesn't have privileges to update Admin user", CurrentUser);
                 throw new HttpResponseException(HttpStatusCode.Forbidden);
@@ -139,7 +139,7 @@ namespace ToptalShop.Api.Controllers
             if (userToBeDeleted == null)
                 return NotFound();
 
-            if (userToBeDeleted.UserRole == ToptalShopAppUserRole.Admin && CurrentUser.UserRole == ToptalShopAppUserRole.UserManager)
+            if (userToBeDeleted.UserRole == ToptalShopAppUserRole.Admin && CurrentUser.UserRole == ToptalShopAppUserRole.Manager)
             {
                 Log.Warning("Current user: {User} doesn't have privileges to delete Admin user, UserId: {UserId}", CurrentUser, id);
                 throw new HttpResponseException(HttpStatusCode.Forbidden);
